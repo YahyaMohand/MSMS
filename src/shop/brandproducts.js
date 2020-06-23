@@ -23,7 +23,7 @@ const BrandProducts = (params)=>{
   useEffect(()=>{
     axios.get(`${url}/products/brand/${brandid}`)
     .then(res => {
-        setProducts(res.data.brandproducts)
+        setProducts(res.data.products)
         setError('')
         setTimeout(setLoading(false)) 
     })   

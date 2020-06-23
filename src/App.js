@@ -18,17 +18,30 @@ const App = ()=>{
   const [loading, setLoading]=useState(true)
   const [error, setError]=useState('')
   const [carousels, setCarousels]=useState({})
-  const [products, setProducts]=useState({})
+  const [newproducts, setNewProducts]=useState({})
   const [brands, setBrands]=useState({})
   const [categories, setCategories]=useState({})
-
+  const [salesproducts, setSalesproducts] = useState({})
+  const [makeupproducts, setMakeupproducts] = useState({})
+  const [skincareproducts, setSkincareproducts] = useState({})
+  const [hairproducts, setHairproducts] = useState({})
+  const [fragranceproducts, setFragranceproducts] = useState({})
+  const [menproducts, setMenproducts] = useState({})
+  const [giftproducts, setGiftproducts] = useState({})
 
   useEffect(()=>{
     axios.get(`${url}`)
     .then(res => {
       
         setCarousels(res.data.carousels)
-        setProducts(res.data.products)
+        setNewProducts(res.data.newproducts)
+        setSalesproducts(res.data.salesproducts)
+        setMakeupproducts(res.data.makeupproducts)
+        setSkincareproducts(res.data.skincareproducts)
+        setHairproducts(res.data.hairproducts)
+        setFragranceproducts(res.data.fragranceproducts)
+        setMenproducts(res.data.menproducts)
+        setGiftproducts(res.data.giftproducts)
         setBrands(res.data.brands)
         setCategories(res.data.categories)
         setError('')
@@ -37,7 +50,14 @@ const App = ()=>{
     .catch(error => {
         setLoading(false)
         setCarousels({})
-        setProducts({})
+        setNewProducts({})
+        setSalesproducts({})
+        setMakeupproducts({})
+        setSkincareproducts({})
+        setHairproducts({})
+        setFragranceproducts({})
+        setMenproducts({})
+        setGiftproducts({})
         setBrands({})
         setCategories({})
         setError('Somthing went wrong')
@@ -59,14 +79,154 @@ const App = ()=>{
     </div>
   )
 
-  const Products = ()=> (
+  const NewProducts = ()=> (
     <div>
       <hr className='ml-4 mr-4 mt-0 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr>
-      <h3 className='text-center'>المنتجات</h3>
+      <h3 className='text-center'>احدث المنتجات</h3>
       <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
       <div  className='container-fluid'>
         <div className='row'>
-          {products.map((products,i)=>(<ProductCards key={i} products={products}/>))}
+          {newproducts.map((newproducts,i)=>(<ProductCards key={i} products={newproducts}/>))}
+        </div>
+      </div>
+      <hr className='ml-4 mr-4 mt-3 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <div  className='container-fluid'>
+        <div className='row'>
+          <a href='#' className='btn btn-primary btn-block text-center ml-5 mr-5 mt-2 mb-1'>عرض الكل</a>
+        </div>
+      </div>
+      <hr className='ml-4 mr-4 mt-1 mb-5 p-0' style={{border: '1px solid #dedede'}}></hr>
+    </div>
+  )
+
+  const SalesProducts = ()=> (
+    <div>
+      <hr className='ml-4 mr-4 mt-0 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <h3 className='text-center'>التخفيصات</h3>
+      <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <div  className='container-fluid'>
+        <div className='row'>
+          {salesproducts.map((salesproducts,i)=>(<ProductCards key={i} products={salesproducts}/>))}
+        </div>
+      </div>
+      <hr className='ml-4 mr-4 mt-3 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <div  className='container-fluid'>
+        <div className='row'>
+          <a href='#' className='btn btn-primary btn-block text-center ml-5 mr-5 mt-2 mb-1'>عرض الكل</a>
+        </div>
+      </div>
+      <hr className='ml-4 mr-4 mt-1 mb-5 p-0' style={{border: '1px solid #dedede'}}></hr>
+    </div>
+  )
+
+  const MakeupProducts = ()=> (
+    <div>
+      <hr className='ml-4 mr-4 mt-0 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <h3 className='text-center'>منتجات المكياج</h3>
+      <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <div  className='container-fluid'>
+        <div className='row'>
+          {makeupproducts.map((makeupproducts,i)=>(<ProductCards key={i} products={makeupproducts}/>))}
+        </div>
+      </div>
+      <hr className='ml-4 mr-4 mt-3 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <div  className='container-fluid'>
+        <div className='row'>
+          <a href='#' className='btn btn-primary btn-block text-center ml-5 mr-5 mt-2 mb-1'>عرض الكل</a>
+        </div>
+      </div>
+      <hr className='ml-4 mr-4 mt-1 mb-5 p-0' style={{border: '1px solid #dedede'}}></hr>
+    </div>
+  )
+
+  const SkincareProducts = ()=> (
+    <div>
+      <hr className='ml-4 mr-4 mt-0 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <h3 className='text-center'>منتجات العناية بالبشرة</h3>
+      <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <div  className='container-fluid'>
+        <div className='row'>
+          {skincareproducts.map((skincareproducts,i)=>(<ProductCards key={i} products={skincareproducts}/>))}
+        </div>
+      </div>
+      <hr className='ml-4 mr-4 mt-3 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <div  className='container-fluid'>
+        <div className='row'>
+          <a href='#' className='btn btn-primary btn-block text-center ml-5 mr-5 mt-2 mb-1'>عرض الكل</a>
+        </div>
+      </div>
+      <hr className='ml-4 mr-4 mt-1 mb-5 p-0' style={{border: '1px solid #dedede'}}></hr>
+    </div>
+  )
+
+  const HairProducts = ()=> (
+    <div>
+      <hr className='ml-4 mr-4 mt-0 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <h3 className='text-center'>منتجات الشعر</h3>
+      <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <div  className='container-fluid'>
+        <div className='row'>
+          {hairproducts.map((hairproducts,i)=>(<ProductCards key={i} products={hairproducts}/>))}
+        </div>
+      </div>
+      <hr className='ml-4 mr-4 mt-3 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <div  className='container-fluid'>
+        <div className='row'>
+          <a href='#' className='btn btn-primary btn-block text-center ml-5 mr-5 mt-2 mb-1'>عرض الكل</a>
+        </div>
+      </div>
+      <hr className='ml-4 mr-4 mt-1 mb-5 p-0' style={{border: '1px solid #dedede'}}></hr>
+    </div>
+  )
+
+  const FragranceProducts = ()=> (
+    <div>
+      <hr className='ml-4 mr-4 mt-0 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <h3 className='text-center'>منتجات العطور</h3>
+      <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <div  className='container-fluid'>
+        <div className='row'>
+          {fragranceproducts.map((fragranceproducts,i)=>(<ProductCards key={i} products={fragranceproducts}/>))}
+        </div>
+      </div>
+      <hr className='ml-4 mr-4 mt-3 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <div  className='container-fluid'>
+        <div className='row'>
+          <a href='#' className='btn btn-primary btn-block text-center ml-5 mr-5 mt-2 mb-1'>عرض الكل</a>
+        </div>
+      </div>
+      <hr className='ml-4 mr-4 mt-1 mb-5 p-0' style={{border: '1px solid #dedede'}}></hr>
+    </div>
+  )
+
+  const MenProducts = ()=> (
+    <div>
+      <hr className='ml-4 mr-4 mt-0 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <h3 className='text-center'>منتجات الرجال</h3>
+      <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <div  className='container-fluid'>
+        <div className='row'>
+          {menproducts.map((menproducts,i)=>(<ProductCards key={i} products={menproducts}/>))}
+        </div>
+      </div>
+      <hr className='ml-4 mr-4 mt-3 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <div  className='container-fluid'>
+        <div className='row'>
+          <a href='#' className='btn btn-primary btn-block text-center ml-5 mr-5 mt-2 mb-1'>عرض الكل</a>
+        </div>
+      </div>
+      <hr className='ml-4 mr-4 mt-1 mb-5 p-0' style={{border: '1px solid #dedede'}}></hr>
+    </div>
+  )
+
+  const GiftProducts = ()=> (
+    <div>
+      <hr className='ml-4 mr-4 mt-0 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <h3 className='text-center'>الهدايا</h3>
+      <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
+      <div  className='container-fluid'>
+        <div className='row'>
+          {giftproducts.map((giftproducts,i)=>(<ProductCards key={i} products={giftproducts}/>))}
         </div>
       </div>
       <hr className='ml-4 mr-4 mt-3 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr>
@@ -121,8 +281,15 @@ const App = ()=>{
           {loading ? loadingSpinner():SidbarNav()}
           <main role='main' className='col-md-9 ml-sm-auto col-lg-10 p-0'>
             {loading ? loadingSpinner():Slidder()}
-            {loading ? loadingSpinner():Products()}
+            {loading ? loadingSpinner():NewProducts()}
+            {loading ? loadingSpinner():SalesProducts()}
             {loading ? loadingSpinner():Brands()}
+            {loading ? loadingSpinner():MakeupProducts()}
+            {/* {loading ? loadingSpinner():SkincareProducts()} */}
+            {/* {loading ? loadingSpinner():HairProducts()} */}
+            {/* {loading ? loadingSpinner():FragranceProducts()} */}
+            {/* {loading ? loadingSpinner():MenProducts()} */}
+            {/* {loading ? loadingSpinner():GiftProducts()} */}
           </main>
 
     </Layout>

@@ -35,7 +35,7 @@ const SubCates = (params)=>{
     axios.get(`${url}/products/main/${categoryid}`)
     .then(res => {
         console.log(res.data)
-        setProducts(res.data.mainproducts)
+        setProducts(res.data.products)
         setError('')
         setTimeout(setLoading(false)) 
     })   

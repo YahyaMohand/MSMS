@@ -23,7 +23,7 @@ const ClassProducts = (params)=>{
   useEffect(()=>{
     axios.get(`${url}/products/class/${classcateid}`)
     .then(res => {
-        setProducts(res.data.classproducts)
+        setProducts(res.data.products)
         setError('')
         setTimeout(setLoading(false)) 
     })   

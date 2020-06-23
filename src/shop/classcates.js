@@ -35,7 +35,7 @@ const ClassCates = (params)=>{
     axios.get(`${url}/products/sub/${subcateid}`)
     .then(res => {
         console.log(res.data)
-        setProducts(res.data.subproducts)
+        setProducts(res.data.products)
         setError('')
         setTimeout(setLoading(false)) 
     })   
