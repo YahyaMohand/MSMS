@@ -33,12 +33,35 @@ const PBag = ()=>{
   const [reciverRP, setreciverRP] = useState()
 
   useEffect(()=>{
-    setItems(getBag())
-    if(localStorage.getItem('bag')){
-      setshowbag(true)
-    }
-    setorderdetails(getBag())
+    // setItems(getBag())
+    // if(localStorage.getItem('bag')){
+    //   setshowbag(true)
+    // }
+    // setorderdetails(getBag())
+    axios.get(`${url}/bag/${userid}`)
+    .then(res=>{
+      setItems(res.data.bag)
+      setorderdetails(res.data.bag)
+      if(res.data.bag[0] != null){
+        setshowbag(true)
+      }
+    }).catch(err=>{
+      console.log(err)
+      setItems({})
+      setshowbag(false)
+      setorderdetails({})
+    })
   },[])
+
+  function deleteBag(){
+    axios.delete(`${url}/bag/remove/${userid}`)
+    .then(res=>{
+      console.log(res)
+      setTimeout(window.location.reload(),3000)
+    }).catch(err=>{
+      console.log(err)
+    })
+  }
 
   const showItems = () => (
     <div className='col-md-8 order-md-1'>
@@ -62,12 +85,12 @@ const PBag = ()=>{
     .then(response =>{
         // console.log("BRAND Added to database successfully", response);
         //set values to empty
-        setTimeout(()=>{localStorage.removeItem('bag')},3000)
-        setTimeout(window.location.reload(),3000)
+        setTimeout(()=>{deleteBag()},3000)
+        setTimeout(window.location.reload(),6000)
         toast.success(response.data.message);
     })
     .catch(error => {
-        // console.log('Operation ERROR', error.response.data)
+        console.log('Operation ERROR', error.response.data)
         // setValues({...values, buttonText: 'Submit'});
         toast.error(error.response.data.error);
     })
