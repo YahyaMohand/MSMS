@@ -9,6 +9,8 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import cookie from 'js-cookie'
 import loadingSpinner from '../../components/loadingspinner'
 
+const url = 'https://www.kwaysidata.com'
+
 const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'notlogedin'
 const token = cookie.get('token')
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
@@ -33,7 +35,7 @@ const UpdateStore = (params) => {
     const [cities, setCities] = useState({})
 
     useEffect(()=>{
-        axios.get(`http://localhost:8000/admin/stores/create/${userid}`)
+        axios.get(`${url}/admin/stores/create/${userid}`)
         .then(res => {
             // console.log('second axios %%%%%%%%',res.data)
             setCities(res.data.cities)
@@ -48,7 +50,7 @@ const UpdateStore = (params) => {
     }, [])
 
     useEffect(()=>{
-        axios.get(`http://localhost:8000/admin/stores/${storeid}/${userid}`)
+        axios.get(`${url}/admin/stores/${storeid}/${userid}`)
         .then(res => {
             // console.log('first effect store data',res.data.store)
             setNameArabic(res.data.store.nameArabic)
@@ -80,7 +82,7 @@ const UpdateStore = (params) => {
         setButtonText('Updating')
         axios({
             method: 'PUT',
-            url: `http://localhost:8000/admin/stores/update/${storeid}/${userid}`,
+            url: `${url}/admin/stores/update/${storeid}/${userid}`,
             data: {nameArabic,nameEnglish, bio,  cityid, street, x_cord, y_cord}
         })
         .then(response =>{

@@ -1,10 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
+// import url from '../../App'
 
+const url = 'https://www.kwaysidata.com'
 const ProductCard = ({products}) => {
     return(
         <div className='card m-1' style={{width:'18rem'}}>
-                <img className='card-img-top' alt='product img' src={`http://localhost:8000/${products.images}`}/>
+                <img className='card-img-top' alt='product img' src={`${url}/${products.images}`}/>
                 <div className='card-body'>
                     <h5 className='card-title text-center'>
                         {`${products.product[0].name}`}

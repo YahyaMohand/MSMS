@@ -12,7 +12,7 @@ const Signup = () =>{
         username: "",
         phonenumber: "",
         password:"",
-        buttonText:"Submit"
+        buttonText:"تسجيل حساب"
     });
 
 
@@ -24,20 +24,20 @@ const Signup = () =>{
 
     const clickSubmit = event => {
         event.preventDefault()
-        setValues({...values, buttonText: 'Submitting'})
+        setValues({...values, buttonText: 'جاري التسجيل'})
         axios({
             method: 'POST',
             url: `${process.env.REACT_APP_API}/signup`,
             data: {username, phonenumber,  password}
         })
         .then(response =>{
-            console.log("SIGNUP Success", response);
+            // console.log("SIGNUP Success", response);
             setValues({...values, username:'', phonenumber: '', password:'', buttonText: 'Submitted'});
             toast.success(response.data.message);
         })
         .catch(error => {
-            console.log('SINGUP ERROR', error.response.data)
-            setValues({...values, buttonText: 'Submit'});
+            // console.log('SINGUP ERROR', error.response.data)
+            setValues({...values, buttonText: 'تسجيل حساب'});
             toast.error(error.response.data.error);
         })
     };

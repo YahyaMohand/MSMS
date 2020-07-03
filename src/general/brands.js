@@ -6,7 +6,7 @@ import loadingSpinner from '../components/loadingspinner'
 import BrandCard from '../components/brandcards'
 
 
-const url = 'http://localhost:8000'
+const url = 'https://www.kwaysidata.com'
 
 const GBrands = ()=>{
 

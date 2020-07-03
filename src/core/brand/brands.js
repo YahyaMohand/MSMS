@@ -7,7 +7,9 @@ import {Redirect} from 'react-router-dom';
 import cookie from 'js-cookie'
 import loadingSpinner from '../../components/loadingspinner'
 
-const url = 'http://localhost:8000'
+
+const url = 'https://www.kwaysidata.com'
+
 
 const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'notlogedin'
 

@@ -8,7 +8,10 @@ import ProductCards from '../components/productcards'
 // import Sidebar from "react-sidebar";
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
 
-const url = 'http://localhost:8000'
+
+const url = 'https://www.kwaysidata.com'
+
+
 
 const SubCates = (params)=>{
 

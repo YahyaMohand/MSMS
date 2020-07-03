@@ -9,12 +9,13 @@ import cookie from 'js-cookie'
 import loadingSpinner from '../components/loadingspinner'
 import OrderCard from '../core/orders/ordercard'
 
+const url = 'https://www.kwaysidata.com'
+
 const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'notlogedin'
 
 const token = cookie.get('token')
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
-const url = 'http://localhost:8000'
 
 
 const Private = () =>{

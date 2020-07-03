@@ -1,8 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
 
-const url = 'http://localhost:8000'
 
+const url = 'https://www.kwaysidata.com'
 
 const BrandCard = ({classcategories}) => {
     return(

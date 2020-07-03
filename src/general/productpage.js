@@ -12,7 +12,8 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
 
-const url = 'http://localhost:8000'
+
+const url = 'https://www.kwaysidata.com'
 
 // const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'notlogedin'
 // const token = cookie.get('token')

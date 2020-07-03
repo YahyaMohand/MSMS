@@ -8,6 +8,9 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import cookie from 'js-cookie'
 
+const url = 'https://www.kwaysidata.com'
+
+
 const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'notlogedin'
 const token = cookie.get('token')
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
@@ -21,7 +24,7 @@ const AddStore = () => {
  
  
      useEffect(()=>{
-         axios.get(`http://localhost:8000/admin/stores/create/${userid}`)
+         axios.get(`${url}/admin/stores/create/${userid}`)
          .then(res => {
              
              setCities(res.data.cities)
@@ -58,7 +61,7 @@ const AddStore = () => {
         axios({
             method: 'POST',
             // url: `${process.env.REACT_APP_ADMIN}/categories/create`,
-            url: `http://localhost:8000/admin/stores/create/${userid}`,
+            url: `${url}/admin/stores/create/${userid}`,
             data: {nameArabic,nameEnglish, bio,  cityid, street, x_cord, y_cord}
         })
         .then(response =>{

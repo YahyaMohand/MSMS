@@ -1,7 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
-
+// import url from '../App'
 const IQD = 'دينار عراقي'
+
+const url = 'https://www.kwaysidata.com'
 
 function numcoma(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -13,7 +15,7 @@ const ProductCards = ({products}) => {
     return(
         <div className='card m-3 shadow' style={{width:'18rem'}} >
             <a href={`/products/${products.productid}`} style={{textDecoration: 'none'}}>
-                <img className='card-img-top' alt='product img' src={`http://localhost:8000/${products.imagePath}`}/>
+                <img className='card-img-top' alt='product img' src={`${url}/${products.imagePath}`}/>
                 <div className='card-body'>
                     <h5 className='card-title text-center'>
                         {`${products.name}`}

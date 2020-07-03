@@ -9,7 +9,8 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import cookie from 'js-cookie'
 import loadingSpinner from '../../components/loadingspinner'
 
-const url = 'http://localhost:8000'
+
+const url = 'https://www.kwaysidata.com'
 
 const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'notlogedin'
 const token = cookie.get('token')
@@ -58,7 +59,7 @@ const UpdateCity = (params) => {
         setButtonText('Updating')
         axios({
             method: 'PUT',
-            url: `http://localhost:8000/admin/cities/update/${cityid}`,
+            url: `${url}/admin/cities/update/${cityid}`,
             data: {cityid, isOperational, nameArabic,  nameEnglish,shippingCost,x_cord,y_cord}
         })
         .then(response =>{

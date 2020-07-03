@@ -48,6 +48,7 @@ import SubCates from './shop/subcates'
 import ClassCates from './shop/classcates'
 import ClassProducts from './shop/classproducts'
 import BrandProducts from './shop/brandproducts'
+import PrivacyPolicy from './general/privacypolicy'
 
 const Routes = () => {
     return(
@@ -63,6 +64,7 @@ const Routes = () => {
                 <PrivateRoute path="/bag" exact component={PBag} />
                 <Route path="/brands" exact component={GBrands} />
                 <Route path="/products/:productid" exact component={ProductPage} />
+                <Route path="/privacypolicy" exact component={PrivacyPolicy} />
                 <PrivateRoute path="/private" exact component={Private} />
                 <AdminRoute path="/admin" exact component={Admin} />
                 <AdminRoute path="/admin/orders" exact component={Orders} />

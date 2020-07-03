@@ -5,7 +5,9 @@ import {isAuth} from '../auth/helpers';
 import axios from 'axios';
 import cookie from 'js-cookie'
 
-const url = 'http://localhost:8000'
+
+
+const url = 'https://www.kwaysidata.com'
 
 const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'notlogedin'
 const token = cookie.get('token')

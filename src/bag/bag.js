@@ -13,10 +13,13 @@ import cookie from 'js-cookie'
 import {ToastContainer, toast} from 'react-toastify';
 import { FaShoppingBag } from 'react-icons/fa';
 
+
+const url = 'https://www.kwaysidata.com'
+
 const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'notlogedin'
 const token = cookie.get('token')
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
-const url = 'http://localhost:8000'
+
 // const items = localStorage.getItem('bag')? getBag() : []
 // console.log(items)
 

@@ -13,7 +13,7 @@ const Signin = ({history}) =>{
     const [values, setValues] = useState({
         phonenumber: "",
         password:"",
-        buttonText:"Submit"
+        buttonText:"تسجيل الدخول"
     });
 
 
@@ -33,14 +33,14 @@ const Signin = ({history}) =>{
 
     const clickSubmit = event => {
         event.preventDefault()
-        setValues({...values, buttonText: 'Submitting'})
+        setValues({...values, buttonText: 'جاري التسجيل'})
         axios({
             method: 'POST',
             url: `${process.env.REACT_APP_API}/signin`,
             data: {phonenumber,  password}
         })
         .then(response =>{
-            console.log("SIGNIN Success", response);
+            // console.log("SIGNIN Success", response);
 
             //save the response (user, token) localstorage/cookie
             authenticate(response, ()=>{
@@ -53,7 +53,7 @@ const Signin = ({history}) =>{
         })
         .catch(error => {
             console.log('SINGIN ERROR', error.response.data)
-            setValues({...values, buttonText: 'Submit'});
+            setValues({...values, buttonText: 'تسجيل الدخول'});
             toast.error(error.response.data.error);
         })
     };

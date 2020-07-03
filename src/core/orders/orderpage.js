@@ -9,11 +9,12 @@ import {ToastContainer, toast} from 'react-toastify';
 import loadingSpinner from '../../components/loadingspinner';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
 
+const url = 'https://www.kwaysidata.com'
 
 const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'notlogedin'
 const token = cookie.get('token')
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
-const url = 'http://localhost:8000'
+
 
 function numcoma(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

@@ -1,7 +1,7 @@
 import React from 'react';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
-const url = 'http://localhost:8000'
+const url = 'https://www.kwaysidata.com'
 
 const CarouselBar = ({carousels}) => (
     

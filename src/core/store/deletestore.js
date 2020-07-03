@@ -8,6 +8,9 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import cookie from 'js-cookie'
 
+
+const url = 'https://www.kwaysidata.com'
+
 const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'notlogedin'
 const token = cookie.get('token')
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
@@ -23,7 +26,7 @@ const DeleteStore = (params) =>{
         // console.log('axios invoked')
         axios({
             method: 'DELETE',
-            url: `http://localhost:8000/admin/stores/delete/${storeid}/${userid}`,
+            url: `${url}/admin/stores/delete/${storeid}/${userid}`,
         })
         .then(response =>{
             toast.success(response.data.message);
