@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom'
 // import url from '../../App'
 
-const url = 'https://www.kwaysidata.com'
+const url = process.env.REACT_APP_NODE
 const ProductCard = ({products}) => {
     return(
         <div className='card m-1' style={{width:'18rem'}}>

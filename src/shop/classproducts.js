@@ -9,7 +9,7 @@ import ProductCards from '../components/productcards'
 // import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
 
 
-const url = 'https://www.kwaysidata.com'
+const url = process.env.REACT_APP_NODE
 
 
 

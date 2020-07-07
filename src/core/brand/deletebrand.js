@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import cookie from 'js-cookie'
 
 
-const url = 'https://www.kwaysidata.com'
+const url = process.env.REACT_APP_NODE
 
 const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'notlogedin'
 

@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom'
 
 
-const url = 'https://www.kwaysidata.com'
+const url = process.env.REACT_APP_NODE
 
 const BrandCard = ({classcategories}) => {
     return(

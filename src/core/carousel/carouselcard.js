@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom'
 
 
-const url = 'https://www.kwaysidata.com'
+const url = process.env.REACT_APP_NODE
 // const userid = JSON.parse(localStorage.getItem('user')).userid
 
 const CarouselCard = ({carousels}) => {

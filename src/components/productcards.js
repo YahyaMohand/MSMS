@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 // import url from '../App'
 const IQD = 'دينار عراقي'
 
-const url = 'https://www.kwaysidata.com'
+const url = process.env.REACT_APP_NODE
 
 function numcoma(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

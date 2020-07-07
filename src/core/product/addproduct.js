@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import cookie from 'js-cookie'
 
 
-const url = 'https://www.kwaysidata.com'
+const url = process.env.REACT_APP_NODE
 
 const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'notlogedin'
 const token = cookie.get('token')
@@ -65,10 +65,10 @@ function AddProduct() {
         description: "",
         cost:0,
         margin: 0,
-        price: null,
-        discountMargin:null,
+        price: 0,
+        discountMargin:0,
         discount: 0,
-        discountPrice:null,
+        discountPrice:0,
         imagePath: "",
         isInStock: 0,
         isNew:0,
@@ -81,9 +81,9 @@ function AddProduct() {
         buttonText:"Submit"
     });
     //price calculation status
-    const [price, setPrice] = useState(0)
-    const [discount, setDiscount] = useState(0)
-    const [discountPrice, setDiscountPrice] = useState()
+    const [margin, setMargin] = useState(0)
+    const [discountMargin, setdiscountMargin] = useState(0)
+    const [discount, setDiscount] = useState()
     const [imagePath, setImagePath ] = useState()
     
     //file upload 
@@ -137,11 +137,11 @@ function AddProduct() {
     name,
     description,
     cost,
-    margin,
-    // price,
-    discountMargin,
+    // margin,
+    price,
+    // discountMargin,
     // discount,
-    // discountPrice,
+    discountPrice,
     // imagePath,
     isInStock,
     isNew,
@@ -162,7 +162,6 @@ function AddProduct() {
         setValues({...values, buttonText: 'Submitting'})
         axios({
             method: 'POST',
-            // url: `${process.env.REACT_APP_ADMIN}/categories/create`,
             url: `${url}/admin/products/create/${userid}`,
             data: {brandid,
                 cityid,
@@ -206,6 +205,27 @@ function AddProduct() {
             <img src={`${url}/${imagePath}`} alt="category pic" style={{height:"200px"}} className="img-thumbnail mx-auto d-block"></img>
         </div>
     )
+    
+    const calculateMargins =()=>{
+        
+        setMargin(
+            (1-(cost/price)).toFixed(2)
+        )
+        if(parseInt(discountPrice)==parseInt(price)){
+            setdiscountMargin(0)
+            setDiscount(0)
+        }else{
+            setdiscountMargin(
+                (1-(cost/discountPrice)).toFixed(2)
+            )
+            setDiscount(
+                ((price-discountPrice)/price).toFixed(2)
+            )
+        }
+    }
+    // function numcoma(x) {
+    //     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // }
 
     const newAddProductForm = () => (
         <form onSubmit={clickSubmit}>
@@ -291,7 +311,7 @@ function AddProduct() {
                         <div className='input-group-prepend'>
                             <span className='input-group-text'>Serial Number</span>
                         </div>
-                        <input onChange={handleChange('serialnumber')} value={serialnumber} type="text" className="form-control" required /> 
+                        <input onChange={handleChange('serialnumber')} value={serialnumber} type="text" className="form-control" /> 
                     </div>
                 </div>
                 <label>Product Price - IQD</label>
@@ -306,9 +326,10 @@ function AddProduct() {
                         <div className='input-group-prepend'>
                             <span className='input-group-text'>Margin</span>
                         </div>
-                        <input onChange={handleChange('margin')} 
-                        onKeyUpCapture={()=>setPrice(parseInt(cost/(1-margin)))}
-                        value={margin} type="number" step='0.01' className="form-control" required /> 
+                        <input 
+                        onChange={handleChange('margin')} 
+                        // onKeyUpCapture={()=>setPrice(parseInt(cost/(1-margin)))}
+                        value={margin} type="number" step='0.01' className="form-control" disabled /> 
                     </div>
                     <div className='col input-group mb-5'>
                         <div className='input-group-prepend'>
@@ -317,7 +338,7 @@ function AddProduct() {
                         <input 
                         onChange={handleChange('price')}
                         value={price} type="number"  
-                        className="form-control" disabled /> 
+                        className="form-control" /> 
                     </div>
                 </div>
                 <label>Price Discount - IQD</label>
@@ -329,12 +350,12 @@ function AddProduct() {
                         </div>
                         <input 
                         onChange={handleChange('discountMargin')} 
-                        onKeyUpCapture={()=>{if(discountMargin==0){setDiscountPrice(parseInt(price));}else{
-                            setDiscountPrice(parseInt(Number((price-cost)/(margin/discountMargin))+Number(cost)));
-                        }}}
-                        onMouseLeave={()=>{setDiscount((Number(price)-Number(discountPrice))/Number(price));}}
+                        // onKeyUpCapture={()=>{if(discountMargin==0){setDiscountPrice(parseInt(price));}else{
+                        //     setDiscountPrice(parseInt(Number((price-cost)/(margin/discountMargin))+Number(cost)));
+                        // }}}
+                        // onMouseLeave={()=>{setDiscount((Number(price)-Number(discountPrice))/Number(price));}}
                         
-                        value={discountMargin} type="number" step='0.01' className="form-control" required /> 
+                        value={discountMargin} type="number" step='0.01' className="form-control" disabled /> 
                     </div>
                     <div className='col input-group mb-5'>
                         <div className='input-group-prepend '>
@@ -349,22 +370,26 @@ function AddProduct() {
                         <div className='input-group-prepend'>
                             <span className='input-group-text badge-secondary'>Price</span>
                         </div>
-                        <input onChange={handleChange('discountPrice')} value={discountPrice} type="number" className="form-control" disabled /> 
+                        <input 
+                        onChange={handleChange('discountPrice')} value={discountPrice} type="number" className="form-control" required /> 
                     </div>
+                </div>
+                <div className='row text-center mb-5'>
+                    <button type='button' onClick={()=>calculateMargins()} className='btn btn-outline-danger btn-block'>claculate margins</button>
                 </div>
                 <div className='row'>
                         <div className='col input-group mb-5'>
                             <div className='input-group-prepend'>
                                 <span className='input-group-text badge-success'>Production date</span>
                             </div>
-                            <input onChange={handleChange('productionDate')} value={productionDate} type="date" className="form-control" required />
+                            <input onChange={handleChange('productionDate')} value={productionDate} type="date" className="form-control"  />
                             
                         </div>
                         <div className='col input-group mb-5'>
                             <div className='input-group-prepend'>
                                 <span className='input-group-text badge-danger'>Expiry Date</span>
                             </div>
-                            <input onChange={handleChange('expiryDate')} value={expiryDate} type="date" className="form-control" required />
+                            <input onChange={handleChange('expiryDate')} value={expiryDate} type="date" className="form-control"  />
                             
                         </div>
                 </div>
@@ -441,7 +466,7 @@ function AddProduct() {
             <ToastContainer />
                 {isAuth() ? null : <Redirect to='/'/>} 
                 {/* {JSON.stringify({name,bio,city,street,x_cord,y_cord})} */}
-                {JSON.stringify({brandid,
+                {/* {JSON.stringify({brandid,
                 cityid,
                 categoryid,
                 storeid,
@@ -464,7 +489,7 @@ function AddProduct() {
                 expiryDate,
                 productionDate,
                 serialnumber
-                })}
+                })} */}
                 <h1 className="p-5 text-center">Add Product</h1>
                 {pic ? pictureBorder():null}
                 {error ? error : null}
