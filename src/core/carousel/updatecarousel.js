@@ -156,7 +156,7 @@ const UpdateCarousel = (params) => {
     return(
         <Layout>
             <div className='container'>
-            <div className="col-d-6 offset-md-3">
+            <div className="col-d-6">
                 <ToastContainer />
                 {isAuth() ? null : <Redirect to='/'/>} 
                 {JSON.stringify({link,notes,image})}

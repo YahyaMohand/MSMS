@@ -180,7 +180,8 @@ const AddSubCategory = () => {
 
     return(
         <Layout>
-            <div className="col-d-6 offset-md-3">
+            <div className='container'>
+            <div className="col-d-6">
                 <ToastContainer />
                 {isAuth() ? null : <Redirect to='/'/>} 
                 {JSON.stringify({nameArabic,nameEnglish,categoryid,logoPath})}
@@ -188,7 +189,7 @@ const AddSubCategory = () => {
                 {pic ? pictureBorder():null}
                 {error ? error : null}
                 {loading ? 'Loading':newCategoryForm()}
-            </div>
+            </div></div>
         </Layout>
     );
 }

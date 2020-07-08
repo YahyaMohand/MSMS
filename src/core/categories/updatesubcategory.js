@@ -192,7 +192,8 @@ const UpdateSubCategory = (params) => {
 
     return(
         <Layout>
-            <div className="col-d-6 offset-md-3">
+            <div className='container'>
+            <div className="col-d-6">
                 <ToastContainer />
                 {isAuth() ? null : <Redirect to='/'/>} 
                 {JSON.stringify({nameArabic,nameEnglish,categoryid,logoPath})}
@@ -200,7 +201,7 @@ const UpdateSubCategory = (params) => {
                 {error ? error : null}
                 {loading ?loadingSpinner():pictureBorder()}
                 {loading ? loadingSpinner():newCategoryForm()}
-            </div>
+            </div></div>
         </Layout>
     );
 }

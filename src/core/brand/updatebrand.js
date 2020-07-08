@@ -151,7 +151,7 @@ const UpdateBrand = (params) => {
                     </div>
                 </div>
 
-            <div>
+            <div className='mb-5 mt-5'>
                 <button className="btn btn-primary">
                     {buttonText}
                 </button>
@@ -162,15 +162,16 @@ const UpdateBrand = (params) => {
 
     return(
         <Layout>
-            <div className="col-d-6 offset-md-3">
+            <div className='container'>
+            <div className="col-d-6">
                 <ToastContainer />
                 {isAuth() ? null : <Redirect to='/'/>} 
-                {JSON.stringify({nameArabic,nameEnglish,bio,logo})}
+                {/* {JSON.stringify({nameArabic,nameEnglish,bio,logo})} */}
                 <h1 className="p-5 text-center">Update Brand</h1>
                 {error ? error : null}
                 {loading ? loadingSpinner():pictureBorder()}
                 {loading ? loadingSpinner():newBrandForm()}
-            </div>
+            </div></div>
         </Layout>
     );
 }

@@ -134,7 +134,7 @@ const AddBrand = () => {
                     </div>
                 </div>
 
-            <div>
+            <div className='mb-lg-5 mt-5'>
                 <button className="btn btn-primary">
                     {buttonText}
                 </button>
@@ -145,14 +145,15 @@ const AddBrand = () => {
 
     return(
         <Layout>
-            <div className="col-d-6 offset-md-3">
+            <div className='container'>
+            <div className="col-d-6">
                 <ToastContainer />
                 {isAuth() ? null : <Redirect to='/'/>} 
-                {JSON.stringify({nameArabic,nameEnglish,bio,logo})}
+                {/* {JSON.stringify({nameArabic,nameEnglish,bio,logo})} */}
                 <h1 className="p-5 text-center">Add Brand</h1>
                 {pic ? pictureBorder():null}
                 {newBrandForm()}
-            </div>
+            </div></div>
         </Layout>
     );
 }

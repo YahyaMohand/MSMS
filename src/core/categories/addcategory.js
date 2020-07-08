@@ -139,14 +139,15 @@ const AddCategory = () => {
 
     return(
         <Layout>
-            <div className="col-d-6 offset-md-3">
+            <div className='container'>
+            <div className="col-d-6">
                 <ToastContainer />
                 {isAuth() ? null : <Redirect to='/'/>} 
                 {JSON.stringify({nameArabic,nameEnglish,logoPath})}
                 <h1 className="p-5 text-center">Add Category</h1>
                 {pic ? pictureBorder(): null}
                 {newCategoryForm()}
-            </div>
+            </div></div>
         </Layout>
     );
 }

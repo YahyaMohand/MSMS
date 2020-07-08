@@ -69,12 +69,13 @@ const DeleteProduct = (params) =>{
 
     return(
         <Layout>
+            <div className='container'>
             <div className="col-d-6">
             <ToastContainer />
                 {isAuth() ? null : <Redirect to='/'/>}
                 <h1 className='text-center m-lg-5'>Delete Product</h1> 
                 {deleteAlert()}
-                </div>
+                </div></div>
         </Layout>
     )
 }

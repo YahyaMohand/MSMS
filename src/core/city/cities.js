@@ -52,10 +52,12 @@ const Cities = () => {
 
     return (
         <Layout>
+            <div className='container'>
+
             {isAuth() ? null : <Redirect to='/'/>}
             {error ? error : null}
             {loading ? loadingSpinner():newCitiesForm()}
-
+</div>
         </Layout>
     );
 }

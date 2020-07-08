@@ -176,6 +176,24 @@ function UpdateStyle(params) {
         </div>
     )
 
+    const calculateMargins =()=>{
+        
+        setMargin(
+            (1-(cost/price)).toFixed(2)
+        )
+        if(parseInt(discountPrice)==parseInt(price)){
+            setDiscountMargin(0)
+            setDiscount(0)
+        }else{
+            setDiscountMargin(
+                (1-(cost/discountPrice)).toFixed(2)
+            )
+            setDiscount(
+                ((price-discountPrice)/price).toFixed(2)
+            )
+        }
+    }
+
     const newAddStyleForm = () => (
         <form onSubmit={clickSubmit}>
             
@@ -240,8 +258,8 @@ function UpdateStyle(params) {
                             <span className='input-group-text'>Margin</span>
                         </div>
                         <input onChange={(event)=>{setMargin(event.target.value)}} 
-                        onKeyUpCapture={()=>setPrice(parseInt(cost/(1-margin)))}
-                        value={margin} type="number" step='0.01' className="form-control" required /> 
+                        // onKeyUpCapture={()=>setPrice(parseInt(cost/(1-margin)))}
+                        value={margin} type="number" step='0.01' className="form-control" disabled /> 
                     </div>
                     <div className='col input-group mb-5'>
                         <div className='input-group-prepend'>
@@ -250,7 +268,7 @@ function UpdateStyle(params) {
                         <input 
                         onChange={(event)=>{setPrice(event.target.value)}}
                         value={price} type="number"  
-                        className="form-control" disabled /> 
+                        className="form-control" required /> 
                     </div>
                 </div>
                 <label>Price Discount - IQD</label>
@@ -262,12 +280,12 @@ function UpdateStyle(params) {
                         </div>
                         <input 
                         onChange={(event)=>{setDiscountMargin(event.target.value)}} 
-                        onKeyUpCapture={()=>{if(discountMargin==0){setDiscountPrice(parseInt(price));}else{
-                            setDiscountPrice(parseInt(Number((price-cost)/(margin/discountMargin))+Number(cost)));
-                        }}}
-                        onMouseLeave={()=>{setDiscount((Number(price)-Number(discountPrice))/Number(price));}}
+                        // onKeyUpCapture={()=>{if(discountMargin==0){setDiscountPrice(parseInt(price));}else{
+                        //     setDiscountPrice(parseInt(Number((price-cost)/(margin/discountMargin))+Number(cost)));
+                        // }}}
+                        // onMouseLeave={()=>{setDiscount((Number(price)-Number(discountPrice))/Number(price));}}
                         
-                        value={discountMargin} type="number" className="form-control" required /> 
+                        value={discountMargin} type="number" className="form-control" disabled /> 
                     </div>
                     <div className='col input-group mb-5'>
                         <div className='input-group-prepend '>
@@ -282,10 +300,12 @@ function UpdateStyle(params) {
                         <div className='input-group-prepend'>
                             <span className='input-group-text badge-secondary'>Price</span>
                         </div>
-                        <input onChange={(event)=>{setDiscountPrice(event.target.value)}} value={discountPrice} type="number" className="form-control" disabled /> 
+                        <input onChange={(event)=>{setDiscountPrice(event.target.value)}} value={discountPrice} type="number" className="form-control" required /> 
                     </div>
                 </div>
-                
+                <div className='row text-center mb-5'>
+                    <button type='button' onClick={()=>calculateMargins()} className='btn btn-outline-danger btn-block'>claculate margins</button>
+                </div>
                 
                 <div className='input-group mb-3'>
                     <div className='input-group-prepend'>
@@ -316,11 +336,12 @@ function UpdateStyle(params) {
 
     return(
         <Layout>
+            <div className='container'>
             <div className="col-d-6">
             <ToastContainer />
                 {isAuth() ? null : <Redirect to='/'/>} 
                 {/* {JSON.stringify({name,bio,city,street,x_cord,y_cord})} */}
-                {JSON.stringify({productid,
+                {/* {JSON.stringify({productid,
                 name,
                 cost,
                 color,
@@ -332,13 +353,13 @@ function UpdateStyle(params) {
                 images,
                 quantity,
                 size
-                })}
+                })} */}
                 <h1 className="p-5 text-center">Update Style</h1>
                 {pictureBorder()}
                 {error ? error : null}
                 {loading ? loadingSpinner():newAddStyleForm()}
                 
-            </div>
+            </div></div>
         </Layout>
     );
     

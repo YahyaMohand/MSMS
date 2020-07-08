@@ -29,6 +29,7 @@ function AddStyle() {
         .then(res => {
             
             setProducts(res.data.products)
+            console.log(res.data)
             setError('')
             setLoading(false)
         })   
@@ -346,7 +347,8 @@ function AddStyle() {
                 {error ? error : null}
                 {loading ? 'Loading':newAddStyleForm()}
                 
-            </div></div>
+            </div>
+            </div>
         </Layout>
     );
     

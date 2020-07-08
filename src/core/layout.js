@@ -140,7 +140,7 @@ const Layout = ({children,match,history}) =>{
                     <NavDropdown title="Stores" id="basic-nav-dropdown" >
                         <NavDropdown.Item href="/admin/stores">Stores</NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item href="/admin/stores">Add Store</NavDropdown.Item>
+                        <NavDropdown.Item href="/admin/addstore">Add Store</NavDropdown.Item>
                     </NavDropdown>
                 
             </li>

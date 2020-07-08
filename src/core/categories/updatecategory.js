@@ -158,15 +158,16 @@ const UpdateCategory = (params) => {
 
     return(
         <Layout>
-            <div className="col-d-6 offset-md-3">
+            <div className='container'>
+            <div className="col-d-6">
                 <ToastContainer />
                 {isAuth() ? null : <Redirect to='/'/>} 
-                {JSON.stringify({nameArabic,nameEnglish,logoPath})}
+                {/* {JSON.stringify({nameArabic,nameEnglish,logoPath})} */}
                 <h1 className="p-5 text-center">Update Category</h1>
                 {error ? error : null}
                 {loading ? loadingSpinner():pictureBorder()}
                 {loading ? loadingSpinner():newCategoryForm()}
-            </div>
+            </div></div>
         </Layout>
     );
 }

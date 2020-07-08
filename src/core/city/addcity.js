@@ -100,13 +100,14 @@ const AddCity = () => {
 
     return(
         <Layout>
-            <div className="col-d-6 offset-md-3">
+            <div className='container'>
+            <div className="col-d-6">
                 <ToastContainer />
                 {isAuth() ? null : <Redirect to='/'/>} 
                 {JSON.stringify({isOperational,nameArabic,nameEnglish,shippingCost,x_cord,y_cord})}
                 <h1 className="p-5 text-center">Add City</h1>
                 {newCityForm()}
-            </div>
+            </div></div>
         </Layout>
     );
 }

@@ -49,9 +49,12 @@ const Stores = () => {
 
     return (
         <Layout>
+            <div className='container'>
+
             {isAuth() ? null : <Redirect to='/'/>} 
             {error ? error : null}
             {loading ? loadingSpinner():newStoresForm()}
+            </div>
         </Layout>
     );
 }

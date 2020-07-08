@@ -198,15 +198,16 @@ const AddClassCategory = () => {
 
     return(
         <Layout>
-            <div className="col-d-6 offset-md-3">
+            <div className='container'>
+            <div className="col-d-6">
                 <ToastContainer />
                 {isAuth() ? null : <Redirect to='/'/>} 
-                {JSON.stringify({categoryid,subcateid, nameArabic,nameEnglish,logoPath})}
+                {/* {JSON.stringify({categoryid,subcateid, nameArabic,nameEnglish,logoPath})} */}
                 <h1 className="p-5 text-center">Add Class-Category</h1>
                 {pic ? pictureBorder():null}
                 {error ? error : null}
                 {loading ? 'Loading':newClassCateForm()}
-            </div>
+            </div></div>
         </Layout>
     );
 }
