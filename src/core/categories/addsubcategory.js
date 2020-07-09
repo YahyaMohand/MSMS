@@ -133,6 +133,7 @@ const AddSubCategory = () => {
                             </div>
                             {/* <label className="text-muted">Brand</label> */}
                             <select onChange={handleChange('categoryid')} value={categoryid} type="text" className="form-control" required>
+                            <option>select main category</option>
                             {categories.map(({categoryid, nameEnglish})=><option value={categoryid}>{nameEnglish}</option>)}
                             </select>
                         </div>

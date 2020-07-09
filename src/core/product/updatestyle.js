@@ -143,7 +143,7 @@ function UpdateStyle(params) {
         axios({
             method: 'PUT',
             // url: `${process.env.REACT_APP_ADMIN}/categories/create`,
-            url: `http://${url}/admin/styles/update/${styleid}/${userid}`,
+            url: `${url}/admin/styles/update/${styleid}/${userid}`,
             data: {productid,
                 name,
                 cost,

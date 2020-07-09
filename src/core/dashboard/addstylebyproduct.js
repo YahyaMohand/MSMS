@@ -1,5 +1,5 @@
 import React, {useState, useEffect } from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import {Link, Redirect,useHistory} from 'react-router-dom';
 import Layout from '../layout';
 import {SketchPicker} from 'react-color';
 // import ImageUploader from 'react-images-upload';
@@ -17,46 +17,53 @@ const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'not
 const token = cookie.get('token')
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
 
-function AddStyle() {
+function AddStyleByProduct(params) {
+    const productid = params.match.params.productid
     //get method functions
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
-    const [products, setProducts] = useState({})
+    const [product, setProduct] = useState({})
     const [pic,setPic]=useState(false)
+    const [cost,setCost]=useState(0)
+    const [discountPrice,setDiscountPrice]=useState(0)
+    const [price,setPrice]=useState(0)
 
     useEffect(()=>{
-        axios.get(`${url}/admin/styles/create/${userid}`)
+        axios.get(`${url}/admin/products/${productid}/${userid}`)
         .then(res => {
             
-            setProducts(res.data.products)
-            console.log(res.data)
+            setProduct(res.data.product)
+            setCost(res.data.product.cost)
+            setDiscountPrice(res.data.product.discountPrice)
+            setPrice(res.data.product.price)
             setError('')
             setLoading(false)
         })   
         .catch(error => {
             setLoading(false)
-            setProducts({})
+            setProduct({})
             setError('Somthing went wrong')
         })
     }, [])
 
 
     const [values, setValues] = useState({
-        productid: "",
+        // productid: "",
         name: "",
         color:'',
-        cost:0,
+        // cost:0,
         margin: 0,
-        price: 0,
+        // price: 0,
         discountMargin:0,
         discount: 0,
-        discountPrice:0,
+        // discountPrice:0,
         images: "",
         quantity:0,
         size:"",
         buttonText:"Submit"
     });
     //price calculation status
+    
     const [margin, setMargin] = useState(0)
     const [discount, setDiscount] = useState(0)
     const [discountMargin, setdiscountMargin] = useState()
@@ -105,15 +112,16 @@ function AddStyle() {
         }
     }
 
-    const {productid,
+    const {
+    // productid,
     name,
-    cost,
+    // cost,
     // margin,
     color,
-    price,
+    // price,
     // discountMargin,
     // discount,
-    discountPrice,
+    // discountPrice,
     // imagePath,
     quantity,
     size,
@@ -181,22 +189,32 @@ function AddStyle() {
         }
     }
 
-
+    const goBack =()=>(
+        <div>
+           <Link to={{
+                        pathname: `/admin/productstyles/${productid}`
+                        }} className='col-3 btn btn-danger m-1'>
+                        Back
+            </Link>
+        </div>
+    )
     const newAddStyleForm = () => (
         <form onSubmit={clickSubmit}>
             
                 <div className='form-group'>   
                     <div className='row'>
-                        <div className='col input-group mb-5'>
-                            <div className='input-group-prepend'>
-                                <span className='input-group-text badge-dark'>Product</span>
-                            </div>
-                            {/* <label className="text-muted">Brand</label> */}
-                            <select onChange={handleChange('productid')} value={productid} type="text" className="form-control" placeholder='Brands' required>
-                            <option value='0'>Select Product</option>
-    {products.map(({productid, name})=><option value={productid}>{name} ({productid})</option>)}
-                            </select>
+                    <div className='col input-group mb-5'>
+                        <div className='input-group-prepend'>
+                            <span className='input-group-text'>Product ID</span>
                         </div>
+                        <input  value={productid} type="text" className="form-control" disabled /> 
+                    </div>
+                    <div className='col input-group mb-5'>
+                        <div className='input-group-prepend'>
+                            <span className='input-group-text'>Product Name</span>
+                        </div>
+                        <input value={product.name} type="text" className="form-control" disabled /> 
+                    </div>
                     </div>
                     
                     <div className='border-bottom border-maroon m-0'></div>
@@ -342,6 +360,7 @@ function AddStyle() {
                 quantity,
                 size
                 })} */}
+                {loading ? null : goBack()}
                 <h1 className="p-5 text-center">Add Style</h1>
                 {pic ? pictureBorder():null}
                 {error ? error : null}
@@ -355,4 +374,4 @@ function AddStyle() {
     
 }
 
-export default AddStyle;
+export default AddStyleByProduct;

@@ -49,6 +49,13 @@ import ClassCates from './shop/classcates'
 import ClassProducts from './shop/classproducts'
 import BrandProducts from './shop/brandproducts'
 import PrivacyPolicy from './general/privacypolicy'
+import Dashboard from './core/dashboard/allproducts'
+import ProductStyles from './core/dashboard/productstyles'
+import AddStyleByProduct from './core/dashboard/addstylebyproduct'
+import DashboardNew from './core/dashboard/newproducts'
+import DashboardSales from './core/dashboard/salesproducts'
+import DashboardVip from './core/dashboard/vipproducts'
+import DashboardOutOfStock from './core/dashboard/outofstockproducts'
 
 const Routes = () => {
     return(
@@ -99,8 +106,15 @@ const Routes = () => {
                 <AdminRoute path="/admin/addcarousel" exact component={AddCarousel} />
                 <AdminRoute path="/admin/carousels" exact component={Carousels} />
                 <AdminRoute path="/admin/carousels/update/:carouselid" exact component={UpdateCarousel} />
-                <AdminRoute path="/admin/carousels/delete/:carouselsid" exact component={DeleteCarousel} />
+                <AdminRoute path="/admin/carousels/delete/:carouselid" exact component={DeleteCarousel} />
                 <AdminRoute path="/admin/orders/:orderid" exact component={OrderPage} />
+                <AdminRoute path="/admin/dashboard" exact component={Dashboard} />
+                <AdminRoute path="/admin/productstyles/:productid" exact component={ProductStyles} />
+                <AdminRoute path="/admin/products/addstyle/:productid" exact component={AddStyleByProduct} />
+                <AdminRoute path="/admin/dashboard/new" exact component={DashboardNew} />
+                <AdminRoute path="/admin/dashboard/sales" exact component={DashboardSales} />
+                <AdminRoute path="/admin/dashboard/vip" exact component={DashboardVip} />
+                <AdminRoute path="/admin/dashboard/outofstock" exact component={DashboardOutOfStock} />
             </Switch>
         </BrowserRouter>
     );

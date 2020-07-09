@@ -80,7 +80,12 @@ const Layout = ({children,match,history}) =>{
                             Products
                         </Link> */}
                         <NavDropdown title="Products" id="basic-nav-dropdown" >
-                            <NavDropdown.Item href="/admin/products">Products</NavDropdown.Item>
+                        <NavDropdown.Item href="/admin/dashboard">All Products</NavDropdown.Item>
+                        <NavDropdown.Item href="/admin/dashboard/new">New Products</NavDropdown.Item>
+                        <NavDropdown.Item href="/admin/dashboard/sales">Sales Products</NavDropdown.Item>
+                        <NavDropdown.Item href="/admin/dashboard/vip">Vip Products</NavDropdown.Item>
+                        <NavDropdown.Item href="/admin/dashboard/outofstock">Out of Stack</NavDropdown.Item>
+                            <NavDropdown.Item href="/admin/products">All Styles</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="/admin/addproduct">Add Product</NavDropdown.Item>
                             <NavDropdown.Divider />

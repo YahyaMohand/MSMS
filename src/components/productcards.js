@@ -9,7 +9,32 @@ function numcoma(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+
+
 const ProductCards = ({products}) => {
+    
+    const isDiscount = ()=>{
+        console.log(products.discount)
+        if(products.discount == 0){
+            return <div>
+                <p className='text-center font-weight-bolder' style={{color: '#fc2779'}}>
+                        {`(${IQD}) ${numcoma(products.price)}`}
+                </p>
+            </div>
+        }else{
+            return  <div className='row'>
+            <p className='col' style={{textDecoration: 'line-through', color: 'gray'}}>
+                {products.price}
+            </p>
+            <p className='col font-weight-bolder' style={{color: '#fc2779'}}>
+            خصم {parseInt((products.discount)*100)}%
+            </p>
+            <p className='col font-weight-bold' style={{color: '#fc2779'}}>
+                {numcoma(products.discountPrice)}
+            </p>
+        </div>
+        }
+    }
     
     
     return(
@@ -22,7 +47,7 @@ const ProductCards = ({products}) => {
                     </h5>
                     {/* {console.log(parseFloat(products.discont))} */}
                     {/* {console.log(products.discont)} */}
-                    {parseFloat(products.discont) =='0'? 
+                    {/* {parseFloat(products.discont) =='0'? 
                         <div className='row'>
                             <p className='col' style={{textDecoration: 'line-through', color: 'gray'}}>
                                 {products.price}
@@ -39,7 +64,8 @@ const ProductCards = ({products}) => {
                         <p className='text-center font-weight-bolder' style={{color: '#fc2779'}}>
                                 {`(${IQD}) ${numcoma(products.price)}`}
                         </p>
-                    </div>}
+                    </div>} */}
+                    {isDiscount()}
                     
                     {/* <p className='text-center'><b>{products.name}</b> : <div className="btn btn-outline-danger pl-2 pr-2 pt-0 pb-0" style={{backgroundColor: products.color}}>..</div></p>
                     <div className='row text-center'>

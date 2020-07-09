@@ -3,7 +3,7 @@ import axios from 'axios';
 import Layout from '../layout';
 import {isAuth} from '../../auth/helpers';
 import {Redirect} from 'react-router-dom';
-import ProductCard from './productcard'
+import DashboardCard from '../dashboard/dashboardcard'
 import cookie from 'js-cookie'
 import loadingSpinner from '../../components/loadingspinner'
 
@@ -14,7 +14,7 @@ const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'not
 const token = cookie.get('token')
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
 
-const Products = () => {
+const DashboardSales = () => {
     //get method functions
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
@@ -22,7 +22,7 @@ const Products = () => {
 
 
     useEffect(()=>{
-        axios.get(`${url}/admin/products/${userid}`)
+        axios.get(`${url}/admin/dashboard/sales/${userid}`)
         .then(res => {
             
             setProducts(res.data.products)
@@ -41,7 +41,7 @@ const Products = () => {
     const newProductsForm = () => (
         <div className='m-2 container'>
             <div className='row'>
-                {products.map((products, i)=>(<ProductCard key={i} products={products}/>))}
+                {products.map((products, i)=>(<DashboardCard key={i} products={products}/>))}
             </div>
         </div>
     )
@@ -60,5 +60,5 @@ const Products = () => {
     );
 }
 
-export default Products;
+export default DashboardSales;
 
