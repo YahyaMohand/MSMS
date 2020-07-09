@@ -29,6 +29,11 @@ const OrderCard = ({orders}) => {
                 <div className='col'><p>{formatedDate(orders.createDate)}</p></div>
                 <div className='col'><p>{formatedTime(orders.createDate)}</p></div>
                 <div className='col'><p>{orders.orderstatus}</p></div>
+                <div className='col'><Link to={{
+                    pathname: `orders/suppliers/${orders.orderid}`
+                }}
+                className='btn btn-warning'
+                >Supplier</Link></div>
             </div>
             </Link>
         </li>        

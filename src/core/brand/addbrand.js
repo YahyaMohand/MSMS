@@ -83,12 +83,12 @@ const AddBrand = () => {
             data: {nameArabic, nameEnglish, bio, logo}
         })
         .then(response =>{
-            console.log("BRAND Added to database successfully", response);
+            // console.log("BRAND Added to database successfully", response);
             setValues({...values, nameArabic:'', nameEnglish: '', bio:'', logo:'',buttonText: 'Submitted'});
             toast.success(response.data.message);
         })
         .catch(error => {
-            console.log('Operation ERROR', error.response.data)
+            // console.log('Operation ERROR', error.response.data)
             setValues({...values, buttonText: 'Submit'});
             toast.error(error.response.data.error);
         })

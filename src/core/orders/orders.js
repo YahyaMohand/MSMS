@@ -47,6 +47,7 @@ const Orders = () => {
                         <div className='col'><p>التاريخ</p></div>
                         <div className='col'><p>الوقت</p></div>
                         <div className='col'><p>الحالة</p></div>
+                        <div className='col'><p>الوكيل</p></div>
                     </div>
                 </li>
                 {orders.map((orders,i)=>(<OrderCard key={i} orders={orders} />))}

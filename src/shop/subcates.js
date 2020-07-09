@@ -16,7 +16,7 @@ const url = process.env.REACT_APP_NODE
 const SubCates = (params)=>{
 
     const categoryid = params.match.params.categoryid
-    console.log('categoryid',categoryid)
+    // console.log('categoryid',categoryid)
   const [loading, setLoading]=useState(true)
   const [error, setError]=useState('')
   const [products, setProducts]=useState({})
@@ -27,7 +27,7 @@ const SubCates = (params)=>{
     axios.get(`${url}/subcategories/${categoryid}`)
     .then(res => {
         setSubCategories(res.data.subcategories)
-        console.log(res.data)
+        // console.log(res.data)
         setError('') 
     })   
     .catch(error => {
@@ -37,7 +37,7 @@ const SubCates = (params)=>{
     })
     axios.get(`${url}/products/main/${categoryid}`)
     .then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         setProducts(res.data.products)
         setError('')
         setTimeout(setLoading(false)) 

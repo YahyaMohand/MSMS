@@ -65,12 +65,12 @@ const AddStore = () => {
             data: {nameArabic,nameEnglish, bio,  cityid, street, x_cord, y_cord}
         })
         .then(response =>{
-            console.log("STORE Added to database successfully", response);
+            // console.log("STORE Added to database successfully", response);
             setValues({...values, nameArabic:'',nameEnglish:"", bio: '', cityid:'',street:'', x_cord: '', y_cord:'', buttonText: 'Submitted'});
             toast.success(response.data.message);
         })
         .catch(error => {
-            console.log('Operation ERROR', error.response.data)
+            // console.log('Operation ERROR', error.response.data)
             setValues({...values, buttonText: 'Submit'});
             toast.error(error.response.data.error);
         })

@@ -21,6 +21,7 @@ const AddCarousel = () => {
         Link: "",
         image: "",
         notes:"",
+        name:"",
         buttonText:"Submit"
     });
     const [pic, setPic]=useState(false)
@@ -66,7 +67,7 @@ const AddCarousel = () => {
         }
     }
 
-    const {link, notes,buttonText} = values
+    const {link, notes,name,buttonText} = values
 
     const handleChange = (link) => (event) => {
         setValues({...values, [link]: event.target.value});
@@ -79,15 +80,15 @@ const AddCarousel = () => {
             method: 'POST',
             // url: `${process.env.REACT_APP_ADMIN}/categories/create`,
             url: `${url}/admin/carousel/create/${userid}`,
-            data: {link, image, notes}
+            data: {link, image, notes,name}
         })
         .then(response =>{
-            console.log("Carousel Added to database successfully", response);
-            setValues({...values, link:'', images: '', notes:'',buttonText: 'Submitted'});
+            // console.log("Carousel Added to database successfully", response);
+            setValues({...values, link:'', images: '', notes:'',name:'',buttonText: 'Submitted'});
             toast.success(response.data.message);
         })
         .catch(error => {
-            console.log('Operation ERROR', error.response.data)
+            // console.log('Operation ERROR', error.response.data)
             setValues({...values, buttonText: 'Submit'});
             toast.error(error.response.data.error);
         })
@@ -107,14 +108,21 @@ const AddCarousel = () => {
                 <input onChange={handleChange('link')} value={link} type="text" className="form-control" required/>
             </div>
 
-            {/* <div className="form-group">
-                <label className="text-muted">Notes (optional)</label>
-                <input onChange={handleChange('notes')} value={notes} type="text" className="form-control" required/>
-            </div> */}
+            <div className="form-group">
+                <label className="text-muted">Name for mobile appbar label (arabic)</label>
+                <input onChange={handleChange('name')} value={name} type="text" className="form-control" required/>
+            </div>
 
             <div className="form-group">
-                <label className="text-muted">Notes (optional)</label>
-                <textarea onChange={handleChange('notes')} value={notes} type="textarea" maxLength='500' className="form-control" required/>
+                <label className="text-muted">Notes to help mobile app understand</label>
+                <select onChange={handleChange('notes')} value={notes}  type="text" className="form-control"  required>
+                    <option>selecte item ...</option>
+                    <option>product</option>
+                    <option>subcategory</option>
+                    <option>classcategory</option>
+                    <option>maincategory</option>
+                    <option>brand</option>
+                </select>
             </div>
 
             <div className='input-group mb-3'>
@@ -134,7 +142,7 @@ const AddCarousel = () => {
                 </div>
 
             <div>
-                <button className="btn btn-primary">
+                <button className="btn btn-primary mt-5 mb-5">
                     {buttonText}
                 </button>
             </div>

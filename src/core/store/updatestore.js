@@ -110,7 +110,7 @@ const UpdateStore = (params) => {
                             {/* <label className="text-muted">Brand</label> */}
                             <select onChange={(event)=>{setCityid(event.target.value)}} value={cityid} type="text" className="form-control" placeholder='Brands' required>
                             <option>Select one</option>
-                            {console.log(cities)}
+                            {/* {console.log(cities)} */}
                             {cities.map(({cityid, nameEnglish})=><option value={cityid}>{nameEnglish}</option>)}
                             </select>
                         </div>

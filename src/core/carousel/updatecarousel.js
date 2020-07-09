@@ -24,6 +24,7 @@ const UpdateCarousel = (params) => {
     const carouselid = params.match.params.carouselid
     const [link, setLink]=useState()
     const [notes, setNotes]=useState()
+    const [name,setName]=useState()
     const [buttonText, setButtonText]=useState('Update')
     const [image, setImage ] = useState()
 
@@ -33,6 +34,7 @@ const UpdateCarousel = (params) => {
             setLink(res.data.carousel.link)
             setNotes(res.data.carousel.notes)
             setImage(res.data.carousel.image)
+            setName(res.data.carousel.name)
             setError('')
             setTimeout(()=>{setLoading(false)})
         })   
@@ -41,6 +43,7 @@ const UpdateCarousel = (params) => {
             setLink({})
             setNotes({})
             setImage({})
+            setName({})
             setError('Somthing went wrong')
         })
     }, [])
@@ -94,15 +97,15 @@ const UpdateCarousel = (params) => {
             method: 'PUT',
             // url: `${process.env.REACT_APP_ADMIN}/categories/create`,
             url: `${url}/admin/carousel/update/${carouselid}/${userid}`,
-            data: {link, notes, image}
+            data: {link, notes, image,name}
         })
         .then(response =>{
-            console.log("Carousel Added to database successfully", response);
+            // console.log("Carousel Added to database successfully", response);
             setButtonText('Updated')
             toast.success(response.data.message);
         })
         .catch(error => {
-            console.log('Operation ERROR', error.response.data)
+            // console.log('Operation ERROR', error.response.data)
             setButtonText('Update')
             toast.error(error.response.data.error);
         })
@@ -121,11 +124,20 @@ const UpdateCarousel = (params) => {
                 <label className="text-muted">Click Link</label>
                 <input onChange={(event)=>{setLink(event.target.value)}} value={link} type="text" className="form-control" required/>
             </div>
-{/*  */}
+            <div className="form-group">
+                <label className="text-muted">Name for mobile appbar label</label>
+                <input onChange={(event)=>{setLink(event.target.value)}} value={name} type="text" className="form-control" required/>
+            </div>
 
             <div className="form-group">
-                <label className="text-muted">Notes</label>
-                <textarea onChange={(event)=>{setNotes(event.target.value)}} value={notes} type="textarea" maxLength='500'  className="form-control" required/>
+                <label className="text-muted">Notes to help mobile app understand</label>
+                <select onChange={(event)=>{setNotes(event.target.value)}} value={notes}  type="text" className="form-control"  required>
+                    <option>product</option>
+                    <option>subcategory</option>
+                    <option>classcategory</option>
+                    <option>maincategory</option>
+                    <option>brand</option>
+                </select>
             </div>
 
             <div className='input-group mb-3'>
@@ -145,7 +157,7 @@ const UpdateCarousel = (params) => {
                 </div>
 
             <div>
-                <button className="btn btn-primary">
+                <button className="btn btn-primary mt-5 mb-5">
                     {buttonText}
                 </button>
             </div>
@@ -159,8 +171,8 @@ const UpdateCarousel = (params) => {
             <div className="col-d-6">
                 <ToastContainer />
                 {isAuth() ? null : <Redirect to='/'/>} 
-                {JSON.stringify({link,notes,image})}
-                <h1 className="p-5 text-center">Update Brand</h1>
+                {JSON.stringify({link,notes,image,name})}
+                <h1 className="p-5 text-center">Update Carousel</h1>
                 {error ? error : null}
                 {loading ? loadingSpinner():pictureBorder()}
                 {loading ? loadingSpinner():newCarouselForm()}

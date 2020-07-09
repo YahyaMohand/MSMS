@@ -57,7 +57,7 @@ function UpdateStyle(params) {
        
         axios.get(`${url}/admin/styles/${styleid}/${userid}`)
         .then(res => {
-            console.log('first effect store data',res.data.style)
+            // console.log('first effect store data',res.data.style)
             setProductid(res.data.style.productid)
             setColor(res.data.style.color)
             setName(res.data.style.name)
@@ -103,7 +103,7 @@ function UpdateStyle(params) {
     const onUpload = e => {
         setFile(e.target.files[0]);
         setFilename(e.target.files[0].name)
-        console.log(file)
+        // console.log(file)
     }
 
     const onSubmitFile = async e => {

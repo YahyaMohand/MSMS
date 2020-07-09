@@ -52,7 +52,7 @@ const Signin = ({history}) =>{
             
         })
         .catch(error => {
-            console.log('SINGIN ERROR', error.response.data)
+            // console.log('SINGIN ERROR', error.response.data)
             setValues({...values, buttonText: 'تسجيل الدخول'});
             toast.error(error.response.data.error);
         })

@@ -56,7 +56,7 @@ import DashboardNew from './core/dashboard/newproducts'
 import DashboardSales from './core/dashboard/salesproducts'
 import DashboardVip from './core/dashboard/vipproducts'
 import DashboardOutOfStock from './core/dashboard/outofstockproducts'
-
+import SupplierOrder from './core/orders/suppliersorders'
 const Routes = () => {
     return(
         <BrowserRouter>
@@ -108,6 +108,7 @@ const Routes = () => {
                 <AdminRoute path="/admin/carousels/update/:carouselid" exact component={UpdateCarousel} />
                 <AdminRoute path="/admin/carousels/delete/:carouselid" exact component={DeleteCarousel} />
                 <AdminRoute path="/admin/orders/:orderid" exact component={OrderPage} />
+                <AdminRoute path="/admin/orders/suppliers/:orderid" exact component={SupplierOrder} />
                 <AdminRoute path="/admin/dashboard" exact component={Dashboard} />
                 <AdminRoute path="/admin/productstyles/:productid" exact component={ProductStyles} />
                 <AdminRoute path="/admin/products/addstyle/:productid" exact component={AddStyleByProduct} />

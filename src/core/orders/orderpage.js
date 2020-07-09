@@ -153,7 +153,7 @@ const OrderPage = (params) => {
     const ordersPage = ()=>(
         <DirectionProvider direction={DIRECTIONS.RTL}>
         <div>
-            {console.log(orderinfo)}
+            {/* {console.log(orderinfo)} */}
             <hr></hr>
             <div className='row'>
                 <div className='col'>

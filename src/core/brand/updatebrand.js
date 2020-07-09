@@ -100,12 +100,12 @@ const UpdateBrand = (params) => {
             data: {nameArabic, nameEnglish, bio, logo}
         })
         .then(response =>{
-            console.log("BRAND Added to database successfully", response);
+            // console.log("BRAND Added to database successfully", response);
             setButtonText('Updated')
             toast.success(response.data.message);
         })
         .catch(error => {
-            console.log('Operation ERROR', error.response.data)
+            // console.log('Operation ERROR', error.response.data)
             setButtonText('Update')
             toast.error(error.response.data.error);
         })

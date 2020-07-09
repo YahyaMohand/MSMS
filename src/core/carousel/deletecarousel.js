@@ -19,7 +19,7 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
 const DeleteBrand = (params) =>{
     const carouselid = params.match.params.carouselid
-    console.log(carouselid)
+    // console.log(carouselid)
     const history = useHistory()
 
 

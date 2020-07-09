@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const Facebook = ({informParent = f => f}) => {
     const responseFacebook = (response)=>{
-        console.log(response)
+        // console.log(response)
         axios({
             method: 'POST',
             url: `${process.env.REACT_APP_API}/facebook-login`,

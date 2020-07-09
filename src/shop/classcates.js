@@ -27,7 +27,7 @@ const ClassCates = (params)=>{
     axios.get(`${url}/classcategories/${subcateid}`)
     .then(res => {
         setClassCategories(res.data.classcategories)
-        console.log(res.data)
+        // console.log(res.data)
         setError('') 
     })   
     .catch(error => {
@@ -37,7 +37,7 @@ const ClassCates = (params)=>{
     })
     axios.get(`${url}/products/sub/${subcateid}`)
     .then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         setProducts(res.data.products)
         setError('')
         setTimeout(setLoading(false)) 

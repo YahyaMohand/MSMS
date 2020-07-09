@@ -23,9 +23,9 @@ const BagCard = ({items}) => {
     axios(`${url}/bag/${items.styleid}/${userid}`)
     .then(res =>{
       setDbqty(res.data.style.quantity)
-      console.log(dbqty)
+      // console.log(dbqty)
     }).catch(err=>{
-      console.log(err)
+      // console.log(err)
     })
   },[])
 

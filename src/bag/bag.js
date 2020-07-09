@@ -49,7 +49,7 @@ const PBag = ()=>{
         setshowbag(true)
       }
     }).catch(err=>{
-      console.log(err)
+      // console.log(err)
       setItems({})
       setshowbag(false)
       setorderdetails({})
@@ -59,10 +59,10 @@ const PBag = ()=>{
   function deleteBag(){
     axios.delete(`${url}/bag/remove/${userid}`)
     .then(res=>{
-      console.log(res)
+      // console.log(res)
       setTimeout(window.location.reload(),3000)
     }).catch(err=>{
-      console.log(err)
+      // console.log(err)
     })
   }
 
@@ -93,7 +93,7 @@ const PBag = ()=>{
         toast.success(response.data.message);
     })
     .catch(error => {
-        console.log('Operation ERROR', error.response.data)
+        // console.log('Operation ERROR', error.response.data)
         // setValues({...values, buttonText: 'Submit'});
         toast.error(error.response.data.error);
     })

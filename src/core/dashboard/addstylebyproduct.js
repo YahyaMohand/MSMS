@@ -78,7 +78,7 @@ function AddStyleByProduct(params) {
     const onUpload = e => {
         setFile(e.target.files[0]);
         setFilename(e.target.files[0].name)
-        console.log(file)
+        // console.log(file)
     }
 
     const onSubmitFile = async e => {

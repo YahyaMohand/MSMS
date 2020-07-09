@@ -149,7 +149,7 @@ function UpdateProduct(params) {
     const onUpload = e => {
         setFile(e.target.files[0]);
         setFilename(e.target.files[0].name)
-        console.log(file)
+        // console.log(file)
     }
 
     const onSubmitFile = async e => {
@@ -217,12 +217,12 @@ function UpdateProduct(params) {
                 }
         })
         .then(response =>{
-            console.log("Product Added to database successfully", response);
+            // console.log("Product Added to database successfully", response);
             setButtonText('Updated')
             toast.success(response.data.message);
         })
         .catch(error => {
-            console.log('Operation ERROR', error.response.data)
+            // console.log('Operation ERROR', error.response.data)
             setButtonText('Update')
             toast.error(error.response.data.error);
         })

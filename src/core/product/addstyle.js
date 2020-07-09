@@ -29,7 +29,7 @@ function AddStyle() {
         .then(res => {
             
             setProducts(res.data.products)
-            console.log(res.data)
+            // console.log(res.data)
             setError('')
             setLoading(false)
         })   
@@ -71,7 +71,7 @@ function AddStyle() {
     const onUpload = e => {
         setFile(e.target.files[0]);
         setFilename(e.target.files[0].name)
-        console.log(file)
+        // console.log(file)
     }
 
     const onSubmitFile = async e => {
