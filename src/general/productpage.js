@@ -147,7 +147,7 @@ const url = process.env.REACT_APP_NODE
                         <div>
                             {styles.map((styles,i)=>(<button 
                             onClick={()=>updateStyle(styles)} className='btn m-1' key={i} styles={styles} 
-                            style={{backgroundColor: `${styles.color}`}} >{styles.name}</button>))}
+                            style={{backgroundColor: `${styles.color}`,color:'white'}} >{styles.name}</button>))}
                         </div>
                     </div>
                     <hr></hr>
@@ -194,7 +194,7 @@ const url = process.env.REACT_APP_NODE
                         <p>{product.description}</p>
                     </div>
                 </div>
-                <div className='row'>
+                {/* <div className='row'>
                     <div className='col text-center'>
                         <h6>تاريخ الانتاج</h6>
                         <hr></hr>
@@ -205,7 +205,7 @@ const url = process.env.REACT_APP_NODE
                     <hr></hr>
                         <h6>{formatedDate(expirydata)}</h6>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div></DirectionProvider>
     )

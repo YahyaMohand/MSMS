@@ -135,7 +135,7 @@ const PBag = ()=>{
               </div>
               <span className="text-muted">{items.reduce((currentValue, nextValue)=>{
               return currentValue + nextValue.count * nextValue.discountPrice
-              },0) >=25000 ? 'التوصيل مجاني':`${numcoma(1000)}`}</span>
+              },0) >=24999 ? 'التوصيل مجاني':`${numcoma(2000)}`}</span>
             </li>
             <li className="list-group-item d-flex justify-content-between lh-condensed">
               <div className='text-success'>
@@ -164,7 +164,7 @@ const PBag = ()=>{
               <label for='address2'>رقم الهاتف</label>
               <input type='number' class='form-control' onChange={(event)=>setreciverphone(event.target.value)} id='address2' placeholder="" required></input>
               <div className="valid-feedback">
-                  07501234567
+                  07503305680
               </div>
             </div>
             <div className='col mb-3'>

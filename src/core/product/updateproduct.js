@@ -240,7 +240,9 @@ function UpdateProduct(params) {
             (1-(cost/price)).toFixed(2)
         )
         if(parseInt(discountPrice)==parseInt(price)){
-            setDiscountMargin(0)
+            setDiscountMargin(
+                (1-(cost/discountPrice)).toFixed(2)
+            )
             setDiscount(0)
         }else{
             setDiscountMargin(
@@ -336,7 +338,7 @@ function UpdateProduct(params) {
                         <div className='input-group-prepend'>
                             <span className='input-group-text'>Serial Number</span>
                         </div>
-                        <input onChange={(event)=>{setSerialnumber(event.target.value)}} value={serialnumber} type="text" className="form-control" required /> 
+                        <input onChange={(event)=>{setSerialnumber(event.target.value)}} value={serialnumber} type="text" className="form-control"  /> 
                     </div>
                 </div>
                 <label>Product Price - IQD</label>
@@ -409,14 +411,14 @@ function UpdateProduct(params) {
                             <div className='input-group-prepend'>
                                 <span className='input-group-text badge-success'>Production date</span>
                             </div>
-                            <input onChange={(event)=>{setProductiondate(event.target.value)}} value={productionDate} type="date" className="form-control" required />
+                            <input onChange={(event)=>{setProductiondate(event.target.value)}} value={productionDate} type="date" className="form-control"  />
                             
                         </div>
                         <div className='col input-group mb-5'>
                             <div className='input-group-prepend'>
                                 <span className='input-group-text badge-danger'>Expiry Date</span>
                             </div>
-                            <input onChange={(event)=>{setExpiryDate(event.target.value)}} value={expiryDate} type="date" className="form-control" required />
+                            <input onChange={(event)=>{setExpiryDate(event.target.value)}} value={expiryDate} type="date" className="form-control"  />
                             
                         </div>
                 </div>

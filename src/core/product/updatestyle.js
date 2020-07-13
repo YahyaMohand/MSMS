@@ -182,7 +182,9 @@ function UpdateStyle(params) {
             (1-(cost/price)).toFixed(2)
         )
         if(parseInt(discountPrice)==parseInt(price)){
-            setDiscountMargin(0)
+            setDiscountMargin(
+                (1-(cost/discountPrice)).toFixed(2)
+            )
             setDiscount(0)
         }else{
             setDiscountMargin(
@@ -362,7 +364,6 @@ function UpdateStyle(params) {
             </div></div>
         </Layout>
     );
-    
     
 }
 

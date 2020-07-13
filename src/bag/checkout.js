@@ -61,7 +61,7 @@ export const FinalTotal =({products})=>{
             return currentValue + nextValue.count * nextValue.discountPrice
         },0);
 
-        return sum >=25000 ? sum:sum+1000 //shipping cost
+        return sum >=24999 ? sum:sum+2000 //shipping cost
 
     };
     

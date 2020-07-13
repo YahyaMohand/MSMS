@@ -100,10 +100,10 @@ const OrderPage = (params) => {
     const ShippingCost = ({products})=>{
         if( products.reduce((currentValue, nextValue)=>{
             return currentValue + nextValue.quantity * nextValue.discountPrice
-        },0) >= 25000){
+        },0) >= 24999){
             return "التوصيل مجاني"
         }else{
-            return numcoma(1000)
+            return numcoma(2000)
         }
     }
 

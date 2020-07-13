@@ -191,7 +191,7 @@ const Layout = ({children,match,history}) =>{
                     <Link to='/bag' className='nav-link' style={isActive('/bag')}>
                         الحقيبة
                         {localStorage.getItem('bag') ? <sup className='badge' style={{backgroundColor: '#fc2779'}} >
-                            <small className='' style={{fontSize: 'small'}}>{JSON.parse(localStorage.getItem('bag')).length}</small>
+                            {/* <small className='' style={{fontSize: 'small'}}>{JSON.parse(localStorage.getItem('bag')).length}</small> */}
                         </sup> : null}
                     </Link>
                 

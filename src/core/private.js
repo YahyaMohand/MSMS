@@ -7,7 +7,7 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import cookie from 'js-cookie'
 import loadingSpinner from '../components/loadingspinner'
-import OrderCard from '../core/orders/ordercard'
+import PrivateOrderCard from '../core/orders/privateordercard'
 
 const url = process.env.REACT_APP_NODE
 
@@ -53,14 +53,14 @@ const Private = () =>{
                         <div className='col'><p>الحالة</p></div>
                     </div>
                 </li>
-                {orders.map((orders,i)=>(<OrderCard key={i} orders={orders} />))}
+                {orders.map((orders,i)=>(<PrivateOrderCard key={i} orders={orders} />))}
             </ul>
         </div></div>
     )
 
     const userProfile = ()=>(
-        <div className='container offset-2'>
-            <div className='card' style={{width:'80vw'}}>
+        <div className='container offset-5'>
+            <div className='card' style={{width:'53vw'}}>
                 <div className='row'>
                     <div className='col'>
                         {user.picture ? <img className='rounded'
@@ -81,11 +81,11 @@ const Private = () =>{
                         <h6>{user.email}</h6>
                         <h6>{user.gender}</h6>
                     </div>
-                    <div className='col m-auto'>
+                    {/* <div className='col m-auto'>
                         <button className='btn btn-dark'>
                             تعديل الحساب
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

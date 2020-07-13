@@ -168,13 +168,13 @@ function AddStyle() {
         setMargin(
             (1-(cost/price)).toFixed(2)
         )
+        setdiscountMargin(
+            (1-(cost/discountPrice)).toFixed(2)
+        )
         if(parseInt(discountPrice)==parseInt(price)){
-            setdiscountMargin(0)
             setDiscount(0)
         }else{
-            setdiscountMargin(
-                (1-(cost/discountPrice)).toFixed(2)
-            )
+           
             setDiscount(
                 ((price-discountPrice)/price).toFixed(2)
             )
