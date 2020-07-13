@@ -286,11 +286,11 @@ const App = ()=>{
             {loading ? loadingSpinner():SalesProducts()}
             {loading ? loadingSpinner():Brands()}
             {loading ? loadingSpinner():MakeupProducts()}
-            {/* {loading ? loadingSpinner():SkincareProducts()} */}
-            {/* {loading ? loadingSpinner():HairProducts()} */}
-            {/* {loading ? loadingSpinner():FragranceProducts()} */}
-            {/* {loading ? loadingSpinner():MenProducts()} */}
-            {/* {loading ? loadingSpinner():GiftProducts()} */}
+            {loading ? loadingSpinner():SkincareProducts()}
+            {loading ? loadingSpinner():HairProducts()}
+            {loading ? loadingSpinner():FragranceProducts()}
+            {loading ? loadingSpinner():MenProducts()}
+            {loading ? loadingSpinner():GiftProducts()}
           </main>
 
     </Layout>
