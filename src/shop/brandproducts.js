@@ -42,7 +42,7 @@ const BrandProducts = (params)=>{
       <h3 className='text-center'>المنتجات</h3>
       <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
       <div  className='container-fluid'>
-        <div className='row'>
+        <div className='row d-flex'>
           {products.map((products,i)=>(<ProductCards key={i} products={products}/>))}
         </div>
       </div>
@@ -55,7 +55,7 @@ const BrandProducts = (params)=>{
   return (
     <Layout>
           {error ? error : null}
-            <div className='container'>
+            <div className='container-fluid'>
             {loading ? loadingSpinner():Products()}
             </div>
 

@@ -47,6 +47,7 @@ const OrderPage = (params) => {
     useEffect(()=>{
         axios.get(`${url}/admin/orders/${orderid}/${userid}`)
         .then(res => {
+            console.log(res.data)
             setorderinfo(res.data.orderinfo)
             setAddress(res.data.orderinfo.address)
             setProducts(res.data.orderinfo.products)
@@ -97,14 +98,8 @@ const OrderPage = (params) => {
         return products.length
     }
 
-    const ShippingCost = ({products})=>{
-        if( products.reduce((currentValue, nextValue)=>{
-            return currentValue + nextValue.quantity * nextValue.discountPrice
-        },0) >= 24999){
-            return "التوصيل مجاني"
-        }else{
-            return numcoma(2000)
-        }
+    const ShippingCost = ({address})=>{
+        return numcoma(address.shippingCost)
     }
 
     const printrecipt = ()=>{
@@ -155,6 +150,12 @@ const OrderPage = (params) => {
         <div>
             {/* {console.log(orderinfo)} */}
             <hr></hr>
+            <div>
+                <div className='text-center alert alert-warning p-1'>
+                    <span>المدينة</span><hr className='m-0'/>
+                    <span className='font-weight-bold'> {address.nameArabic} </span>
+                </div>
+            </div>
             <div className='row'>
                 <div className='col'>
                     <div className='text-center alert alert-secondary p-1'>
@@ -214,7 +215,7 @@ const OrderPage = (params) => {
                     <li className='list-group-item'>
                         <div className='row text-center font-weight-bold'>
                             <div className='col'><p>{<TotalRecordes products={products}/>}</p></div>
-                            <div className='col'><p>{<ShippingCost products={products}/>}</p></div>
+                            <div className='col'><p>{<ShippingCost address={address}/>}</p></div>
                             <div className='col'><p>{<TotalPrice products={products}/>}</p></div>
                             <div className='col'><p>{<TotalDiscountPrice products={products}/>}</p></div>
                             <div className='col'><p>{<TotalQuantity products={products}/>}</p></div>
@@ -253,7 +254,7 @@ const OrderPage = (params) => {
                     {loading? loadingSpinner():ordersPage()}
                 </div>
             </div>
-        </Layout>
+         </Layout>
     );
 }
 

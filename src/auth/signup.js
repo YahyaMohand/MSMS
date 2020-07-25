@@ -43,7 +43,7 @@ const Signup = () =>{
     };
 
     const singupForm = ()=>(
-        <form>
+        <form className='m-lg-5'>
             <div className="form-group">
                 <label className="text-muted">الاسم الكامل</label>
                 <input onChange={handleChange('username')} value={username} type="text" className="form-control" />
@@ -75,7 +75,7 @@ const Signup = () =>{
                 <ToastContainer />
                 {isAuth() ? <Redirect to='/'/> : null} 
                 {/* {JSON.stringify({username,phonenumber,password})} */}
-                <h1 className="p-5 text-center">إنشاء حساب</h1>
+                <h1 className="p-5 text-center m-5">إنشاء حساب</h1>
                 {singupForm()}
             </div></div>
         </Layout>

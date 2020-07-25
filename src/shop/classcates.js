@@ -51,18 +51,18 @@ const ClassCates = (params)=>{
 
   const SidbarCardClassCate = ({classcategories}) => (
    
-    <li className='nav-item list-group-item'>
-        <a className='nav-link active text-center mt-2' style={{color: '#000000', fontSize: 'large', fontWeight: 'bolder'}} href={`/products/class/${classcategories.classcateid}`}>{classcategories.nameArabic}</a>
-    </li>
+    <div className='card shadow mx-auto btn btn-outline-warning p-3 m-1' style={{width:'12rem'}}>
+        <a className='active text-center mt-2 text-decoration-none' style={{color: '#000000', fontSize: 'large', fontWeight: 'bolder'}} href={`/products/class/${classcategories.classcateid}`}>{classcategories.nameArabic}</a>
+    </div>
 );
 
   const Products = ()=> (
     <div>
-      <hr className='ml-4 mr-4 mt-0 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr>
-      <h3 className='text-center'>المنتجات</h3>
-      <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
+      {/* <hr className='ml-4 mr-4 mt-0 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr> */}
+      {/* <h3 className='text-center'>المنتجات</h3> */}
+      {/* <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr> */}
       <div  className='container-fluid'>
-        <div className='row'>
+        <div className='row d-flex'>
           {products.map((products,i)=>(<ProductCards key={i} products={products}/>))}
         </div>
       </div>
@@ -73,26 +73,27 @@ const ClassCates = (params)=>{
 
   const SidbarNav = ()=> (
       
-      <nav className='col-md-2 d-none d-md-block sidebar' style={{backgroundColor: '#F3F3F3'}}>
+      <div className='mt-3 mb-3' style={{backgroundColor: '#ffffff'}}>
         
-        <div className='sidebar-sticky ' >
+        <div className='' >
         {/* <h4 className='text-center mt-3 text-light' > الأصناف الرئيسية</h4> */}
         {/* <hr style={{border: '1px solid white'}}></hr> */}
-          <ul className='nav list-group flex-column mt-3'>
+          <div className='row d-flex'>
             {classcategories.map((classcategories,i)=>(<SidbarCardClassCate key={i} classcategories={classcategories}/>))}
-          </ul>
+          </div>
         </div>
-      </nav>
+      </div>
 
   )
 
   return (
     <Layout>
           {error ? error : null}
+          <div className='container-fluid'>
           {loading ? loadingSpinner():SidbarNav()}
-          <main role='main' className='col-md-9 ml-sm-auto col-lg-10 p-0'>
-            {loading ? loadingSpinner():Products()}
-          </main>
+          
+          {loading ? loadingSpinner():Products()}
+          </div>
 
     </Layout>
   )

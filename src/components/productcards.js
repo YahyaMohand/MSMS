@@ -38,7 +38,7 @@ const ProductCards = ({products}) => {
     
     
     return(
-        <div className='card m-3 shadow' style={{width:'18rem'}} >
+        <div className='card m-3 shadow mx-auto' style={{width:'18rem'}} >
             <a href={`/products/${products.productid}`} style={{textDecoration: 'none'}}>
                 <img className='card-img-top' alt='product img' src={`${url}/${products.imagePath}`}/>
                 <div className='card-body'>

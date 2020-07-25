@@ -38,16 +38,16 @@ const DeleteStyle = (params) =>{
 
     const deleteAlert = ()=>(
           //delete alert start
+        <div className="m-lg-5">
+        <div  variant='danger' className='alert-danger text-center  align-items-center align-content-center justify-content-center'>
         <div>
-        <Alert  variant='danger' className='alert-danger text-center  align-items-center align-content-center justify-content-center'>
-        <Alert.Heading>
             <p>Hey, you are going to delete item, Are you sure?</p>
-        </Alert.Heading>
+        </div>
         <p>
             ستقوم بحذف معلومات من قاعدة البيانات ولايمكن الرجوع عن هذه الخطوة, هل انت واثق من عملية الحذف
         </p>
         <hr></hr>
-        <div className='row align-items-center align-content-center justify-content-center'>
+        <div className='row align-items-center align-content-center justify-content-center p-2'>
                 <button onClick={()=>{
                     history.goBack()
                     clickSubmit()
@@ -60,7 +60,7 @@ const DeleteStyle = (params) =>{
                         Cancel
                     </Link>
                 </div>
-        </Alert>
+        </div>
         </div>
   //delete alret end
     )

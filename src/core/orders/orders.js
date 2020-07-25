@@ -29,7 +29,7 @@ const Orders = () => {
         .then(res => {
             setorders(res.data.orders)
             setError('')
-            setLoading(false)
+            if(res.status == 200){setLoading(false)}
         })
         .catch(err =>{
             setLoading(false)

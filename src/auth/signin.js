@@ -59,19 +59,19 @@ const Signin = ({history}) =>{
     };
 
     const signinForm = ()=>(
-        <form>
+        <form className='m-lg-5'>
 
-            <div className="form-group">
+            <div className="form-group m-2">
                 <label className="text-muted">رقم الهاتف</label>
                 <input onChange={handleChange('phonenumber')} value={phonenumber} type="text" className="form-control" />
             </div>
 
-            <div className="form-group">
+            <div className="form-group m-2">
                 <label className="text-muted">الباسورد</label>
                 <input onChange={handleChange('password')} value={password} type="password" className="form-control" />
             </div>
 
-            <div>
+            <div className='m-2'>
                 <button className="btn btn-primary" onClick={clickSubmit}>
                     {buttonText}
                 </button>
@@ -89,9 +89,9 @@ const Signin = ({history}) =>{
                 {/* if the user is loged in it will convert it to home page */}
                 {isAuth() ? <Redirect to='/'/> : null} 
                 {/* {JSON.stringify({phonenumber,password})} */}
-                <h1 className="p-5 text-center">تسجيل الدخول</h1>
-                <Google informParent={informParent}/>
-                <Facebook informParent={informParent}/>
+                <h1 className="p-5 text-center m-5">تسجيل الدخول</h1>
+                {/* <Google informParent={informParent}/> */}
+                {/* <Facebook informParent={informParent}/> */}
                 {signinForm()}
             </div></div>
         </Layout>

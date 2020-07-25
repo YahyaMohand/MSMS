@@ -59,7 +59,7 @@ const UpdateCity = (params) => {
         setButtonText('Updating')
         axios({
             method: 'PUT',
-            url: `${url}/admin/cities/update/${cityid}`,
+            url: `${url}/admin/cities/update/${cityid}/${userid}`,
             data: {cityid, isOperational, nameArabic,  nameEnglish,shippingCost,x_cord,y_cord}
         })
         .then(response =>{
@@ -125,7 +125,7 @@ const UpdateCity = (params) => {
             <div className="col-d-6">
                 <ToastContainer />
                 {isAuth() ? null : <Redirect to='/'/>} 
-                {/* {JSON.stringify({cityid,isOperational,nameArabic,nameEnglish,shippingCost,x_cord,y_cord})} */}
+                {JSON.stringify({cityid,isOperational,nameArabic,nameEnglish,shippingCost,x_cord,y_cord})}
                 <h1 className="p-5 text-center">Update City</h1>
                 {error ? error : null}
                 {loading ? loadingSpinner():newCityForm()}

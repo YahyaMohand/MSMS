@@ -8,7 +8,7 @@ import loadingSpinner from '../components/loadingspinner'
 import {getBag, updateItem, removeItem} from '../bag/baghelper'
 import {isAuth} from '../auth/helpers';
 import BagCard from './bagcard'
-import {TotalPrice,TotalDiscountPrice,FinalTotal } from './checkout'
+import {TotalPrice,TotalDiscountPrice,FinalTotal, Shippingcost } from './checkout'
 import cookie from 'js-cookie'
 import {ToastContainer, toast} from 'react-toastify';
 import { FaShoppingBag } from 'react-icons/fa';
@@ -27,6 +27,7 @@ const PBag = ()=>{
 
   const [items, setItems] = useState()
   const [showbag, setshowbag]=useState(false)
+  const [cities, setCities] = useState()
   // const [address, setaddress]=useState()
   // const [order, setorder] = useState()
   const [orderdetails, setorderdetails] = useState()
@@ -34,6 +35,7 @@ const PBag = ()=>{
   const [reciverphone, setreciverphone] = useState()
   const [reciveraddres, setreciveraddres] = useState()
   const [reciverRP, setreciverRP] = useState()
+  const [cityid, setCityid] = useState(1)
 
   useEffect(()=>{
     // setItems(getBag())
@@ -44,6 +46,7 @@ const PBag = ()=>{
     axios.get(`${url}/bag/${userid}`)
     .then(res=>{
       setItems(res.data.bag)
+      setCities(res.data.cities)
       setorderdetails(res.data.bag)
       if(res.data.bag[0] != null){
         setshowbag(true)
@@ -51,6 +54,7 @@ const PBag = ()=>{
     }).catch(err=>{
       // console.log(err)
       setItems({})
+      setCities({})
       setshowbag(false)
       setorderdetails({})
     })
@@ -60,7 +64,7 @@ const PBag = ()=>{
     axios.delete(`${url}/bag/remove/${userid}`)
     .then(res=>{
       // console.log(res)
-      setTimeout(window.location.reload(),3000)
+      if(res.status == 200){window.location.reload()}
     }).catch(err=>{
       // console.log(err)
     })
@@ -83,13 +87,14 @@ const PBag = ()=>{
         method: 'POST',
         // url: `${process.env.REACT_APP_ADMIN}/categories/create`,
         url: `${url}/orders/${userid}`,
-        data: {userid, orderdetails,recivername,reciverphone,reciveraddres,reciverRP}
+        data: {userid, orderdetails,recivername,reciverphone,reciveraddres,reciverRP,cityid}
     })
     .then(response =>{
         // console.log("BRAND Added to database successfully", response);
         //set values to empty
-        setTimeout(()=>{deleteBag()},3000)
-        setTimeout(window.location.reload(),6000)
+        // console.log(response.status)
+        if(response.status == 200){deleteBag()}
+        if(response.status == 200){window.location.reload()}
         toast.success(response.data.message);
     })
     .catch(error => {
@@ -133,16 +138,17 @@ const PBag = ()=>{
                 <h6 className="my-0">كلفة التوصيل</h6>
                 <small className="text-muted"></small>
               </div>
-              <span className="text-muted">{items.reduce((currentValue, nextValue)=>{
+              {/* <span className="text-muted">{items.reduce((currentValue, nextValue)=>{
               return currentValue + nextValue.count * nextValue.discountPrice
-              },0) >=24999 ? 'التوصيل مجاني':`${numcoma(2000)}`}</span>
+              },0) >=24999 ? 'التوصيل مجاني':`${numcoma(2000)}`}</span> */}
+              <span className='text-muted'><Shippingcost cities={cities} cityid={cityid}/></span>
             </li>
             <li className="list-group-item d-flex justify-content-between lh-condensed">
               <div className='text-success'>
                 <h6 className="my-0">المجموع الكلي</h6>
                 <small className="text-muted"></small>
               </div>
-              <span className="font-weight-bolder text-success"><FinalTotal products={items}/></span>
+              <span className="font-weight-bolder text-success"><FinalTotal products={items}  cities={cities} cityid={cityid}/></span>
             </li>
           </ul>
       </div>
@@ -153,6 +159,13 @@ const PBag = ()=>{
         </h5>
         <div className='card'>
           <form onSubmit={clickSubmit}>
+          <div className='col mb-3'>
+              <label for='address1'>مدينة التوصيل</label>
+              <select onChange={(event)=>setCityid(event.target.value)} value={cityid} type="text" className="form-control" required>
+              {/* <option value="0">اختيار المدينة</option> */}
+              {cities.map(({cityid, nameArabic})=><option value={cityid}>{nameArabic}</option>)}
+              </select>
+            </div>
             <div className='col mb-3'>
               <label for='address1'>اسم المستلم</label>
               <input type='text' class='form-control' onChange={(event)=>setrecivername(event.target.value)} id='address1' placeholder="" required></input>
@@ -199,7 +212,7 @@ const PBag = ()=>{
             <Link  to={{
             pathname: '/'
           }}>
-            <button className='btn btn-block btn-lg btn-dark p-3'>الانتقال الى الصفحة الرئيسية</button>
+            <button className='btn btn-block btn-lg btn-dark p-3 m-lg-5'>الانتقال الى الصفحة الرئيسية</button>
           </Link>
           </div>
           
@@ -215,7 +228,7 @@ const PBag = ()=>{
       {isAuth() ? null : <Redirect to='/'/>}
         <div className='row'>
           <ToastContainer/>
-          {/* {JSON.stringify({ orderdetails})} */}
+          {/* {JSON.stringify({ cityid})} */}
           {showbag ? showItems():null }
           {showbag ? totalPill():bagEmpty() }
         </div>

@@ -37,11 +37,11 @@ const GBrands = ()=>{
       <hr className='ml-4 mr-4 mt-0 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr>
       <h3 className='text-center'>البراندات</h3>
       <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
-      <div className='ml-lg-5 mr-lg-5'>
-        <div className='row'>
+      {/* <div className='ml-lg-5 mr-lg-5'> */}
+        <div className='row d-flex'>
           {brands.map((brands,i)=>(<BrandCard key={i} brands={brands}/>))}
         </div>
-      </div>
+      {/* </div> */}
     </div>
   )
 

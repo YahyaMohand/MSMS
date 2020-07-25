@@ -40,10 +40,10 @@ const DeleteClassCate = (params) =>{
     const deleteAlert = ()=>(
           //delete alert start
         <div>
-        <Alert  variant='danger' className='alert-danger text-center  align-items-center align-content-center justify-content-center'>
-        <Alert.Heading>
+        <div  variant='danger' className='alert-danger text-center  align-items-center align-content-center justify-content-center'>
+        <div>
             <p>Hey, you are going to delete item, Are you sure?</p>
-        </Alert.Heading>
+        </div>
         <p>
             ستقوم بحذف معلومات من قاعدة البيانات ولايمكن الرجوع عن هذه الخطوة, هل انت واثق من عملية الحذف
         </p>
@@ -64,7 +64,7 @@ const DeleteClassCate = (params) =>{
                         Cancel
                     </Link>
                 </div>
-        </Alert>
+        </div>
         </div>
   //delete alret end
     )

@@ -67,9 +67,9 @@ const App = ()=>{
 
   const SidbarCard = ({categories}) => (
    
-    <li className='nav-item list-group-item'>
-        <a className='nav-link active text-center mt-2' style={{color: '#000000', fontSize: 'large', fontWeight: 'bolder'}} href={`/categories/${categories.categoryid}`}>{categories.nameArabic}</a>
-    </li>
+    <div className='card m-1 shadow mx-auto btn btn-outline-warning p-3  mx-auto' style={{width:'12rem'}}>
+        <a className=' active text-center mt-2 text-decoration-none' style={{color: '#000000', fontSize: 'large', fontWeight: 'bolder'}} href={`/categories/${categories.categoryid}`}>{categories.nameArabic}</a>
+    </div>
   );
   // console.log(carousels)
   const Slidder = () => (
@@ -86,7 +86,7 @@ const App = ()=>{
       <h3 className='text-center'>احدث المنتجات</h3>
       <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
       <div  className='container-fluid'>
-        <div className='row'>
+        <div className='row d-flex'>
           {newproducts.map((newproducts,i)=>(<ProductCards key={i} products={newproducts}/>))}
         </div>
       </div>
@@ -106,7 +106,7 @@ const App = ()=>{
       <h3 className='text-center'>التخفيصات</h3>
       <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
       <div  className='container-fluid'>
-        <div className='row'>
+        <div className='row d-flex'>
           {salesproducts.map((salesproducts,i)=>(<ProductCards key={i} products={salesproducts}/>))}
         </div>
       </div>
@@ -126,7 +126,7 @@ const App = ()=>{
       <h3 className='text-center'>منتجات المكياج</h3>
       <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
       <div  className='container-fluid'>
-        <div className='row'>
+        <div className='row d-flex'>
           {makeupproducts.map((makeupproducts,i)=>(<ProductCards key={i} products={makeupproducts}/>))}
         </div>
       </div>
@@ -146,7 +146,7 @@ const App = ()=>{
       <h3 className='text-center'>منتجات العناية بالبشرة</h3>
       <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
       <div  className='container-fluid'>
-        <div className='row'>
+        <div className='row d-flex'>
           {skincareproducts.map((skincareproducts,i)=>(<ProductCards key={i} products={skincareproducts}/>))}
         </div>
       </div>
@@ -166,7 +166,7 @@ const App = ()=>{
       <h3 className='text-center'>منتجات الشعر</h3>
       <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
       <div  className='container-fluid'>
-        <div className='row'>
+        <div className='row d-flex'>
           {hairproducts.map((hairproducts,i)=>(<ProductCards key={i} products={hairproducts}/>))}
         </div>
       </div>
@@ -186,7 +186,7 @@ const App = ()=>{
       <h3 className='text-center'>منتجات العطور</h3>
       <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
       <div  className='container-fluid'>
-        <div className='row'>
+        <div className='row d-flex'>
           {fragranceproducts.map((fragranceproducts,i)=>(<ProductCards key={i} products={fragranceproducts}/>))}
         </div>
       </div>
@@ -206,7 +206,7 @@ const App = ()=>{
       <h3 className='text-center'>منتجات الرجال</h3>
       <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
       <div  className='container-fluid'>
-        <div className='row'>
+        <div className='row d-flex'>
           {menproducts.map((menproducts,i)=>(<ProductCards key={i} products={menproducts}/>))}
         </div>
       </div>
@@ -226,7 +226,7 @@ const App = ()=>{
       <h3 className='text-center'>الهدايا</h3>
       <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
       <div  className='container-fluid'>
-        <div className='row'>
+        <div className='row d-flex'>
           {giftproducts.map((giftproducts,i)=>(<ProductCards key={i} products={giftproducts}/>))}
         </div>
       </div>
@@ -246,7 +246,7 @@ const App = ()=>{
       <h3 className='text-center'>البراندات</h3>
       <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
       <div className='container-fluid'>
-        <div className='row'>
+        <div className='row d-flex'>
           {brands.map((brands,i)=>(<BrandCard key={i} brands={brands}/>))}
         </div>
         
@@ -263,36 +263,38 @@ const App = ()=>{
 
   const SidbarNav = ()=> (
       
-      <nav className='col-md-2 d-none d-md-block sidebar' style={{backgroundColor: '#F3F3F3'}}>
+      <div className='mt-3 mb-3' style={{backgroundColor: '#ffffff'}}>
         
-        <div className='sidebar-sticky ' >
-        <h4 className='text-center mt-3' > الأصناف الرئيسية</h4>
-        <hr></hr>
-          <ul className='nav list-group flex-column'>
+        <div className=''>
+        {/* <h4 className='text-center mt-3' > الأصناف الرئيسية</h4> */}
+        {/* <hr></hr> */}
+          <div className='row d-flex'>
             {categories.map((categories,i)=>(<SidbarCard key={i} categories={categories}/>))}
-          </ul>
+          </div>
         </div>
-      </nav>
+      </div>
 
   )
 
   return (
     <Layout>
           {error ? error : null}
-          {loading ? loadingSpinner():SidbarNav()}
-          <main role='main' className='col-md-9 ml-sm-auto col-lg-10 p-0'>
+          
+          {/* <main role='main' className='col-md-9 ml-sm-auto col-lg-10 p-0'> */}
+          <div className='container-fluid'>
             {loading ? loadingSpinner():Slidder()}
+            {loading ? loadingSpinner():SidbarNav()}
             {loading ? loadingSpinner():NewProducts()}
             {loading ? loadingSpinner():SalesProducts()}
             {loading ? loadingSpinner():Brands()}
             {loading ? loadingSpinner():MakeupProducts()}
-            {loading ? loadingSpinner():SkincareProducts()}
-            {loading ? loadingSpinner():HairProducts()}
-            {loading ? loadingSpinner():FragranceProducts()}
-            {loading ? loadingSpinner():MenProducts()}
-            {loading ? loadingSpinner():GiftProducts()}
-          </main>
-
+            {/* {loading ? loadingSpinner():SkincareProducts()} */}
+            {/* {loading ? loadingSpinner():HairProducts()} */}
+            {/* {loading ? loadingSpinner():FragranceProducts()} */}
+            {/* {loading ? loadingSpinner():MenProducts()} */}
+            {/* {loading ? loadingSpinner():GiftProducts()} */}
+          {/* </main> */}
+          </div>
     </Layout>
   )
 }

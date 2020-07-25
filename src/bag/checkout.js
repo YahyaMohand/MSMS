@@ -50,18 +50,23 @@ export const TotalDiscountPrice =({products})=>{
     )
 }
 
-export const FinalTotal =({products})=>{
+export const FinalTotal =({products,cities,cityid})=>{
 
     function numcoma(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
+
 
   const getTotalDiscountPrice = () => {
         let sum = products.reduce((currentValue, nextValue)=>{
             return currentValue + nextValue.count * nextValue.discountPrice
         },0);
 
-        return sum >=24999 ? sum:sum+2000 //shipping cost
+        var selectedcity = cities.filter((cost)=>{
+            return cost.cityid == cityid
+          })
+        return sum+selectedcity[0].shippingCost
+
 
     };
     
@@ -72,5 +77,26 @@ export const FinalTotal =({products})=>{
             <h6>{numcoma(getTotalDiscountPrice())}</h6>
         </div>
     )
+}
+
+export const Shippingcost = ({cities,cityid})=>{
+    function numcoma(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    const getShippingcost = ()=>{
+        var selectedcity = cities.filter((cost)=>{
+            return cost.cityid == cityid
+          })
+        return selectedcity[0].shippingCost
+    }
+    
+    return(
+        <div>
+            <h6>{numcoma(getShippingcost())}</h6>
+        </div>
+    )
+      
+   
 }
 

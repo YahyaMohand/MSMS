@@ -41,9 +41,9 @@ const ClassProducts = (params)=>{
 
   const Products = ()=> (
     <div>
-      <hr className='ml-4 mr-4 mt-0 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr>
-      <h3 className='text-center'>المنتجات</h3>
-      <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
+      {/* <hr className='ml-4 mr-4 mt-0 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr> */}
+      {/* <h3 className='text-center'>المنتجات</h3> */}
+      {/* <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr> */}
       <div  className='container-fluid'>
         <div className='row'>
           {products.map((products,i)=>(<ProductCards key={i} products={products}/>))}
@@ -58,7 +58,7 @@ const ClassProducts = (params)=>{
   return (
     <Layout>
           {error ? error : null}
-            <div className='container'>
+            <div className='container-fluid'>
             {loading ? loadingSpinner():Products()}
             </div>
 

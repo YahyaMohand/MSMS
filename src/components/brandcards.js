@@ -6,7 +6,7 @@ const url = process.env.REACT_APP_NODE
 
 const BrandCard = ({brands}) => {
     return(
-        <div className='card m-3 shadow' style={{width:'18rem'}}>
+        <div className='card m-3 shadow mx-auto' style={{width:'18rem'}}>
             <a href={`/products/brand/${brands.brandid}`} style={{textDecoration: 'none'}}>
                 <img className='card-img-top' alt='product img' src={`${url}/${brands.logo}`}/>
                 <div className='card-body'>
