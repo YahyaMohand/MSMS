@@ -24,12 +24,18 @@ const Private = () =>{
     const [error, setError]=useState('')
     const [user, setUser]=useState()
     const [orders, setorders]=useState()
+    const [hasorders, setHasorders]=useState(false)
 
     useEffect(() => {
         axios.get(`${url}/user/${userid}`)
         .then(res=>{
             setUser(res.data.user)
             setorders(res.data.user.orders)
+            if(res.data.user.orders[0] == null || res.data.user.orders[0] == {}){
+                setHasorders(false)
+            }else{
+                setHasorders(true)
+            }
             setError('')
             setTimeout(()=>{setLoading(false)})
         }).catch(err=>{
@@ -39,6 +45,15 @@ const Private = () =>{
             setLoading(false)
         })
     }, [])
+
+    const noOrders = ()=>(
+        <div className='mx-auto my-auto'>
+            <div className='m-lg-5'>
+                <h1 className='text-center' style={{marginTop:'30vh', marginBottom:'30vh'}}>اهلا وسهلا بك في متجر كويسي</h1>
+                
+            </div>
+        </div>
+    )
 
     const ordersList = ()=>(
         <div className='container col-d-6 offset-5'>
@@ -59,10 +74,12 @@ const Private = () =>{
     )
 
     const userProfile = ()=>(
-        <div className='container offset-5'>
-            <div className='card' style={{width:'53vw'}}>
-                <div className='row'>
-                    <div className='col'>
+        <div className='container-fluid mt-3'>
+            <div className='card' 
+            // style={{width:'53vw'}}
+            >
+                <div className='row '>
+                    {/* <div className='col'>
                         {user.picture ? <img className='rounded'
                         src={`${url}/${user.picture}`} 
                         // src={window.location.origin + '/kwaysiavatar.jpg'}
@@ -74,13 +91,17 @@ const Private = () =>{
                         alt='avatar'
                         height='300px'
                         ></img>}
+                    </div> */}
+                    <div className='col text-center mx-auto mt-3  mb-3'>
+                        <h6>{user.username}</h6>
                     </div>
-                    <div className='col m-auto'>
-                        <h6><span></span>{user.username}</h6>
-                        <h6>{user.phone_number}</h6>
+                    <div className='col text-center mx-auto mt-3  mb-3'>
+                    <h6>{user.phone_number}</h6>
+                    </div>
+                    {/* <div className='col text-center'>
                         <h6>{user.email}</h6>
                         <h6>{user.gender}</h6>
-                    </div>
+                    </div> */}
                     {/* <div className='col m-auto'>
                         <button className='btn btn-dark'>
                             تعديل الحساب
@@ -93,12 +114,12 @@ const Private = () =>{
 
     return(
     <Layout>
-        <div className='col-d-6'>
+        <div className='container-fluid'>
         <ToastContainer />
             {isAuth() ? null : <Redirect to='/'/>} 
             {error ? error : null}
             {loading ? loadingSpinner():userProfile()}
-            {orders ? ordersList(): null}
+            {hasorders ? ordersList(): noOrders()}
         </div>
     </Layout>
     )};

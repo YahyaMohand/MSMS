@@ -57,6 +57,12 @@ import DashboardSales from './core/dashboard/salesproducts'
 import DashboardVip from './core/dashboard/vipproducts'
 import DashboardOutOfStock from './core/dashboard/outofstockproducts'
 import SupplierOrder from './core/orders/suppliersorders'
+import NewProducts from './shop/newproducts'
+import SalesProducts from './shop/salesproducts'
+import VipProducts from './shop/vipproducts'
+
+
+
 const Routes = () => {
     return(
         <BrowserRouter>
@@ -72,6 +78,9 @@ const Routes = () => {
                 <Route path="/brands" exact component={GBrands} />
                 <Route path="/products/:productid" exact component={ProductPage} />
                 <Route path="/privacypolicy" exact component={PrivacyPolicy} />
+                <Route path="/product/new" exact component={NewProducts} />
+                <Route path="/product/sales" exact component={SalesProducts} />
+                <Route path="/product/vip" exact component={VipProducts} />
                 <PrivateRoute path="/private" exact component={Private} />
                 <AdminRoute path="/admin" exact component={Admin} />
                 <AdminRoute path="/admin/orders" exact component={Orders} />

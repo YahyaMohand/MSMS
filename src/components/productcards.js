@@ -14,7 +14,7 @@ function numcoma(x) {
 const ProductCards = ({products}) => {
     
     const isDiscount = ()=>{
-        console.log(products.discount)
+        // console.log(products.discount)
         if(products.discount == 0){
             return <div>
                 <p className='text-center font-weight-bolder' style={{color: '#fc2779'}}>

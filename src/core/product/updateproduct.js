@@ -275,7 +275,7 @@ function UpdateProduct(params) {
                             </div>
                             <select onChange={(event)=>{setCategoryid(event.target.value)}} value={categoryid} type="text" className="form-control" required>
                             <option>Select one</option>
-                            {categories.map(({categoryid, nameArabic})=><option value={categoryid}>{nameArabic+` ${categoryid}`}</option>)}
+                            {categories.map(({categoryid, nameArabic})=><option value={categoryid}>{nameArabic}</option>)}
                             </select>
                         </div>
                     </div>
@@ -286,7 +286,7 @@ function UpdateProduct(params) {
                             </div>
                             <select onChange={(event)=>{setSubcateid(event.target.value)}} value={subcateid} type="text" className="form-control" required>
                             <option>Select one</option>
-                            {subcategories.map(({subcateid, nameArabic})=><option value={subcateid}>{nameArabic+` ${categoryid}`}</option>)}
+                            {subcategories.filter(el=>el.categoryid==categoryid).map(({subcateid, nameArabic})=><option value={subcateid}>{nameArabic}</option>)}
                             </select>
                         </div>
                         <div className='col input-group mb-5'>
@@ -295,7 +295,7 @@ function UpdateProduct(params) {
                             </div>
                             <select onChange={(event)=>{setClasscateid(event.target.value)}} value={classcateid} type="text" className="form-control" required>
                             <option>Select one</option>
-                            {classcategories.map(({classcateid, nameArabic})=><option value={classcateid}>{nameArabic+` ${categoryid}`}</option>)}
+                            {classcategories.filter(el=>el.subcateid==subcateid).map(({classcateid, nameArabic})=><option value={classcateid}>{nameArabic}</option>)}
                             </select>
                         </div>
                     </div>

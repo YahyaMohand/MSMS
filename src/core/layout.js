@@ -1,11 +1,24 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import {isAuth, signout} from '../auth/helpers';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
 import {NavDropdown} from 'react-bootstrap'
 import { FaFacebookSquare, FaInstagramSquare, FaYoutubeSquare, FaSnapchatSquare, FaUserCircle } from 'react-icons/fa';
+import ProductCards from '../components/productcards'
+import axios from 'axios';
+import {ToastContainer, toast} from 'react-toastify';
+import DashboardCard from './dashboard/dashboardcard'
 
 const Layout = ({children,match,history}) =>{
+
+
+    const url = process.env.REACT_APP_NODE
+
+    const [query,setQuery]=useState()
+    const [loading, setLoading]=useState(true)
+    const [error, setError]=useState('')
+    const [products, setProducts]=useState({})
+    const [searchresult,setSearchresult]=useState(false)
 
     const isActive = path =>{
         if(match.path === path){
@@ -15,15 +28,70 @@ const Layout = ({children,match,history}) =>{
         }
     };
 
+    const SearchProducts = ()=> {
+
+        return(
+        <div>
+          {/* <hr className='ml-4 mr-4 mt-0 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr> */}
+          {/* <h3 className='text-center'>المنتجات</h3> */}
+          {/* <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr> */}
+          <div  className='container-fluid'>
+          {isAuth() && isAuth().role ===1? 
+            <div className='row d-flex'>
+                {products.map((products,i)=>(<DashboardCard key={i} products={products}/>))}
+            </div>
+            :
+            <div className='row d-flex'>
+                {products.map((products,i)=>(<ProductCards key={i} products={products}/>))}
+            </div>
+            }
+            {/* <div className='row d-flex'>
+              {products.map((products,i)=>(<ProductCards key={i} products={products}/>))}
+            </div> */}
+          </div>
+          <hr className='ml-4 mr-4 mt-1 mb-5 p-0' style={{border: '1px solid #dedede'}}></hr>
+        </div>
+      )}
+
+      const clickSubmit = event => {
+        event.preventDefault()
+        axios.get(`${url}/search/${encodeURI(query)}`)
+        .then(res => {
+            // console.log(res.data)
+            setProducts(res.data.products)
+            if(res.data.products[0]==null || res.data.products == {}){
+                setSearchresult(false)
+                toast.warning("لاتوجد نتائج لعملية البحث هذه");
+            }else{
+                setSearchresult(true)
+            }
+            setError('')
+            setTimeout(setLoading(false))
+            console.log(products)
+            console.log(query)
+        })   
+        .catch(error => {
+            setLoading(false)
+            setProducts({})
+            setError('Somthing went wrong')
+        })
+    };
+  
+    
     const nav = ()=>(
         <DirectionProvider direction={DIRECTIONS.RTL}>
         <nav className=" navbar navbar-expand-lg" style={{backgroundColor: '#562e48', color: '#ffffff'}}>
-            {/* <li className="nav-item text-center">  */}
-                <form className='text-center form-inline my-2 my-lg-0'>
-                    <button className='text-center btn my-2 my-sm-0 font-weight-bolder' type='submit' style={{backgroundColor:'#fc2779',color:'#ffffff'}} >ابحث</button>
-                    <input type='search' className='form-control mr-sm-2' placeholder="ابحث عن المنتجات" />
+           
+                <form className='text-center form-inline my-2 my-lg-0' 
+                    onSubmit={clickSubmit}
+                >
+                    {/* {submitsearch()} */}
+                    <button className='text-center btn my-2 my-sm-0 font-weight-bolder' type='submit' 
+                        style={{backgroundColor:'#fc2779',color:'#ffffff'}} >ابحث</button>
+                    
+                    <input type='search' onChange={(event)=>{setQuery(event.target.value)}} value={query} className='form-control mr-sm-2' placeholder="ابحث عن المنتجات" />
                 </form>
-            {/* </li> */}
+   
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             {/* <span className="navbar-toggler-icon" style={{backgroundColor: '#ffffff',color:"#ffffff"}}></span> */}
             <svg style={{color:'#ffffff'}} width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-grid-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -31,17 +99,17 @@ const Layout = ({children,match,history}) =>{
             </svg>
         </button>
             <div className='collapse navbar-collapse' id="navbarSupportedContent">
-            <ul className="container d-flex justify-content-between navbar-nav mx-auto">
+            <ul className="container d-flex justify-content-between navbar-nav mx-auto my-auto">
 
             <li>
-                <Link to="/" className="mr-5 nav-link" style={isActive('/')}>
+                <Link to="/" onClick={()=>setSearchresult(false)} className="mr-5 nav-link" style={isActive('/')}>
                     <img height='40px' src={window.location.origin + '/kwaysi.png'} alt='kwaysi'></img>
                 </Link>
             </li>
 
             <li className="nav-item text-center">
                 
-                <Link to='/brands' className='nav-link font-weight-bold' style={isActive('/brands')}>
+                <Link to='/brands' onClick={()=>setSearchresult(false)} className='nav-link font-weight-bold' style={isActive('/brands')}>
                     البراندات
                 </Link>
             
@@ -50,13 +118,13 @@ const Layout = ({children,match,history}) =>{
            {!isAuth() && (
                <Fragment>
                     <li className="nav-item text-center">
-                <Link to="/signin" className=" nav-link font-weight-bold" style={isActive('/signin')}>
+                <Link onClick={()=>setSearchresult(false)} to="/signin" className=" nav-link font-weight-bold" style={isActive('/signin')}>
                     تسجيل الدخول
                 </Link>
             </li>
 
             <li className="nav-item text-center">
-                <Link to="/signup" className=" nav-link font-weight-bold" style={isActive('/signup')}>
+                <Link onClick={()=>setSearchresult(false)} to="/signup" className=" nav-link font-weight-bold" style={isActive('/signup')}>
                     انشاء حساب
                 </Link>
             </li>
@@ -78,7 +146,7 @@ const Layout = ({children,match,history}) =>{
              {isAuth() && isAuth().role ===1 && (
             <li className="nav-item text-center">
                 
-                    <Link to='/admin/orders' className='nav-link' style={isActive('/admin/orders')}>
+                    <Link onClick={()=>setSearchresult(false)} to='/admin/orders' className='nav-link' style={isActive('/admin/orders')}>
                         Orders
                     </Link>
                 
@@ -93,16 +161,16 @@ const Layout = ({children,match,history}) =>{
                             Products
                         </Link> */}
                         <NavDropdown title="Products" id="basic-nav-dropdown" >
-                        <NavDropdown.Item href="/admin/dashboard">All Products</NavDropdown.Item>
-                        <NavDropdown.Item href="/admin/dashboard/new">New Products</NavDropdown.Item>
-                        <NavDropdown.Item href="/admin/dashboard/sales">Sales Products</NavDropdown.Item>
-                        <NavDropdown.Item href="/admin/dashboard/vip">Vip Products</NavDropdown.Item>
-                        <NavDropdown.Item href="/admin/dashboard/outofstock">Out of Stack</NavDropdown.Item>
-                            <NavDropdown.Item href="/admin/products">All Styles</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard">All Products</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard/new">New Products</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard/sales">Sales Products</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard/vip">Vip Products</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard/outofstock">Out of Stack</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/products">All Styles</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="/admin/addproduct">Add Product</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addproduct">Add Product</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="/admin/addstyle">Add Style</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addstyle">Add Style</NavDropdown.Item>
                         </NavDropdown>
                 
             </li>
@@ -118,9 +186,9 @@ const Layout = ({children,match,history}) =>{
                     </Link> */}
 
                     <NavDropdown title="Brands" id="basic-nav-dropdown" >
-                            <NavDropdown.Item href="/admin/brands">Brands</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/brands">Brands</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="/admin/addbrand">Add Brand</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addbrand">Add Brand</NavDropdown.Item>
                         </NavDropdown>
                 
             </li>
@@ -135,13 +203,13 @@ const Layout = ({children,match,history}) =>{
                         Categories
                     </Link> */}
                     <NavDropdown title="Categories" id="basic-nav-dropdown" >
-                            <NavDropdown.Item href="/admin/categories">Categories</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/categories">Categories</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="/admin/addcategory">Add Category</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addcategory">Add Category</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="/admin/addsubcategory">Add Sub-Category</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addsubcategory">Add Sub-Category</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="/admin/addclasscategory">Add Class-Category</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addclasscategory">Add Class-Category</NavDropdown.Item>
                         </NavDropdown>
                 
             </li>
@@ -156,9 +224,9 @@ const Layout = ({children,match,history}) =>{
                         Stores
                     </Link> */}
                     <NavDropdown title="Stores" id="basic-nav-dropdown" >
-                        <NavDropdown.Item href="/admin/stores">Stores</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/stores">Stores</NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item href="/admin/addstore">Add Store</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addstore">Add Store</NavDropdown.Item>
                     </NavDropdown>
                 
             </li>
@@ -172,9 +240,9 @@ const Layout = ({children,match,history}) =>{
                         Cities
                     </Link> */}
                     <NavDropdown title="Cities" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="/admin/cities">Cities</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/cities">Cities</NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item href="/admin/addcity">Add City</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addcity">Add City</NavDropdown.Item>
                     </NavDropdown>
                 
             </li>
@@ -188,9 +256,9 @@ const Layout = ({children,match,history}) =>{
                         Add Carousel
                     </Link> */}
                     <NavDropdown title="Carousel" id="basic-nav-dropdown" >
-                        <NavDropdown.Item href="/admin/carousels">Carousels</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/carousels">Carousels</NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item href="/admin/addcarousel">Add Carousel</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addcarousel">Add Carousel</NavDropdown.Item>
                     </NavDropdown>
                 
             </li>
@@ -201,7 +269,7 @@ const Layout = ({children,match,history}) =>{
                {isAuth() && isAuth().role ===0 && (
             <li className="nav-item  text-center">
                 
-                    <Link to='/bag' className='nav-link' style={isActive('/bag')}>
+                    <Link onClick={()=>setSearchresult(false)} to='/bag' className='nav-link' style={isActive('/bag')}>
                         الحقيبة
                         {localStorage.getItem('bag') ? <sup className='badge' style={{backgroundColor: '#fc2779'}} >
                             {/* <small className='' style={{fontSize: 'small'}}>{JSON.parse(localStorage.getItem('bag')).length}</small> */}
@@ -221,6 +289,7 @@ const Layout = ({children,match,history}) =>{
                  onClick={()=>{
                     signout(() => {
                         history.push('/')
+                        setSearchresult(false)
                     })
                 }}
                 >
@@ -237,7 +306,7 @@ const Layout = ({children,match,history}) =>{
             {isAuth() && isAuth().role ===0 && (
             // <li className="nav-item  text-center">
                 
-                    <Link to='/private' className='nav-link font-weight-bold' style={isActive('/private')}>
+                    <Link onClick={()=>setSearchresult(false)} to='/private' className='nav-link font-weight-bold' style={isActive('/private')}>
                         {` ${isAuth().username}    `}
                         
                         <FaUserCircle  style={{color: '#ffffff',fontSize:'20'}} />
@@ -302,9 +371,12 @@ const Layout = ({children,match,history}) =>{
     return(
         <Fragment>
             {nav()}
+            
             <div className='container-fluid' style={{width:'80%'}}>
                 <div className='row' style={{backgroundColor: '#FDFDFB'}}>
-                    {children}
+                    <ToastContainer position='bottom-right' />
+                    {searchresult ? SearchProducts():children}
+                    {/* {children} */}
                 </div>
             </div>
             {Footer()}

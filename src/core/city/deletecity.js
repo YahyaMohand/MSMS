@@ -39,7 +39,7 @@ const DeleteCity = (params) =>{
     const deleteAlert = ()=>(
           //delete alert start
         <div className='m-lg-5'>
-        <div  variant='danger' className='alert-danger text-center  align-items-center align-content-center justify-content-center'>
+        <div  variant='danger' className=' text-center  align-items-center align-content-center justify-content-center'>
         <div className='p-3'>
             <p>Hey, you are going to delete item, Are you sure?</p>
         </div>

@@ -250,7 +250,7 @@ function AddProduct() {
                             </div>
                             <select onChange={handleChange('categoryid')} value={categoryid} type="text" className="form-control" required>
                             <option value="0">Select one</option>
-                            {categories.map(({categoryid, nameArabic})=><option value={categoryid}>{nameArabic}</option>)}
+                            {categories.map(({categoryid, nameArabic})=><option value={categoryid}>{`${nameArabic}`}</option>)}
                             </select>
                         </div>
                     </div>
@@ -259,9 +259,9 @@ function AddProduct() {
                             <div className='input-group-prepend'>
                                 <span className='input-group-text badge-dark'>Sub-Category</span>
                             </div>
-                            <select onChange={handleChange('subcateid')} value={subcateid} type="text" className="form-control" required>
+                            <select onChange={handleChange('subcateid')} value={subcateid} type="text" className="form-control"  required>
                             <option value="0">Select one</option>
-                            {subcategories.map(({subcateid, nameArabic})=><option value={subcateid}>{nameArabic}</option>)}
+                            {subcategories.filter(el=>el.categoryid==categoryid).map(({subcateid, nameArabic})=><option value={subcateid}>{`${nameArabic}`}</option>)}
                             </select>
                         </div>
                         <div className='col input-group mb-5'>
@@ -270,7 +270,7 @@ function AddProduct() {
                             </div>
                             <select onChange={handleChange('classcateid')} value={classcateid} type="text" className="form-control" required>
                             <option value="0">Select one</option>
-                            {classcategories.map(({classcateid, nameArabic})=><option value={classcateid}>{nameArabic}</option>)}
+                            {classcategories.filter(el=>el.subcateid==subcateid).map(({classcateid, nameArabic,})=><option value={classcateid}>{`${nameArabic}`}</option>)}
                             </select>
                         </div>
                     </div>
