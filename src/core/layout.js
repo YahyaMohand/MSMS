@@ -8,6 +8,7 @@ import ProductCards from '../components/productcards'
 import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
 import DashboardCard from './dashboard/dashboardcard'
+import '../App.css'
 
 const Layout = ({children,match,history}) =>{
 
@@ -372,9 +373,13 @@ const Layout = ({children,match,history}) =>{
         <Fragment>
             {nav()}
             
-            <div className='container-fluid' style={{width:'80%'}}>
+            <div className='container-fluid widthclass' 
+            // style={{width:'80%'}}
+            >
                 <div className='row' style={{backgroundColor: '#FDFDFB'}}>
-                    <ToastContainer position='bottom-right' />
+                    <ToastContainer 
+                    // position='bottom-right' 
+                    />
                     {searchresult ? SearchProducts():children}
                     {/* {children} */}
                 </div>
