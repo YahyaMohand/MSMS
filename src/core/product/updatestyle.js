@@ -42,17 +42,17 @@ function UpdateStyle(params) {
 
 
     useEffect(()=>{
-        axios.get(`${url}/admin/styles/create/${userid}`)
-        .then(res => {
-            setProducts(res.data.products)
-            setError('')
-            // setLoading(false)
-        })   
-        .catch(error => {
-            // setLoading(false)
-            setProducts({})
-            setError('Somthing went wrong')
-        })
+        // axios.get(`${url}/admin/styles/create/${userid}`)
+        // .then(res => {
+        //     setProducts(res.data.products)
+        //     setError('')
+        //     // setLoading(false)
+        // })   
+        // .catch(error => {
+        //     // setLoading(false)
+        //     setProducts({})
+        //     setError('Somthing went wrong')
+        // })
 
        
         axios.get(`${url}/admin/styles/${styleid}/${userid}`)
@@ -205,11 +205,12 @@ function UpdateStyle(params) {
                             <div className='input-group-prepend'>
                                 <span className='input-group-text badge-dark'>Product</span>
                             </div>
+                            <input className="form-control" value={productid} disabled/>
                             {/* <label className="text-muted">Brand</label> */}
-                            <select onChange={(event)=>{setProductid(event.target.value)}} value={productid} type="text" className="form-control" placeholder='Brands' required>
+                            {/* <select onChange={(event)=>{setProductid(event.target.value)}} value={productid} type="text" className="form-control" placeholder='Brands' required>
                             <option>Select Product</option>
                             {products.map(({productid, name})=><option value={productid}>{name}</option>)}
-                            </select>
+                            </select> */}
                         </div>
                     </div>
                     

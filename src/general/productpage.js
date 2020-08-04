@@ -114,9 +114,9 @@ const url = process.env.REACT_APP_NODE
 
     const productPart = ()=> (
         <DirectionProvider direction={DIRECTIONS.RTL}>
-        <div className='m-5'>
-            <div className='row'>
-                <div className='col text-center'>
+        <div className='m-5 mx-auto'>
+            <div className='row d-flex'>
+                <div className='col-md text-center'>
                     <div style={{backgroundClip: '#ffffff'}} className=' m-3'>
                         <h4>{product.name}</h4>
                     </div>
@@ -125,9 +125,10 @@ const url = process.env.REACT_APP_NODE
                         <img src={`${url}/${images}`} alt='product pic'style={{border: '1px solid #ffffff'}} className='shadow' width='80%'>
                         </img>
                     </div>
+                    <hr style={{border: '1px solid gery'}}></hr>
                 </div>
-                <div className='col'>
-                    <div className='row'>
+                <div className='col-md'>
+                    <div className='row mx-auto text-center d-flex'>
                         <div className='col'>
                             {parseInt(Number(discount)*100) === 0 ? <h5>{`(${IQD}) ${numcoma(price)}`}</h5> :  <h5 style={{textDecoration: 'line-through'}}>{`(${IQD}) ${numcoma(price)}`}</h5> }
                         </div>
@@ -143,21 +144,25 @@ const url = process.env.REACT_APP_NODE
                     </div>
                     <hr></hr>
                     <div>
-                        <h6 className='text-right'>:اللون</h6>
+                    <h6 className='text-right'>الستايل :</h6>
+                    {/* <h6 className='ml-5 mr-5 inline'>{stylename}</h6> */}
                         <div>
-                            {styles.map((styles,i)=>(<button 
-                            onClick={()=>updateStyle(styles)} className='btn m-1' key={i} styles={styles} 
-                            style={{backgroundColor: `${styles.color}`,color:'white'}} >{styles.name}</button>))}
+                            {styles.map((styles,i)=>( 
+                            <button
+                            onClick={()=>updateStyle(styles)} className='btn btn-outline-primary m-1' key={i} styles={styles}>
+                                 {styles.name}
+                                 <p className='badge m-1' style={{backgroundColor: `${styles.color}`,color:`${styles.color}`}} >o</p>
+                             </button>))}
                         </div>
                     </div>
                     <hr></hr>
                     <div className='text-right'>
                         <span >الحجم</span>
                         <span> : </span>
-                        <span>{size}</span>
+                        <span className='font-weight-bolder'>{size}</span>
                     </div>
                 </div>
-                <div className='col'>
+                <div className='col-md'>
                     <div className='text-center mb-3'>
                         <h4 >البراند</h4>
                         <hr></hr>
@@ -184,14 +189,21 @@ const url = process.env.REACT_APP_NODE
             <div className='container-fluid' style={{backgroundColor: '#ffffff',}}>
                 <div className='block'>
                     <div>
-                        <h6 className='text-right'>: طريقة الاستخدام</h6>
-                        <hr></hr>
-                        <p>{product.useMethod}</p>
+                        <h6 className='text-right'>  الموديل :</h6>
+                        {/* <hr></hr> */}
+                        <p className='text-right'>{product.model}</p>
                     </div>
+                    <hr></hr>
                     <div>
-                        <h6 className='text-right'>: وصف المنتج</h6>
-                        <hr></hr>
-                        <p>{product.description}</p>
+                        <h6 className='text-right'> طريقة الاستخدام :</h6>
+                        {/* <hr></hr> */}
+                        <p className='text-right'>{product.useMethod}</p>
+                    </div>
+                    <hr></hr>
+                    <div>
+                        <h6 className='text-right'> وصف المنتج :</h6>
+                        {/* <hr></hr> */}
+                        <p className='text-right'>{product.description}</p>
                     </div>
                 </div>
                 {/* <div className='row'>
