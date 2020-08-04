@@ -43,8 +43,8 @@ const Brands = () => {
 
 
     const newBrandsForm = () => (
-        <div className='m-2'>
-            <div className='row'>
+        <div className='m-2 mx-auto container-fluid'>
+            <div className='row d-flex'>
                 {brands.map((brands, i)=>(<BrandCard key={i} brands={brands}/>))}
             </div>
         </div>

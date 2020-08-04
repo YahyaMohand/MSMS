@@ -39,8 +39,8 @@ const DashboardNew = () => {
 
 
     const newProductsForm = () => (
-        <div className='m-2 container'>
-            <div className='row'>
+        <div className='m-2 container-fluid mx-auto'>
+            <div className='row d-flex'>
                 {products.map((products, i)=>(<DashboardCard key={i} products={products}/>))}
             </div>
         </div>
@@ -49,7 +49,7 @@ const DashboardNew = () => {
 
     return (
         <Layout>
-            <div className='container'>
+            <div className='container-fluid'>
             <div className="col-d-6">
             {isAuth() ? null : <Redirect to='/'/>} 
             {error ? error : null}

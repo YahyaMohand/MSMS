@@ -18,6 +18,7 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 const AddCarousel = () => {
 
     const [values, setValues] = useState({
+        itemid:"",
         Link: "",
         image: "",
         notes:"",
@@ -67,7 +68,7 @@ const AddCarousel = () => {
         }
     }
 
-    const {link, notes,name,buttonText} = values
+    const {link,itemid, notes,name,buttonText} = values
 
     const handleChange = (link) => (event) => {
         setValues({...values, [link]: event.target.value});
@@ -80,11 +81,11 @@ const AddCarousel = () => {
             method: 'POST',
             // url: `${process.env.REACT_APP_ADMIN}/categories/create`,
             url: `${url}/admin/carousel/create/${userid}`,
-            data: {link, image, notes,name}
+            data: {link,itemid, image, notes,name}
         })
         .then(response =>{
             // console.log("Carousel Added to database successfully", response);
-            setValues({...values, link:'', images: '', notes:'',name:'',buttonText: 'Submitted'});
+            setValues({...values, link:'', images: '', notes:'',name:'',itemid:'',buttonText: 'Submitted'});
             toast.success(response.data.message);
         })
         .catch(error => {
@@ -104,8 +105,13 @@ const AddCarousel = () => {
     const newCarouselForm = () => (
         <form onSubmit={clickSubmit}>
             <div className="form-group">
-                <label className="text-muted">Click Link</label>
+                <label className="text-muted">Web Link</label>
                 <input onChange={handleChange('link')} value={link} type="text" className="form-control" required/>
+            </div>
+
+            <div className="form-group">
+                <label className="text-muted">item id for app</label>
+                <input onChange={handleChange('itemid')} value={itemid} type="text" className="form-control" required/>
             </div>
 
             <div className="form-group">
@@ -118,9 +124,9 @@ const AddCarousel = () => {
                 <select onChange={handleChange('notes')} value={notes}  type="text" className="form-control"  required>
                     <option>selecte item ...</option>
                     <option>product</option>
+                    <option>category</option>
                     <option>subcategory</option>
                     <option>classcategory</option>
-                    <option>maincategory</option>
                     <option>brand</option>
                 </select>
             </div>
@@ -156,7 +162,7 @@ const AddCarousel = () => {
             <div className="col-d-6">
                 <ToastContainer />
                 {isAuth() ? null : <Redirect to='/'/>} 
-                {JSON.stringify({link,image,notes})}
+                {JSON.stringify({link,image,notes,name,itemid})}
                 <h1 className="p-5 text-center">Add Carousel</h1>
                 {pic ? pictureBorder():null}
                 {newCarouselForm()}

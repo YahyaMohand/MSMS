@@ -42,8 +42,8 @@ const Carousels = () => {
 
 
     const newCarouselForm = () => (
-        <div className='m-2'>
-            <div className='row'>
+        <div className='m-2 mx-auto'>
+            <div className='row d-flex'>
                 {carousels.map((carousels, i)=>(<CarouselCard key={i} carousels={carousels}/>))}
             </div>
         </div>
@@ -53,7 +53,7 @@ const Carousels = () => {
     return (
         <Layout>
             {isAuth() ? null : <Redirect to='/'/>} 
-            <div className='container'>
+            <div className='container-fluid'>
                 {error ? error : null}
                 {loading ? loadingSpinner():newCarouselForm()}
             </div>

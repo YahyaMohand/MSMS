@@ -7,7 +7,7 @@ const url = process.env.REACT_APP_NODE
 
 const CarouselCard = ({carousels}) => {
     return(
-        <div className='card m-1' style={{width:'18rem'}}>
+        <div className='card m-3 mx-auto shadow' style={{width:'45rem'}}>
                 <img className='card-img-top' alt='product img' src={`${url}/${carousels.image}`}/>
                 <div className='card-body'>
                     <h5 className='card-title text-center'>
@@ -15,6 +15,9 @@ const CarouselCard = ({carousels}) => {
                     </h5>
                     <h5 className='card-title text-center'>
                         {`${carousels.notes}`}
+                    </h5>
+                    <h5 className='card-title text-center'>
+                        {`${carousels.name}`}
                     </h5>
                     {/* <p className='text-center'>{brands.bio}</p> */}
 

@@ -8,7 +8,7 @@ const ProductCard = ({products}) => {
 
 
     return(
-        <div className='card m-1' style={{width:'18rem'}}>
+        <div className='card m-4 mx-auto shadow' style={{width:'18rem'}}>
                 <img className='card-img-top' alt='product img' src={`${url}/${products.images}`}/>
                 <div className='card-body'>
                     <h5 className='card-title text-center'>
@@ -24,8 +24,8 @@ const ProductCard = ({products}) => {
                     <p className='m-0'>Discount Price : {products.discountPrice} IQD</p>
                     <p className='m-0'>Quantity : {products.quantity}</p>
                     <p className='m-0'>Size : {products.size}</p>
-                    <p className='m-0'>Pro Date : {products.product[0].productionDate}</p>
-                    <p className='m-0'>Exp Date : {products.product[0].expiryDate}</p>
+                    {/* <p className='m-0'>Pro Date : {products.product[0].productionDate}</p> */}
+                    {/* <p className='m-0'>Exp Date : {products.product[0].expiryDate}</p> */}
                     <p className='m-0'>SN : {products.product[0].serialnumber}</p>
                    <div className='row'>
                        <Link to={{

@@ -7,7 +7,7 @@ const CityCard = ({cities}) => {
 
     return(
 
-        <div className='card m-1' style={{width:'18rem'}}>
+        <div className='card m-3 mx-auto shadow' style={{width:'18rem'}}>
                 <div className='card-body'>
                     <h5 className='card-title text-center'>
                         {`${cities.nameArabic}`}

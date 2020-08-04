@@ -39,7 +39,7 @@ const Products = () => {
 
 
     const newProductsForm = () => (
-        <div className='m-2 container'>
+        <div className='m-2 container-fluid mx-auto'>
             <div className='row'>
                 {products.map((products, i)=>(<ProductCard key={i} products={products}/>))}
             </div>
@@ -49,8 +49,8 @@ const Products = () => {
 
     return (
         <Layout>
-            <div className='container'>
-            <div className="col-d-6">
+            <div className='container-fluid'>
+            <div className="">
             {isAuth() ? null : <Redirect to='/'/>} 
             {error ? error : null}
             {loading ? loadingSpinner():newProductsForm()}

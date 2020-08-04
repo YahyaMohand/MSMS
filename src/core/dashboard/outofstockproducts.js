@@ -41,10 +41,10 @@ const DashboardOutOfStock = () => {
 
     const newProductsForm = () => (
       
-    <div className='m-2 container'>
+    <div className='m-2 container-fluid mx-auto'>
         
 
-        <div className='row'>
+        <div className='row d-flex'>
             {products.map((products, i)=>(<DashboardCard key={i} products={products}/>))}
         </div>
     </div>
@@ -53,8 +53,8 @@ const DashboardOutOfStock = () => {
 
     return (
         <Layout>
-            <div className='container'>
-            <div className="col-d-6">
+            <div className='container-fluid'>
+            <div className="">
             {isAuth() ? null : <Redirect to='/'/>} 
             {error ? error : null}
             {loading ? loadingSpinner():newProductsForm()}

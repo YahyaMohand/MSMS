@@ -257,7 +257,7 @@ function AddStyleByProduct(params) {
                         <div className='input-group-prepend'>
                             <span className='input-group-text'>Cost</span>
                         </div>
-                        <input onChange={handleChange('cost')} value={cost} type="number" className="form-control" required /> 
+                        <input onChange={(event)=>{setCost(event.target.value)}} value={cost} type="number" className="form-control" required /> 
                     </div>
                     <div className='col input-group mb-5'>
                         <div className='input-group-prepend'>
@@ -272,7 +272,7 @@ function AddStyleByProduct(params) {
                             <span className='input-group-text badge-secondary'>Price</span>
                         </div>
                         <input 
-                        onChange={handleChange('price')}
+                        onChange={(event)=>{setPrice(event.target.value)}}
                         value={price} type="number"  
                         className="form-control" required /> 
                     </div>
@@ -306,7 +306,7 @@ function AddStyleByProduct(params) {
                         <div className='input-group-prepend'>
                             <span className='input-group-text badge-secondary'>Price</span>
                         </div>
-                        <input onChange={handleChange('discountPrice')} value={discountPrice} type="number" className="form-control" required /> 
+                        <input onChange={(event)=>{setDiscountPrice(event.target.value)}} value={discountPrice} type="number" className="form-control" required /> 
                     </div>
                 </div>
                 <div className='row text-center mb-5'>

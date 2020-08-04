@@ -5,8 +5,8 @@ import {Link} from 'react-router-dom'
 const url = process.env.REACT_APP_NODE
 const DashboardCard = ({products}) => {
     return(
-        <a href={`/admin/productstyles/${products.productid}`} style={{textDecoration: 'none', color: 'black'}}>
-        <div className='card m-1' style={{width:'18rem'}}>
+        <div className='card mx-auto shadow m-3' style={{width:'18rem'}}>
+            <a href={`/admin/productstyles/${products.productid}`} style={{textDecoration: 'none', color: 'black'}}>
                 <img className='card-img-top' alt='product img' src={`${url}/${products.imagePath}`}/>
                 <div className='card-body'>
                     <h5 className='card-title text-center'>
@@ -52,8 +52,9 @@ const DashboardCard = ({products}) => {
                     
                     
                 </div>
+                </a>
             </div>
-            </a>
+           
     )
 }
 

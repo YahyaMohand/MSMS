@@ -42,8 +42,8 @@ const Cities = () => {
 
 
     const newCitiesForm = () => (
-        <div className='m-2'>
-            <div className='row'>
+        <div className='m-2 mx-auto'>
+            <div className='row d-flex'>
                 {cities.map((cities, i)=>(<CityCard key={i} cities={cities}/>))}
             </div>
         </div>
@@ -52,7 +52,7 @@ const Cities = () => {
 
     return (
         <Layout>
-            <div className='container'>
+            <div className='container-fluid'>
 
             {isAuth() ? null : <Redirect to='/'/>}
             {error ? error : null}

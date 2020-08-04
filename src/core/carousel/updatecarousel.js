@@ -25,6 +25,7 @@ const UpdateCarousel = (params) => {
     const [link, setLink]=useState()
     const [notes, setNotes]=useState()
     const [name,setName]=useState()
+    const [itemid,setitemid]=useState()
     const [buttonText, setButtonText]=useState('Update')
     const [image, setImage ] = useState()
 
@@ -35,6 +36,7 @@ const UpdateCarousel = (params) => {
             setNotes(res.data.carousel.notes)
             setImage(res.data.carousel.image)
             setName(res.data.carousel.name)
+            setitemid(res.data.carousel.itemid)
             setError('')
             setTimeout(()=>{setLoading(false)})
         })   
@@ -44,6 +46,7 @@ const UpdateCarousel = (params) => {
             setNotes({})
             setImage({})
             setName({})
+            setitemid({})
             setError('Somthing went wrong')
         })
     }, [])
@@ -97,7 +100,7 @@ const UpdateCarousel = (params) => {
             method: 'PUT',
             // url: `${process.env.REACT_APP_ADMIN}/categories/create`,
             url: `${url}/admin/carousel/update/${carouselid}/${userid}`,
-            data: {link, notes, image,name}
+            data: {link, notes, image,name,itemid}
         })
         .then(response =>{
             // console.log("Carousel Added to database successfully", response);
@@ -126,7 +129,12 @@ const UpdateCarousel = (params) => {
             </div>
             <div className="form-group">
                 <label className="text-muted">Name for mobile appbar label</label>
-                <input onChange={(event)=>{setLink(event.target.value)}} value={name} type="text" className="form-control" required/>
+                <input onChange={(event)=>{setName(event.target.value)}} value={name} type="text" className="form-control" required/>
+            </div>
+
+            <div className="form-group">
+                <label className="text-muted">item id for app</label>
+                <input onChange={(event)=>{setitemid(event.target.value)}} value={itemid} type="text" className="form-control" required/>
             </div>
 
             <div className="form-group">
@@ -135,7 +143,7 @@ const UpdateCarousel = (params) => {
                     <option>product</option>
                     <option>subcategory</option>
                     <option>classcategory</option>
-                    <option>maincategory</option>
+                    <option>category</option>
                     <option>brand</option>
                 </select>
             </div>
@@ -167,11 +175,11 @@ const UpdateCarousel = (params) => {
 
     return(
         <Layout>
-            <div className='container'>
-            <div className="col-d-6">
+            <div className='container-fluid'>
+            <div className="">
                 <ToastContainer />
                 {isAuth() ? null : <Redirect to='/'/>} 
-                {JSON.stringify({link,notes,image,name})}
+                {JSON.stringify({link,notes,image,name,itemid})}
                 <h1 className="p-5 text-center">Update Carousel</h1>
                 {error ? error : null}
                 {loading ? loadingSpinner():pictureBorder()}

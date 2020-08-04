@@ -39,8 +39,8 @@ const Stores = () => {
     }, [])
 
     const newStoresForm = () => (
-        <div className='m-2'>
-            <div className='row'>
+        <div className='m-2 mx-auto'>
+            <div className='row d-flex'>
                 {stores.map((stores, i)=>(<StoreCard key={i} stores={stores}/>))}
             </div>
         </div>
@@ -49,7 +49,7 @@ const Stores = () => {
 
     return (
         <Layout>
-            <div className='container'>
+            <div className='container-fluid'>
 
             {isAuth() ? null : <Redirect to='/'/>} 
             {error ? error : null}

@@ -47,7 +47,7 @@ const Categories = () => {
     }, [])
 
     const newCategoriesForm = () => (
-        <div className='container m-2'>
+        <div className='container-fluid mx-auto'>
             <div className='row'>
                 {categories.map((categories, i)=>(<MainCategoriesCard key={i} categories={categories}/>))}
             </div>
@@ -56,7 +56,7 @@ const Categories = () => {
 
 
     const newSubCategoriesForm = () => (
-        <div className='container m-2'>
+        <div className='container-fluid mx-auto'>
             <div className='row'>
                 {subcategories.map((subcategories, i)=>(<SubCategoriesCard key={i} subcategories={subcategories}/>))}
             </div>
@@ -64,8 +64,8 @@ const Categories = () => {
     )
 
     const newClassCategoriesForm = () => (
-        <div className='container m-2'>
-            <div className='row'>
+        <div className='container-fluid mx-auto'>
+            <div className='row d-flex'>
                 {classcategories.map((classcategories, i)=>(<ClassCategoriesCard key={i} classcategories={classcategories}/>))}
             </div>
         </div>
@@ -73,7 +73,7 @@ const Categories = () => {
 
     return (
         <Layout>
-            <div className='container'>
+            <div className='container-fluid'>
             {isAuth() ? null : <Redirect to='/'/>} 
             <h1 className='text-center m-lg-5'>Main Categories</h1>
             {error ? error : null}
