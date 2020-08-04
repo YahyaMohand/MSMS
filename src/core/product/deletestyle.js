@@ -69,7 +69,7 @@ const DeleteStyle = (params) =>{
         <Layout>
             <div className='container'>
             <div className="col-d-6">
-            <ToastContainer />
+            {/* <ToastContainer /> */}
                 {isAuth() ? null : <Redirect to='/'/>}
                 <h1 className='text-center m-lg-5'>Delete Style</h1> 
                 {deleteAlert()}

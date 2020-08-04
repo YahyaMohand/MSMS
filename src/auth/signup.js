@@ -72,7 +72,7 @@ const Signup = () =>{
         <Layout>
             <div className='container mb-lg-5 mt-lg-5'>
             <div className="col-d-6">
-                <ToastContainer />
+                {/* <ToastContainer /> */}
                 {isAuth() ? <Redirect to='/'/> : null} 
                 {/* {JSON.stringify({username,phonenumber,password})} */}
                 <h1 className="p-5 text-center m-5">إنشاء حساب</h1>

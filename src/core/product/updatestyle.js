@@ -340,7 +340,7 @@ function UpdateStyle(params) {
         <Layout>
             <div className='container'>
             <div className="col-d-6">
-            <ToastContainer />
+            {/* <ToastContainer /> */}
                 {isAuth() ? null : <Redirect to='/'/>} 
                 {/* {JSON.stringify({name,bio,city,street,x_cord,y_cord})} */}
                 {/* {JSON.stringify({productid,

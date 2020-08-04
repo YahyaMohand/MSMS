@@ -227,7 +227,7 @@ const PBag = ()=>{
       <div className='container'>
       {isAuth() ? null : <Redirect to='/'/>}
         <div className='row'>
-          <ToastContainer/>
+          {/* <ToastContainer/> */}
           {/* {JSON.stringify({ cityid})} */}
           {showbag ? showItems():null }
           {showbag ? totalPill():bagEmpty() }

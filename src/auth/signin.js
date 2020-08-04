@@ -85,7 +85,7 @@ const Signin = ({history}) =>{
         {/* {JSON.stringify(isAuth())} */}
         <div className='container mb-lg-5 mt-lg-5'>
             <div className="col-d-6">
-                <ToastContainer />
+                {/* <ToastContainer /> */}
                 {/* if the user is loged in it will convert it to home page */}
                 {isAuth() ? <Redirect to='/'/> : null} 
                 {/* {JSON.stringify({phonenumber,password})} */}

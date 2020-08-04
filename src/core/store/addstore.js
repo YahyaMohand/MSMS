@@ -143,7 +143,7 @@ const AddStore = () => {
             <div className='container'>
 
             <div className="col-d-6">
-                <ToastContainer />
+                {/* <ToastContainer /> */}
                 {isAuth() ? null : <Redirect to='/'/>} 
                 {JSON.stringify({nameArabic,nameEnglish,bio,cityid,street,x_cord,y_cord})}
                 <h1 className="p-5 text-center">Add Store</h1>

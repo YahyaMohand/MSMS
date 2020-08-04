@@ -38,11 +38,11 @@ const Layout = ({children,match,history}) =>{
           {/* <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr> */}
           <div  className='container-fluid'>
           {isAuth() && isAuth().role ===1? 
-            <div className='row d-flex'>
+            <div className='row mx-auto d-flex'>
                 {products.map((products,i)=>(<DashboardCard key={i} products={products}/>))}
             </div>
             :
-            <div className='row d-flex'>
+            <div className='row mx-auto d-flex'>
                 {products.map((products,i)=>(<ProductCards key={i} products={products}/>))}
             </div>
             }
@@ -336,7 +336,7 @@ const Layout = ({children,match,history}) =>{
                         <br></br>
                         
                         <a href="https://play.google.com/store/apps/details?id=com.kwaysi.com">
-                            <img height='60px' src={window.location.origin + '/googleplay.png'} alt='google play' />
+                            <img height='60px' className='mb-5' src={window.location.origin + '/googleplay.png'} alt='google play' />
                         </a>
                        
                     </div>
@@ -378,7 +378,7 @@ const Layout = ({children,match,history}) =>{
             >
                 <div className='row' style={{backgroundColor: '#FDFDFB'}}>
                     <ToastContainer 
-                    // position='bottom-right' 
+                    position='bottom-right'
                     />
                     {searchresult ? SearchProducts():children}
                     {/* {children} */}

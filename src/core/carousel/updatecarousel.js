@@ -177,7 +177,7 @@ const UpdateCarousel = (params) => {
         <Layout>
             <div className='container-fluid'>
             <div className="">
-                <ToastContainer />
+                {/* <ToastContainer /> */}
                 {isAuth() ? null : <Redirect to='/'/>} 
                 {JSON.stringify({link,notes,image,name,itemid})}
                 <h1 className="p-5 text-center">Update Carousel</h1>

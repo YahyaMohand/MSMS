@@ -194,7 +194,7 @@ const UpdateSubCategory = (params) => {
         <Layout>
             <div className='container'>
             <div className="col-d-6">
-                <ToastContainer />
+                {/* <ToastContainer /> */}
                 {isAuth() ? null : <Redirect to='/'/>} 
                 {JSON.stringify({nameArabic,nameEnglish,categoryid,logoPath})}
                 <h1 className="p-5 text-center">Update Sub-Category</h1>

@@ -115,7 +115,7 @@ const Private = () =>{
     return(
     <Layout>
         <div className='container-fluid'>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
             {isAuth() ? null : <Redirect to='/'/>} 
             {error ? error : null}
             {loading ? loadingSpinner():userProfile()}

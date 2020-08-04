@@ -160,7 +160,7 @@ const AddCarousel = () => {
         <Layout>
             <div className='container'>
             <div className="col-d-6">
-                <ToastContainer />
+                {/* <ToastContainer /> */}
                 {isAuth() ? null : <Redirect to='/'/>} 
                 {JSON.stringify({link,image,notes,name,itemid})}
                 <h1 className="p-5 text-center">Add Carousel</h1>

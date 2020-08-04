@@ -18,6 +18,7 @@ const DashboardCard = ({products}) => {
                         <p className='m-1 col' style={{backgroundColor: products.isNew? '#3CB371':'#CD5C5C'}}>New</p>
                         <p className='m-1 col' style={{backgroundColor: products.isVip? '#3CB371':'#CD5C5C'}}>VIP</p>
                     </div>
+                    <p className='m-0'>cost : {products.cost} IQD</p>
                     <p className='m-0'>Price : {products.price} IQD</p>
                     <p className='m-0'>Discount Price : {products.discountPrice} IQD</p>
                     {/* <p className='m-0'>Quantity : {products.quantity}</p> */}

@@ -218,7 +218,7 @@ const url = process.env.REACT_APP_NODE
                 <div 
                 className='container-fluid'
                 >
-                    <ToastContainer />
+                    {/* <ToastContainer /> */}
                     {error ? error : null}
                     {loading ? loadingSpinner():productPart()}
                 </div>

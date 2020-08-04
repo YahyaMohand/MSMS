@@ -147,7 +147,7 @@ const AddBrand = () => {
         <Layout>
             <div className='container'>
             <div className="col-d-6">
-                <ToastContainer />
+                {/* <ToastContainer /> */}
                 {isAuth() ? null : <Redirect to='/'/>} 
                 {/* {JSON.stringify({nameArabic,nameEnglish,bio,logo})} */}
                 <h1 className="p-5 text-center">Add Brand</h1>

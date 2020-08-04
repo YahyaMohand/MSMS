@@ -123,7 +123,7 @@ const UpdateCity = (params) => {
             <div className='container'>
 
             <div className="col-d-6">
-                <ToastContainer />
+                {/* <ToastContainer /> */}
                 {isAuth() ? null : <Redirect to='/'/>} 
                 {JSON.stringify({cityid,isOperational,nameArabic,nameEnglish,shippingCost,x_cord,y_cord})}
                 <h1 className="p-5 text-center">Update City</h1>

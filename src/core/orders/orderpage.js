@@ -247,7 +247,7 @@ const OrderPage = (params) => {
         <Layout>
             <div className='container'>
                 <div className='col-d-6'>
-                    <ToastContainer />
+                    {/* <ToastContainer /> */}
                     {redirect ? <Redirect to='/admin/orders' /> :null}
                     {isAuth() ? null : <Redirect to='/'/>} 
                     {error ? error : null}  
