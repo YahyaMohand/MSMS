@@ -18,8 +18,8 @@ const StyleCard = ({styles}) => {
                         <p className='m-1 col' style={{backgroundColor: styles.isNew? '#3CB371':'#CD5C5C'}}>New</p>
                         <p className='m-1 col' style={{backgroundColor: styles.isVip? '#3CB371':'#CD5C5C'}}>VIP</p>
                     </div> */}
-                    <p className='m-0'>Price : {styles.price} IQD</p>
-                    <p className='m-0'>Discount Price : {styles.discountPrice} IQD</p>
+                    <p className='m-0'>Price : {styles.price} $</p>
+                    <p className='m-0'>Discount Price : {styles.discountPrice} $</p>
                     <p className='m-0'>Quantity : {styles.quantity}</p>
                     <p className='m-0'>Size : {styles.size}</p>
                     {/* <p className='m-0'>Pro Date : {products.product[0].productionDate}</p> */}

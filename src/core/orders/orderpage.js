@@ -63,12 +63,13 @@ const OrderPage = (params) => {
         })
     },[])
 
+    // console.log(products)
     const ListofOrder = ({products})=>(
         <li className='list-group-item'>
             <div className='row text-center'>
                 <div className='col'><img src={`${url}/${products.style.images}`} alt='prodpic' height='50px'></img></div>
                 <div className='col'><p>{products.product.name}</p></div>
-                <div className='col'><p>{products.style.name}</p></div>
+                <div className='col'><p>{products.style.name} <br/> {products.product.model}</p></div>
                 <div className='col'><p>{products.price}</p></div>
                 <div className='col'><p>{products.discountPrice}</p></div>
                 <div className='col'><p>{products.quantity}</p></div>
@@ -79,19 +80,19 @@ const OrderPage = (params) => {
     const TotalPrice = ({products})=>{
         return numcoma(products.reduce((currentValue, nextValue)=>{
             return currentValue + nextValue.quantity * nextValue.price
-        },0)) 
+        },0)+address.shippingCost) 
     }
 
     const TotalDiscountPrice = ({products})=>{
         return numcoma(products.reduce((currentValue, nextValue)=>{
             return currentValue + nextValue.quantity * nextValue.discountPrice
-        },0)) 
+        },0)+address.shippingCost) 
     }
 
     const TotalQuantity = ({products})=>{
         return numcoma(products.reduce((currentValue, nextValue)=>{
             return currentValue + nextValue.quantity
-        },0)) 
+        },0))
     }
 
     const TotalRecordes = ({products})=>{
@@ -152,36 +153,36 @@ const OrderPage = (params) => {
             <hr></hr>
             <div>
                 <div className='text-center alert alert-warning p-1'>
-                    <span>المدينة</span><hr className='m-0'/>
+                    <span>المحافظة / Governorate / پارێزگا</span><hr className='m-0'/>
                     <span className='font-weight-bold'> {address.nameArabic} </span>
                 </div>
             </div>
             <div className='row'>
                 <div className='col'>
                     <div className='text-center alert alert-secondary p-1'>
-                        <span> اسم المستلم</span><hr className='m-0'/>
+                        <span>اسم المستلم / Reciver name / ناوی وەرگر</span><hr className='m-0'/>
                         <span className='font-weight-bold'> {address.reciverName} </span>
                     </div>
                     <div className='text-center alert alert-secondary p-1'>
-                        <span> العنوان</span><hr className='m-0'/>
+                        <span>العنوان / Address / ناونیشان</span><hr className='m-0'/>
                         <span className='font-weight-bold'> {address.address} </span>
                     </div>
                     <div className='text-center alert alert-secondary p-1'>
-                        <span> تاريخ الطلب</span><hr className='m-0'/>
+                        <span>تاريخ الطلب / Order date / بەرواری داواکاری</span><hr className='m-0'/>
                         <span className='font-weight-bold'> {formatedDate(orderinfo.createDate)} - {formatedTime(orderinfo.createDate)} </span>
                     </div>
                 </div>
                 <div className='col'>
                 <div className='text-center alert alert-secondary p-1'>
-                        <span> رقم هاتف المستلم</span><hr className='m-0'/>
+                        <span>رقم الهاتف / Phone number / ژمارەی مۆبایلی وەرگر</span><hr className='m-0'/>
                         <span className='font-weight-bold'> {address.phone_number} </span>
                     </div>
                     <div className='text-center alert alert-secondary p-1'>
-                        <span>نقطة دالة </span><hr className='m-0'/>
+                        <span>كود الخصم / Coupon / کۆدی داشکاندن</span><hr className='m-0'/>
                         <span className='font-weight-bold'> {address.referencePoint} </span>
                     </div>
                     <div className='text-center alert alert-secondary p-1'>
-                        <span> تاريخ التجهيز</span><hr className='m-0'/>
+                        <span>تاريخ التجهيز / Supply date / بەرواری ئامادەکردن</span><hr className='m-0'/>
                         <span className='font-weight-bold'> {formatedDate(Date.now())} - {formatedTime(Date.now())}</span>
                     </div>
                 </div>
@@ -191,12 +192,12 @@ const OrderPage = (params) => {
                 <ul className='list-group'>
                 <li className='list-group-item active'>
                     <div className='row text-center font-weight-bold'>
-                        <div className='col'><p>الصورة</p></div>
-                        <div className='col'><p>اسم المنتج</p></div>
-                        <div className='col'><p>الستايل</p></div>
-                        <div className='col'><p>السعر</p></div>
-                        <div className='col'><p>السعر المخفض</p></div>
-                        <div className='col'><p>الكمية</p></div>
+                        <div className='col'><p>الصورة / وێنە</p></div>
+                        <div className='col'><p>اسم المنتج / ناوی بەرهەم</p></div>
+                        <div className='col'><p>الستايل والموديل /  ستایل و مۆدێل</p></div>
+                        <div className='col'><p>السعر / نرخ</p></div>
+                        <div className='col'><p>السعر المخفض / نرخی کەمکراوە</p></div>
+                        <div className='col'><p>الكمية / بڕ</p></div>
                     </div>
                 </li>  
                 {products.map((products,i)=>(<ListofOrder key={i} products={products} />))}  
@@ -205,11 +206,11 @@ const OrderPage = (params) => {
                 <ul className='list-group m-0'>
                     <li className='list-group-item active'>
                         <div className='row text-center font-weight-bold'>
-                            <div className='col'><p>مجموع المنتجات</p></div>
-                            <div className='col'><p>كلفة الشحن</p></div>
-                            <div className='col'><p>السعر الاجمالي</p></div>
-                            <div className='col'><p>السعر الاجمالي المخفض</p></div>
-                            <div className='col'><p>الكمية الاجمالية</p></div>
+                            <div className='col'><p>مجموع المنتجات / گروپی بەرهەمەکان</p></div>
+                            <div className='col'><p></p>كلفة الشحن / نرخی ناردن</div>
+                            <div className='col'><p>السعر الاجمالي / نرخی گشتی</p></div>
+                            <div className='col'><p>السعر الاجمالي المخفض / نرخی گشتی کەمکراوە</p></div>
+                            <div className='col'><p>الكمية الاجمالية /  بڕی گشتی</p></div>
                         </div>
                     </li> 
                     <li className='list-group-item'>
@@ -218,7 +219,7 @@ const OrderPage = (params) => {
                             <div className='col'><p>{<ShippingCost address={address}/>}</p></div>
                             <div className='col'><p>{<TotalPrice products={products}/>}</p></div>
                             <div className='col'><p>{<TotalDiscountPrice products={products}/>}</p></div>
-                            <div className='col'><p>{<TotalQuantity products={products}/>}</p></div>
+                            <div className='col'><p>{(<TotalQuantity products={products}/>)}</p></div>
                         </div>
                     </li> 
                 </ul>

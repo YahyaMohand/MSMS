@@ -71,7 +71,7 @@ const Signin = ({history}) =>{
                 <input onChange={handleChange('password')} value={password} type="password" className="form-control" />
             </div>
 
-            <div className='m-2'>
+            <div className='m-2 mt-4 btn-block mb-5'>
                 <button className="btn btn-primary" onClick={clickSubmit}>
                     {buttonText}
                 </button>

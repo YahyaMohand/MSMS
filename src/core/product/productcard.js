@@ -20,8 +20,8 @@ const ProductCard = ({products}) => {
                         <p className='m-1 col' style={{backgroundColor: products.product[0].isNew? '#3CB371':'#CD5C5C'}}>New</p>
                         <p className='m-1 col' style={{backgroundColor: products.product[0].isVip? '#3CB371':'#CD5C5C'}}>VIP</p>
                     </div>
-                    <p className='m-0'>Price : {products.price} IQD</p>
-                    <p className='m-0'>Discount Price : {products.discountPrice} IQD</p>
+                    <p className='m-0'>Price : {products.price} $</p>
+                    <p className='m-0'>Discount Price : {products.discountPrice} $</p>
                     <p className='m-0'>Quantity : {products.quantity}</p>
                     <p className='m-0'>Size : {products.size}</p>
                     {/* <p className='m-0'>Pro Date : {products.product[0].productionDate}</p> */}

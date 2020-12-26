@@ -66,6 +66,7 @@ function AddProduct() {
         cost:0,
         margin: 0,
         price: 0,
+        priceType:0,
         discountMargin:0,
         discount: 0,
         discountPrice:0,
@@ -139,6 +140,7 @@ function AddProduct() {
     cost,
     // margin,
     price,
+    priceType,
     // discountMargin,
     // discount,
     discountPrice,
@@ -174,6 +176,7 @@ function AddProduct() {
                 cost,
                 margin,
                 price,
+                priceType,
                 discountMargin,
                 discount,
                 discountPrice,
@@ -211,7 +214,7 @@ function AddProduct() {
         setMargin(
             (1-(cost/price)).toFixed(2)
         )
-        if(parseInt(discountPrice)==parseInt(price)){
+        if((discountPrice)==(price)){
             setdiscountMargin(
                 (1-(cost/discountPrice)).toFixed(2)
             )
@@ -316,13 +319,24 @@ function AddProduct() {
                         <input onChange={handleChange('serialnumber')} value={serialnumber} type="text" className="form-control" /> 
                     </div>
                 </div>
-                <label>Product Price - IQD</label>
+                <lable>Price in USD 0   /    in IQD 1</lable>
+                <div className='form-row'>
+                    <div className='col input-group mb-5 border rounded p-0 ml-2 mr-2'>
+                    <div className='input-group-prepend'>
+                            <span className='input-group-text'>Price Type</span>
+                        </div>
+                        <input 
+                        onChange={handleChange('priceType')} 
+                        value={priceType}
+                         type="number" min='0' max='1' className="form-control"  name='priceType' />
+                </div></div>
+                <label>Product Price - $</label>
                 <div className='form-row'>
                     <div className='col input-group mb-5'>
                         <div className='input-group-prepend'>
                             <span className='input-group-text'>Cost</span>
                         </div>
-                        <input onChange={handleChange('cost')} value={cost} type="number" className="form-control" required /> 
+                        <input onChange={handleChange('cost')} value={cost} type="number" className="form-control" step='0.01' required /> 
                     </div>
                     <div className='col input-group mb-5'>
                         <div className='input-group-prepend'>
@@ -339,11 +353,11 @@ function AddProduct() {
                         </div>
                         <input 
                         onChange={handleChange('price')}
-                        value={price} type="number"  
+                        value={price} type="number"  step='0.01'
                         className="form-control" /> 
                     </div>
                 </div>
-                <label>Price Discount - IQD</label>
+                <label>Price Discount - $</label>
                 <div className='form-row'>
                     <div className='col input-group mb-5'>
                         <div className='input-group-prepend'>
@@ -373,7 +387,7 @@ function AddProduct() {
                             <span className='input-group-text badge-secondary'>Price</span>
                         </div>
                         <input 
-                        onChange={handleChange('discountPrice')} value={discountPrice} type="number" className="form-control" required /> 
+                        onChange={handleChange('discountPrice')} value={discountPrice} type="number" step='0.01' className="form-control" required /> 
                     </div>
                 </div>
                 <div className='row text-center mb-5'>

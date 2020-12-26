@@ -1,17 +1,46 @@
 import React, {Fragment, useState} from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {Link, withRouter,Route} from 'react-router-dom';
 import {isAuth, signout} from '../auth/helpers';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
 import {NavDropdown} from 'react-bootstrap'
-import { FaFacebookSquare, FaInstagramSquare, FaYoutubeSquare, FaSnapchatSquare, FaUserCircle } from 'react-icons/fa';
+import { FaFacebookSquare, FaInstagramSquare, FaYoutubeSquare, FaSnapchatSquare, FaUserCircle,FaShoppingBag,FaProductHunt } from 'react-icons/fa';
+import {FiLogIn, FiLogOut} from 'react-icons/fi';
+import {BsFillPersonPlusFill} from 'react-icons/bs';
+import Tooltip from 'rc-tooltip';
+import 'rc-tooltip/assets/bootstrap.css';
+import {AiFillTags, AiFillHome,AiOutlineBulb,AiTwotoneBug} from 'react-icons/ai';
 import ProductCards from '../components/productcards'
 import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
 import DashboardCard from './dashboard/dashboardcard'
 import '../App.css'
+import {BrowserView,MobileView,isBrowser,isMobile,isAndroid,isIOS} from "react-device-detect";
 
 const Layout = ({children,match,history}) =>{
 
+
+    const mobilebanner = ()=>(
+        
+            <MobileView>
+                <div className="alert alert-info d-block fixed-bottom m-0 pt-0 pb-0 pl-0 pr-2 text-right" style={{height:55,opacity:'0.9', position:"fixed", bottom:'0px',backgroundColor:'#fc2779'}}>
+                    <div className='row p-0 m-0'>
+                        
+                        <div className='col-5 p-0 m-0 d-flex center'>
+                            <div className='btn '>
+                            <a href='https://kwaysi.page.link/qrcode' className='btn btn-light'>
+                           <p className='m-0 p-0 font-weight-bold' style={{fontSize:'13px'}}>الى التطبيق</p>
+                            </a>
+                            </div>
+                        </div>
+                        <div className='col-7 p-0 m-0'>
+                            <p className='p-0 m-0 font-smaller white font-weight-bold' style={{color:'#ffffff', fontSize:'16px'}}>تسوق عبر التطبيق</p>
+                            <p className='p-0 m-0 font-smaller white' style={{color:'#ffffff', fontSize:'13px'}}>متوفر الان على متجر التطبيقات</p>
+                        </div>
+                    </div>
+                </div>
+            </MobileView>
+        
+    )
 
     const url = process.env.REACT_APP_NODE
 
@@ -30,7 +59,7 @@ const Layout = ({children,match,history}) =>{
     };
 
     const SearchProducts = ()=> {
-
+       
         return(
         <div>
           {/* <hr className='ml-4 mr-4 mt-0 mb-0 p-0' style={{border: '1px solid #ececec'}}></hr> */}
@@ -77,8 +106,213 @@ const Layout = ({children,match,history}) =>{
             setError('Somthing went wrong')
         })
     };
+
+
+    //mobil nav
   
-    
+    const mobilnav = ()=>(
+        <DirectionProvider direction={DIRECTIONS.RTL}>
+        <nav className=" navbar navbar-expand" style={{backgroundColor: '#562e48', color: '#ffffff'}}>
+       
+            
+            {/* <div className='collapse navbar-collapse' id="navbarSupportedContent"> */}
+            <ul className="container d-flex justify-content-between navbar-nav mx-auto">
+
+            <li className='nav-item'>
+                <Tooltip  placement="bottom"  overlay={<span>الرئيسية</span>}>
+                <Link to="/" onClick={()=>setSearchresult(false)} className="nav-link font-weight-bold right-align" style={isActive('/')} >
+                {/* <img className='m-0 p-0' height='30px' width='80px' src={window.location.origin + '/kwaysi.png'} alt='kwaysi'></img> */}
+                <AiFillHome style={{color: '#ffffff',fontSize:'24'}}/>
+                </Link>
+                </Tooltip>
+            </li>
+
+            <li className="nav-item text-center">
+            <Tooltip  placement="bottom"  overlay={<span>البراندات</span>}>
+                <Link to='/brands' onClick={()=>setSearchresult(false)} className='nav-link font-weight-bold' style={isActive('/brands')}>
+                   <AiFillTags style={{color: '#ffffff',fontSize:'24'}}/>
+                </Link>
+            </Tooltip>
+            </li>
+
+           {!isAuth() && (
+               <Fragment>
+                    <li className="nav-item text-center">
+                    <Tooltip  placement="bottom"  overlay={<span>تسجيل الدخول</span>}>
+                <Link onClick={()=>setSearchresult(false)} to="/signin" className=" nav-link font-weight-bold" style={isActive('/signin')}>
+                     <FiLogIn style={{color: '#ffffff',fontSize:'24'}}/>
+                </Link>
+                </Tooltip>
+            </li>
+
+            <li className="nav-item text-center">
+            <Tooltip  placement="bottom"  overlay={<span>تسجيل حساب</span>}>
+                <Link onClick={()=>setSearchresult(false)} to="/signup" className=" nav-link font-weight-bold" style={isActive('/signup')}>
+                    <BsFillPersonPlusFill style={{color: '#ffffff',fontSize:'24'}}/>
+                </Link>
+                </Tooltip>
+            </li>
+               </Fragment>
+           )}
+
+             {/* to show the username on nav and go to admin page */}
+             {/* {isAuth() && isAuth().role ===1 && (
+            <li className="nav-item">
+                
+                    <Link to='/admin' className='nav-link font-weight-bold' style={isActive('/admin')}>
+                        {`${isAuth().username} اهلا،`}
+                    </Link>
+                
+            </li>
+            )} */}
+
+             {/* to go to orders admin page */}
+             {isAuth() && isAuth().role ===1 && (
+            <li className="nav-item text-center">
+
+                    
+                    <Link onClick={()=>setSearchresult(false)} to='/admin/orders' className='nav-link' style={isActive('/admin/orders')}>
+                        <AiOutlineBulb style={{color: '#ffffff',fontSize:'24'}}/>
+                    </Link>
+                
+            </li>
+            )}
+
+            {/* to go to suppliers admin page */}
+            {isAuth() && isAuth().role ===1 && (
+            <li className="nav-item text-center">
+
+                    <Link onClick={()=>setSearchresult(false)} to='/admin/suppliers' className='nav-link' style={isActive('/admin/suppliers')}>
+                        <AiTwotoneBug style={{color: '#ffffff',fontSize:'24'}}/>
+                    </Link>
+                
+            </li>
+            )}
+
+             {/* to go to products admin page */}
+             {isAuth() && isAuth().role ===1 && (
+            <li className="nav-item text-center">
+                
+                        {/* <Link to='/admin/products' className='nav-link' style={isActive('/admin/products')}>
+                            Products
+                        </Link> */}
+                        <NavDropdown title="P" id="basic-nav-dropdown" >
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard">All Products</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard/new">New Products</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard/sales">Sales Products</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard/vip">Vip Products</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard/outofstock">Out of Stack</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/products">All Styles</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addproduct">Add Product</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addstyle">Add Style</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/updateusd">Update USD</NavDropdown.Item>
+                        </NavDropdown>
+                
+            </li>
+            )}
+
+
+             {/* to go to brands admin page */}
+             {isAuth() && isAuth().role ===1 && (
+            <li className="nav-item text-center">
+                
+                    {/* <Link to='/admin/brands' className='nav-link' style={isActive('/admin/brands')}>
+                        Brands
+                    </Link> */}
+
+                    <NavDropdown title="B" id="basic-nav-dropdown" >
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/brands">Brands</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addbrand">Add Brand</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/stores">Stores</NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addstore">Add Store</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/cities">Cities</NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addcity">Add City</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/carousels">Carousels</NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addcarousel">Add Carousel</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/categories">Categories</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addcategory">Add Category</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addsubcategory">Add Sub-Category</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addclasscategory">Add Class-Category</NavDropdown.Item>
+                        </NavDropdown>
+                
+            </li>
+            )}
+
+
+           
+
+            
+
+           
+
+
+               {/* to show the bag on nav for user*/}
+               {isAuth() && isAuth().role ===0 && (
+            <li className="nav-item  text-center">
+                <Tooltip  placement="bottom"  overlay={<span>حقيبة التسوق</span>}>
+                    <Link onClick={()=>setSearchresult(false)} to='/bag' className='nav-link' style={isActive('/bag')}>
+                        <FaShoppingBag  style={{color: '#ffffff',fontSize:'24'}}/>
+                        {localStorage.getItem('bag') ? <sup className='badge' style={{backgroundColor: '#fc2779'}} >
+                            {/* <small className='' style={{fontSize: 'small'}}>{JSON.parse(localStorage.getItem('bag')).length}</small> */}
+                        </sup> : null}
+                    </Link>
+                </Tooltip>
+            </li>
+            )}
+
+                          {/* </div> */}
+            {/* to show the username on nav and go to private non-admin page */}
+            {isAuth() && isAuth().role ===0 && (
+            <li className="nav-item  text-center">
+                <Tooltip  placement="bottom"  overlay={<span>الحساب</span>}>
+                    <Link onClick={()=>setSearchresult(false)} to='/private' className='nav-link font-weight-bold' style={isActive('/private')}>
+                        {/* {` ${isAuth().username}    `} */}
+                        
+                        <FaUserCircle  style={{color: '#ffffff',fontSize:'24'}} />
+                    </Link>
+                </Tooltip>
+            </li>
+            )}
+
+            {/* signout nav if noth authenticated */}
+           {isAuth() && (
+            <li className="nav-item  text-center">
+                <Tooltip  placement="bottom"  overlay={<span>تسجيل الخروج</span>}>
+                <span className='nav-link'
+                    style={{cursor:'pointer', color:'#ff9009'}}
+                 onClick={()=>{
+                    signout(() => {
+                        history.push('/')
+                        setSearchresult(false)
+                    })
+                }}
+                >
+                    <FiLogOut  style={{color: '#5DFDCB',fontSize:'24'}}/>
+                </span>
+                </Tooltip>
+            </li>
+           )}
+
+           
+
+            
+
+           </ul>
+
+
+        </nav>
+        </DirectionProvider>
+    )
     const nav = ()=>(
         <DirectionProvider direction={DIRECTIONS.RTL}>
         <nav className=" navbar navbar-expand-lg" style={{backgroundColor: '#562e48', color: '#ffffff'}}>
@@ -146,9 +380,21 @@ const Layout = ({children,match,history}) =>{
              {/* to go to orders admin page */}
              {isAuth() && isAuth().role ===1 && (
             <li className="nav-item text-center">
-                
+
+                    
                     <Link onClick={()=>setSearchresult(false)} to='/admin/orders' className='nav-link' style={isActive('/admin/orders')}>
                         Orders
+                    </Link>
+                
+            </li>
+            )}
+
+            {/* to go to suppliers admin page */}
+            {isAuth() && isAuth().role ===1 && (
+            <li className="nav-item text-center">
+
+                    <Link onClick={()=>setSearchresult(false)} to='/admin/suppliers' className='nav-link' style={isActive('/admin/suppliers')}>
+                        suppliers
                     </Link>
                 
             </li>
@@ -172,6 +418,8 @@ const Layout = ({children,match,history}) =>{
                             <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addproduct">Add Product</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addstyle">Add Style</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/updateusd">Update USD</NavDropdown.Item>
                         </NavDropdown>
                 
             </li>
@@ -320,6 +568,14 @@ const Layout = ({children,match,history}) =>{
         </DirectionProvider>
     );
 
+    const mobilFooter = ()=>(
+        <footer  style={{backgroundColor: '#fc2779', color: '#ffffff', width: '100%', height:'55px'}}>
+            <div>
+
+            </div>
+        </footer>
+    )
+
     const Footer = ()=>(
         <footer className='py-5 ' style={{backgroundColor: '#562e48', color: '#ffffff', width: '100%'}}>
             <div className='container'>
@@ -331,12 +587,16 @@ const Layout = ({children,match,history}) =>{
                             <a href='https://www.facebook.com/kwaysistore/' ><FaFacebookSquare  style={{fontSize: '1.8rem', color: 'white'}} /> </a>
                             <a href='https://www.instagram.com/kwaysistore/' ><FaInstagramSquare  style={{fontSize: '1.8rem', color: 'white'}} /> </a>
                             <a href='https://www.youtube.com/channel/UCHDDkqwMnd4uc-8NSWN1MzA' ><FaYoutubeSquare  style={{fontSize: '1.8rem', color: 'white'}} /> </a>
-                            <a href='#' ><FaSnapchatSquare style={{fontSize: '1.8rem', color: 'white'}} /> </a>
+                            <a href='https://www.snapchat.com/add/kwaysistore' ><FaSnapchatSquare style={{fontSize: '1.8rem', color: 'white'}} /> </a>
                         </div>
                         <br></br>
                         
                         <a href="https://play.google.com/store/apps/details?id=com.kwaysi.com">
                             <img height='60px' className='mb-5' src={window.location.origin + '/googleplay.png'} alt='google play' />
+                        </a>
+                        <br/>
+                        <a href="https://apps.apple.com/iq/app/%D9%85%D8%AA%D8%AC%D8%B1-%D9%83%D9%88%D9%8A%D8%B3%D9%8A-kwaysi-store/id1527991952">
+                            <img height='70px' className='mb-5' src={window.location.origin + '/appstore.png'} alt='app store' />
                         </a>
                        
                     </div>
@@ -347,9 +607,9 @@ const Layout = ({children,match,history}) =>{
                     </div>
                     <div className='col-6 col-md'>
                         <h4>العنوان</h4>
-                        <p className='mt-3'>الموصل</p>
-                        <p>41001</p>
-                        <p>نينوى</p>
+                        {/* <p className='mt-3'>الموصل</p> */}
+                        {/* <p>41001</p> */}
+                        {/* <p>نينوى</p> */}
                         <p>العراق</p>
                     </div>
                     <div className='col-6 col-md'>
@@ -371,20 +631,24 @@ const Layout = ({children,match,history}) =>{
 
     return(
         <Fragment>
-            {nav()}
-            
+            {isMobile? mobilnav(): nav()}
+            {mobilebanner()}
             <div className='container-fluid widthclass' 
             // style={{width:'80%'}}
             >
+                <span>
+        {isAndroid ? <Route exact path="/qrcode" render={() => (window.location.href = "https://play.google.com/store/apps/details?id=com.kwaysi.com")} /> :isIOS ? <Route exact path="/qrcode" render={() => (window.location.href = "https://apps.apple.com/iq/app/%D9%85%D8%AA%D8%AC%D8%B1-%D9%83%D9%88%D9%8A%D8%B3%D9%8A-kwaysi-store/id1527991952")} />:<Route exact path="/qrcode" render={() => (window.location.href = "https://www.kwaysi.com")} />}
+      </span>
                 <div className='row' style={{backgroundColor: '#FDFDFB'}}>
                     <ToastContainer 
                     position='bottom-right'
                     />
+                    
                     {searchresult ? SearchProducts():children}
                     {/* {children} */}
                 </div>
             </div>
-            {Footer()}
+            {isMobile ? mobilFooter(): Footer()}
         </Fragment>
     );
 };

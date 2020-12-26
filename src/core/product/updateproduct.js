@@ -51,6 +51,7 @@ function UpdateProduct(params) {
     const [serialnumber, setSerialnumber]=useState()
     const [productionDate, setProductiondate]=useState()
     const [expiryDate, setExpiryDate]=useState()
+    const [priceType, setpriceType]=useState()
 
     const [price, setPrice] = useState(0)
     const [discount, setDiscount] = useState(0)
@@ -106,6 +107,7 @@ function UpdateProduct(params) {
             setDiscountMargin(res.data.product.discountMargin)
             setDiscount(res.data.product.discount)
             setDiscountPrice(res.data.product.discountPrice)
+            setpriceType(res.data.product.priceType)
             setTimeout(()=>{setLoading(false)})
             setError('')
         })   
@@ -134,6 +136,7 @@ function UpdateProduct(params) {
             setDiscountMargin()
             setDiscount()
             setDiscountPrice()
+            setpriceType()
             setError('Somthing went wrong')
             // setLoading(false)
         })
@@ -214,6 +217,7 @@ function UpdateProduct(params) {
                 serialnumber,
                 productionDate,
                 expiryDate,
+                priceType,
                 }
         })
         .then(response =>{
@@ -239,7 +243,7 @@ function UpdateProduct(params) {
         setMargin(
             (1-(cost/price)).toFixed(2)
         )
-        if(parseInt(discountPrice)==parseInt(price)){
+        if((discountPrice)==(price)){
             setDiscountMargin(
                 (1-(cost/discountPrice)).toFixed(2)
             )
@@ -341,13 +345,19 @@ function UpdateProduct(params) {
                         <input onChange={(event)=>{setSerialnumber(event.target.value)}} value={serialnumber} type="text" className="form-control"  /> 
                     </div>
                 </div>
-                <label>Product Price - IQD</label>
+                <div className='col input-group mb-5 border rounded p-0 ml-2 mr-2'>
+                        <div className='input-group-prepend'>
+                            <span className='input-group-text'>Price Type</span>
+                        </div>
+                        <input onChange={(event)=>{setpriceType(event.target.value)}} value={priceType} type="number" min='0' max='1' className="form-control" required />
+                </div>
+                <label>Product Price - $</label>
                 <div className='form-row'>
                     <div className='col input-group mb-5'>
                         <div className='input-group-prepend'>
                             <span className='input-group-text'>Cost</span>
                         </div>
-                        <input onChange={(event)=>{setCost(event.target.value)}} value={cost} type="number" className="form-control" required /> 
+                        <input onChange={(event)=>{setCost(event.target.value)}} value={cost} type="number" step='0.01' className="form-control" required /> 
                     </div>
                     <div className='col input-group mb-5'>
                         <div className='input-group-prepend'>
@@ -363,11 +373,11 @@ function UpdateProduct(params) {
                         </div>
                         <input 
                         onChange={(event)=>{setPrice(event.target.value)}}
-                        value={price} type="number"  
+                        value={price} type="number"  step='0.01'
                         className="form-control" required /> 
                     </div>
                 </div>
-                <label>Price Discount - IQD</label>
+                <label>Price Discount - $</label>
                 <div className='form-row'>
                     <div className='col input-group mb-5'>
                         <div className='input-group-prepend'>
@@ -397,7 +407,7 @@ function UpdateProduct(params) {
                             <span className='input-group-text badge-secondary'>Price</span>
                         </div>
                         <input onChange={(event)=>{setDiscountPrice(event.target.value)}} 
-                        value={discountPrice} type="number" className="form-control" required /> 
+                        value={discountPrice} type="number" step='0.01' className="form-control" required /> 
                     </div>
                 </div>
 

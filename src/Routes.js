@@ -60,13 +60,15 @@ import SupplierOrder from './core/orders/suppliersorders'
 import NewProducts from './shop/newproducts'
 import SalesProducts from './shop/salesproducts'
 import VipProducts from './shop/vipproducts'
-
-
+import Qrcode from './qrcode'
+import SuppliersPage from './core/orders/suppliers'
+import UpdateUsd from './general/usdtoiqd'
 
 const Routes = () => {
     return(
         <BrowserRouter>
             <Switch>
+                <Route path='/qrcode' exact component={Qrcode} />
                 <Route path="/" exact component={App} />
                 <Route path="/categories/:categoryid" exact component={SubCates} />
                 <Route path="/subcategories/:subcateid" exact component={ClassCates} />
@@ -84,6 +86,7 @@ const Routes = () => {
                 <PrivateRoute path="/private" exact component={Private} />
                 <AdminRoute path="/admin" exact component={Admin} />
                 <AdminRoute path="/admin/orders" exact component={Orders} />
+                <AdminRoute path="/admin/suppliers" exact component={SuppliersPage} />
                 <AdminRoute path="/admin/products" exact component={Products} />
                 <AdminRoute path="/admin/addproduct" exact component={AddProduct} />
                 <AdminRoute path="/admin/brands" exact component={Brands} />
@@ -98,24 +101,24 @@ const Routes = () => {
                 <AdminRoute path="/admin/addsubcategory" exact component={AddSubCategory} />
                 <AdminRoute path="/admin/addclasscategory" exact component={AddClassCategory} />
                 <AdminRoute path="/admin/cities/update/:cityid" exact component={UpdateCity} />
-                <AdminRoute path="/admin/cities/delete/:cityid" exact component={DeleteCity} />
+                {/* <AdminRoute path="/admin/cities/delete/:cityid" exact component={DeleteCity} /> */}
                 <AdminRoute path="/admin/stores/update/:storeid" exact component={UpdateStore} />
-                <AdminRoute path="/admin/stores/delete/:storeid" exact component={DeleteStore} />
+                {/* <AdminRoute path="/admin/stores/delete/:storeid" exact component={DeleteStore} /> */}
                 <AdminRoute path="/admin/categories/update/:categoryid" exact component={UpdateCategory} />
                 <AdminRoute path="/admin/subcategories/update/:subcateid" exact component={UpdateSubCategory} />
-                <AdminRoute path="/admin/subcategories/delete/:subcateid" exact component={DeleteSubCate} />
+                {/* <AdminRoute path="/admin/subcategories/delete/:subcateid" exact component={DeleteSubCate} /> */}
                 <AdminRoute path="/admin/classcategories/update/:classcateid" exact component={UpdateClassCategory} />
-                <AdminRoute path="/admin/classcategories/delete/:classcateid" exact component={DeleteClassCate} />
+                {/* <AdminRoute path="/admin/classcategories/delete/:classcateid" exact component={DeleteClassCate} /> */}
                 <AdminRoute path="/admin/brands/update/:brandid" exact component={UpdateBrand} />
-                <AdminRoute path="/admin/brands/delete/:brandid" exact component={DeleteBrand} />
+                {/* <AdminRoute path="/admin/brands/delete/:brandid" exact component={DeleteBrand} /> */}
                 <AdminRoute path="/admin/styles/update/:styleid" exact component={UpdateStyle} />
-                <AdminRoute path="/admin/styles/delete/:styleid" exact component={DeleteStyle} />
+                {/* <AdminRoute path="/admin/styles/delete/:styleid" exact component={DeleteStyle} /> */}
                 <AdminRoute path="/admin/products/update/:productid" exact component={UpdateProduct} />
-                <AdminRoute path="/admin/products/delete/:productid" exact component={DeleteProduct} />
+                {/* <AdminRoute path="/admin/products/delete/:productid" exact component={DeleteProduct} /> */}
                 <AdminRoute path="/admin/addcarousel" exact component={AddCarousel} />
                 <AdminRoute path="/admin/carousels" exact component={Carousels} />
                 <AdminRoute path="/admin/carousels/update/:carouselid" exact component={UpdateCarousel} />
-                <AdminRoute path="/admin/carousels/delete/:carouselid" exact component={DeleteCarousel} />
+                {/* <AdminRoute path="/admin/carousels/delete/:carouselid" exact component={DeleteCarousel} /> */}
                 <AdminRoute path="/admin/orders/:orderid" exact component={OrderPage} />
                 <AdminRoute path="/admin/orders/suppliers/:orderid" exact component={SupplierOrder} />
                 <AdminRoute path="/admin/dashboard" exact component={Dashboard} />
@@ -125,6 +128,7 @@ const Routes = () => {
                 <AdminRoute path="/admin/dashboard/sales" exact component={DashboardSales} />
                 <AdminRoute path="/admin/dashboard/vip" exact component={DashboardVip} />
                 <AdminRoute path="/admin/dashboard/outofstock" exact component={DashboardOutOfStock} />
+                <AdminRoute path="/admin/updateusd" exact component={UpdateUsd} />
             </Switch>
         </BrowserRouter>
     );

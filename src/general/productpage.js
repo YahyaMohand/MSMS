@@ -3,15 +3,19 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import axios from 'axios';
 import {Link} from 'react-router-dom'
 import loadingSpinner from '../components/loadingspinner'
+import {Helmet} from "react-helmet";
 import {isAuth} from '../auth/helpers';
+import useObjectURL from 'use-object-url';
 import cookie from 'js-cookie'
 import React, {useState, useEffect } from 'react';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
 // import StyleButton from './stylecard'
 import {addItem} from '../bag/baghelper'
+import {isAndroid, isIOS,} from "react-device-detect";
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
-
+import {BrowserView,MobileView,isBrowser,isMobile} from "react-device-detect";
 
 const url = process.env.REACT_APP_NODE
 
@@ -42,6 +46,7 @@ const url = process.env.REACT_APP_NODE
     const [productiondata, setproductiondata] = useState({})
     const [expirydata, setexpirydata] = useState({})
     const [productname, setproductname]=useState({})
+    const [dlink,setDlink]=useState({})
 
     useEffect(()=>{
         axios.get(`${url}/products/${productid}`)
@@ -61,6 +66,7 @@ const url = process.env.REACT_APP_NODE
             setquantity(res.data.product.styles[0].quantity)
             setstyleid(res.data.product.styles[0].styleid)
             setproductname(res.data.product.name)
+            setDlink(res.data.product.dlink)
             setError('')
             setTimeout(setLoading(false)) 
         })   
@@ -75,6 +81,7 @@ const url = process.env.REACT_APP_NODE
             setbrandid({})
             setbrandlogo({})
             setdiscountPrice({})
+            setDlink({})
             setError('Somthing went wrong')
         })
     }, [])
@@ -106,10 +113,14 @@ const url = process.env.REACT_APP_NODE
     const IQD = 'دينار عراقي'
 
     const addToBag =()=>{
+        if(isAuth()){
         let style = styles.find(({styleid}) => styleid === selectedstyleid)
         toast.success('تمت اضافة المنتج الى الحقيبة')
         addItem(style, ()=>{})
-        window.location.reload()
+        // window.location.reload()
+        }else{
+            toast.warning('لطفا يرجى تسجيل الدخول اولا')  
+        }
     }
 
     const productPart = ()=> (
@@ -222,14 +233,26 @@ const url = process.env.REACT_APP_NODE
         </div></DirectionProvider>
     )
 
+ 
+
     // console.log(size, color,styleid,stylename, images)
     return (
         <Layout>
-            
+            <Helmet>
+                <title>
+                    {productname.toString()}
+                </title>
+                <meta name="description" content={product.description +' - '+product.model} />
+                <meta property="og:image" content={`${url}/${images}`}></meta>
+            </Helmet>
             {/* <div className='ml-lg-5 mr-lg-5'> */}
                 <div 
                 className='container-fluid'
                 >
+                    {/* {console.log((dlink))} */}
+                    
+        {/* {loading ? loadingSpinner():(isMobile ? <Route style={{color:'#ffffff'}} exact path={`/products/${productid}`} render={() => (window.location.href = dlink )} />:productPart()) } */}
+    
                     {/* <ToastContainer /> */}
                     {error ? error : null}
                     {loading ? loadingSpinner():productPart()}

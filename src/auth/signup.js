@@ -60,7 +60,7 @@ const Signup = () =>{
             </div>
 
             <div>
-                <button className="btn btn-primary" onClick={clickSubmit}>
+                <button className="btn btn-primary mb-5 mt-3" onClick={clickSubmit}>
                     {buttonText}
                 </button>
             </div>

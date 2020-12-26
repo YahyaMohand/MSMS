@@ -27,6 +27,7 @@ const Orders = () => {
     useEffect(()=>{
         axios.get(`${url}/admin/orders/${userid}`)
         .then(res => {
+            // console.log(res.data.orders)
             setorders(res.data.orders)
             setError('')
             if(res.status == 200){setLoading(false)}

@@ -1,11 +1,94 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 import {Link} from 'react-router-dom'
 // import url from '../../App'
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+import cookie from 'js-cookie'
+import {isAuth} from '../../auth/helpers';
 
+const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'notlogedin'
+const token = cookie.get('token')
+axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
+
+
+// const [dynamiclink, setDynamicLink]=useState({})
 const url = process.env.REACT_APP_NODE
 const DashboardCard = ({products}) => {
+    const createLink =  ()=>{
+        const urlApi =  `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=${process.env.REACT_APP_FIREBASE}`;
+        const data = {
+            "dynamicLinkInfo": {
+              "domainUriPrefix": "https://kwaysi.page.link",
+              "link": `https://www.kwaysi.com/products/${products.productid}`,
+              "androidInfo": {
+                "androidPackageName": "com.kwaysi.com"
+              },
+              "iosInfo": {
+                "iosBundleId": "com.kwaysi.com"
+              },
+              "socialMetaTagInfo": {
+                "socialTitle": products.name,
+                "socialDescription": products.description,
+                "socialImageLink":`${url}/${products.imagePath}`
+              },
+    
+            }
+          };
+        //   console.log(urlApi);
+        //   console.log(data);
+
+fetch(urlApi, {
+  method: 'POST', // or 'PUT'
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+})
+.then(response => response.json())
+.then(data => {
+    const shortLink = data.shortLink
+    console.log('sent shortlink to server node',shortLink)
+    axios({
+        method: 'PUT',
+        // url: `${process.env.REACT_APP_ADMIN}/categories/create`,
+        url: `${url}/admin/products/dynamiclink/${products.productid}/${userid}`,
+        data: {shortLink}
+        })
+        .then(response =>{
+            // console.log("Product Added to database successfully", response);
+            toast.success(response.data.message);
+        })
+        .catch(error => {
+            console.log('Operation ERROR', error.response.data)
+            toast.error(error.response.data.error);
+        })
+})
+.catch(err=>{toast.error(err.response.data.error)});
+}
+
+    // const savedylinkindb = ()=>{
+    //     if(dynamiclink){
+            
+    //         axios({
+    //             method: 'PUT',
+    //             // url: `${process.env.REACT_APP_ADMIN}/categories/create`,
+    //             url: `${url}/admin/products/update/${products.productid}/${userid}`,
+    //             data: dynamiclink})
+    //             .then(response =>{
+    //                 // console.log("Product Added to database successfully", response);
+    //                 toast.success(response.data.message);
+    //             })
+    //             .catch(error => {
+    //                 // console.log('Operation ERROR', error.response.data)
+    //                 toast.error(error.response.data.error);
+    //             })
+    //         };
+    //     }
+    
     return(
         <div className='card mx-auto shadow m-3' style={{width:'18rem'}}>
+            <button onClick={createLink}>make dynamic link</button>
             <a href={`/admin/productstyles/${products.productid}`} style={{textDecoration: 'none', color: 'black'}}>
                 <img className='card-img-top' alt='product img' src={`${url}/${products.imagePath}`}/>
                 <div className='card-body'>
@@ -51,9 +134,11 @@ const DashboardCard = ({products}) => {
                         </Link>
                     </div> */}
                     
-                    
+                
+                {/* <button onClick={savedylinkindb}>save dynamic link in db</button> */}
                 </div>
                 </a>
+                <div><p className=' m-0 p-0' style={{color:'#000000', backgroundColor:'#FFFACD'}}>{products.dlink}</p></div>
             </div>
            
     )

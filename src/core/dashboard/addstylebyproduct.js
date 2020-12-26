@@ -56,6 +56,7 @@ function AddStyleByProduct(params) {
         // price: 0,
         discountMargin:0,
         discount: 0,
+        priceType: 0,
         // discountPrice:0,
         images: "",
         quantity:0,
@@ -68,6 +69,7 @@ function AddStyleByProduct(params) {
     const [discount, setDiscount] = useState(0)
     const [discountMargin, setdiscountMargin] = useState()
     const [images, setImages ] = useState()
+    // const [priceType, setpriceType]=useState(0)
   
     
     //file upload 
@@ -123,6 +125,7 @@ function AddStyleByProduct(params) {
     // discount,
     // discountPrice,
     // imagePath,
+    priceType,
     quantity,
     size,
     buttonText} = values
@@ -144,6 +147,7 @@ function AddStyleByProduct(params) {
                 color,
                 margin,
                 price,
+                priceType,
                 discountMargin,
                 discount,
                 discountPrice,
@@ -176,7 +180,7 @@ function AddStyleByProduct(params) {
         setMargin(
             (1-(cost/price)).toFixed(2)
         )
-        if(parseInt(discountPrice)==parseInt(price)){
+        if((discountPrice)==(price)){
             setdiscountMargin(0)
             setDiscount(0)
         }else{
@@ -251,13 +255,24 @@ function AddStyleByProduct(params) {
                         <input onChange={handleChange('size')} value={size} type="text" className="form-control" required /> 
                     </div>
                 </div>
-                <label>Product Price - IQD</label>
+                <lable>Price in USD 0   /    in IQD 1</lable>
+                <div className='form-row'>
+                    <div className='col input-group mb-5 border rounded p-0 ml-2 mr-2'>
+                    <div className='input-group-prepend'>
+                            <span className='input-group-text'>Price Type</span>
+                        </div>
+                        <input 
+                        onChange={handleChange('priceType')} 
+                        value={priceType}
+                         type="number" min='0' max='1' className="form-control"  name='priceType' />
+                    </div></div>
+                <label>Product Price - $</label>
                 <div className='form-row'>
                     <div className='col input-group mb-5'>
                         <div className='input-group-prepend'>
                             <span className='input-group-text'>Cost</span>
                         </div>
-                        <input onChange={(event)=>{setCost(event.target.value)}} value={cost} type="number" className="form-control" required /> 
+                        <input onChange={(event)=>{setCost(event.target.value)}} value={cost} type="number" step='0.01' className="form-control" required /> 
                     </div>
                     <div className='col input-group mb-5'>
                         <div className='input-group-prepend'>
@@ -273,11 +288,11 @@ function AddStyleByProduct(params) {
                         </div>
                         <input 
                         onChange={(event)=>{setPrice(event.target.value)}}
-                        value={price} type="number"  
+                        value={price} type="number"  step='0.01'
                         className="form-control" required /> 
                     </div>
                 </div>
-                <label>Price Discount - IQD</label>
+                <label>Price Discount - $</label>
                 <div className='form-row'>
                     <div className='col input-group mb-5'>
                         <div className='input-group-prepend'>
@@ -306,7 +321,7 @@ function AddStyleByProduct(params) {
                         <div className='input-group-prepend'>
                             <span className='input-group-text badge-secondary'>Price</span>
                         </div>
-                        <input onChange={(event)=>{setDiscountPrice(event.target.value)}} value={discountPrice} type="number" className="form-control" required /> 
+                        <input onChange={(event)=>{setDiscountPrice(event.target.value)}} value={discountPrice} type="number" step='0.01' className="form-control" required /> 
                     </div>
                 </div>
                 <div className='row text-center mb-5'>
