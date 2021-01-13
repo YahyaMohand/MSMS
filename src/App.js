@@ -25,6 +25,8 @@ const App = ()=>{
   const [categories, setCategories]=useState({})
   const [salesproducts, setSalesproducts] = useState({})
   const [vipproducts, setVipproducts]=useState({})
+  const [groups, setgroups]=useState({})
+  const [subcategories,setsubcategories]=useState({})
   // const [makeupproducts, setMakeupproducts] = useState({})
   // const [skincareproducts, setSkincareproducts] = useState({})
   // const [hairproducts, setHairproducts] = useState({})
@@ -40,6 +42,8 @@ const App = ()=>{
         setNewProducts(res.data.newproducts)
         setSalesproducts(res.data.salesproducts)
         setVipproducts(res.data.vipproducts)
+        setgroups(res.data.groups)
+        setsubcategories(res.data.subcategories)
         // setMakeupproducts(res.data.makeupproducts)
         // setSkincareproducts(res.data.skincareproducts)
         // setHairproducts(res.data.hairproducts)
@@ -57,6 +61,8 @@ const App = ()=>{
         setNewProducts({})
         setSalesproducts({})
         setVipproducts({})
+        setgroups({})
+        setsubcategories({})
         // setMakeupproducts({})
         // setSkincareproducts({})
         // setHairproducts({})
@@ -75,6 +81,29 @@ const App = ()=>{
         <a className=' active text-center mt-2 text-decoration-none' style={{color: '#000000', fontSize: 'large', fontWeight: 'bolder'}} href={`/categories/${categories.categoryid}`}>{categories.nameArabic}</a>
     </div>
   );
+
+  const Subcategorycard = ({subcategories})=>{
+    return(
+        <div className='card m-3 shadow mx-auto' style={{width:'18rem'}}>
+        <a href={`/subcategories/${subcategories.subcateid}`} style={{textDecoration: 'none'}}>
+                <img className='card-img-top' alt='product img' src={`${url}/${subcategories.logoPath}`} style={{borderRadius:'50%'}}/>
+                <div className='card-body'>
+                    <h5 className='card-title text-center'>
+                        {`${subcategories.nameArabic}`}
+                    </h5>
+                </div>
+                </a>
+            </div>
+    )
+  }
+
+  const subcategorieslist = ()=>(
+    <div  className='container-fluid'>
+        <div className='row d-flex'>
+          {subcategories.map((subcategories,i)=>(<Subcategorycard key={i} subcategories={subcategories}/>))}
+        </div>
+      </div>
+  )
   // console.log(carousels)
   const Slidder = () => (
     <div className='mb-3'>
@@ -83,6 +112,28 @@ const App = ()=>{
       </Carousel>
     </div>
   )
+
+  const Groupcard = ({groups})=>{
+    return(
+
+        <div className='card m-3 shadow mx-auto' style={{width:'45rem'}}>
+        <a href={`/groups/${groups.groupid}`} style={{textDecoration: 'none'}}>
+                <img className='card-img-top' alt='product img' src={`${url}/${groups.image}`} />
+                </a>
+        </div>
+
+    )
+  }
+
+  const grouplist =()=>(
+    <div className='container-fluid'>
+      <div className='row d-flex'>
+       {groups.map((groups,i)=>(<Groupcard key={i} groups={groups}/>))}
+      </div>
+    </div>
+  )
+    
+  
 
   const NewProducts = ()=> (
     <div>
@@ -324,7 +375,9 @@ const App = ()=>{
           {/* <main role='main' className='col-md-9 ml-sm-auto col-lg-10 p-0'> */}
           <div className='container-fluid'>
             {loading ? loadingSpinner():Slidder()}
-            {loading ? loadingSpinner():SidbarNav()}
+            {/* {loading ? loadingSpinner():SidbarNav()} */}
+            {loading ? null:subcategorieslist()}
+            {loading ? null: grouplist()}
             {/* {loading ? loadingSpinner():VipProducts()} */}
             {loading ? loadingSpinner():NewProducts()}
             {loading ? loadingSpinner():SalesProducts()}

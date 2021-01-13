@@ -84,7 +84,7 @@ const SuppliersPage = () => {
     const TotalPriceDollars = ({products})=>{
         return  (products.filter(el=>el.product.storeid==storeid).reduce((currentValue, nextValue)=>{
             return currentValue + nextValue.quantity * nextValue.style.cost
-        },0)/1200)
+        },0))
     }
 
     const TotalQuantity = ({products})=>{

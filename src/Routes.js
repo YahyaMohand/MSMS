@@ -39,7 +39,11 @@ import DeleteProduct from './core/product/deleteproduct'
 import AddCarousel from './core/carousel/addcarousel'
 import Carousels from './core/carousel/carousels'
 import UpdateCarousel from './core/carousel/updatecarousel'
-import DeleteCarousel from './core/carousel/deletecarousel'
+// import DeleteCarousel from './core/carousel/deletecarousel'
+import AddGroup from './core/groups/addgroup'
+import Groups from './core/groups/groups'
+import UpdateGroup from './core/groups/updategroup'
+// import DeleteGroup from './core/groups/deletegroup'
 import PBag from './bag/bag'
 import GBrands from './general/brands'
 import ProductPage from './general/productpage'
@@ -63,6 +67,8 @@ import VipProducts from './shop/vipproducts'
 import Qrcode from './qrcode'
 import SuppliersPage from './core/orders/suppliers'
 import UpdateUsd from './general/usdtoiqd'
+import BussinesDashboard from './general/bussinessdashboard'
+import Grouproducts from './shop/groupproducts'
 
 const Routes = () => {
     return(
@@ -73,6 +79,7 @@ const Routes = () => {
                 <Route path="/categories/:categoryid" exact component={SubCates} />
                 <Route path="/subcategories/:subcateid" exact component={ClassCates} />
                 <Route path="/products/class/:classcateid" exact component={ClassProducts} />
+                <Route path="/groups/:groupid" exact component={Grouproducts} />
                 <Route path="/products/brand/:brandid" exact component={BrandProducts} />
                 <Route path="/signup" exact component={Signup} />
                 <Route path="/signin" exact component={Signin} />
@@ -129,6 +136,11 @@ const Routes = () => {
                 <AdminRoute path="/admin/dashboard/vip" exact component={DashboardVip} />
                 <AdminRoute path="/admin/dashboard/outofstock" exact component={DashboardOutOfStock} />
                 <AdminRoute path="/admin/updateusd" exact component={UpdateUsd} />
+                <AdminRoute path="/admin/bussinesdashboard" exact component={BussinesDashboard} />
+                <AdminRoute path="/admin/addgroup" exact component={AddGroup} />
+                <AdminRoute path="/admin/groups" exact component={Groups} />
+                <AdminRoute path="/admin/groups/update/:groupid" exact component={UpdateGroup} />
+                {/* <AdminRoute path="/admin/groups/delete/:groupid" exact component={DeleteGroup} /> */}
             </Switch>
         </BrowserRouter>
     );

@@ -72,7 +72,7 @@ const OrderPage = (params) => {
                 <div className='col'><p>{products.style.name} <br/> {products.product.model}</p></div>
                 <div className='col'><p>{products.price}</p></div>
                 <div className='col'><p>{products.discountPrice}</p></div>
-                <div className='col'><p>{products.quantity}</p></div>
+                <div className='col'><p contentEditable='true'>{products.quantity}</p></div>
             </div>
         </li>    
     )
@@ -208,18 +208,18 @@ const OrderPage = (params) => {
                         <div className='row text-center font-weight-bold'>
                             <div className='col'><p>مجموع المنتجات / گروپی بەرهەمەکان</p></div>
                             <div className='col'><p></p>كلفة الشحن / نرخی ناردن</div>
-                            <div className='col'><p>السعر الاجمالي / نرخی گشتی</p></div>
+                            <div className='col'><p>السعر الاجمالي + الشحن/ نرخی گشتی</p></div>
                             <div className='col'><p>السعر الاجمالي المخفض / نرخی گشتی کەمکراوە</p></div>
                             <div className='col'><p>الكمية الاجمالية /  بڕی گشتی</p></div>
                         </div>
                     </li> 
                     <li className='list-group-item'>
                         <div className='row text-center font-weight-bold'>
-                            <div className='col'><p>{<TotalRecordes products={products}/>}</p></div>
-                            <div className='col'><p>{<ShippingCost address={address}/>}</p></div>
-                            <div className='col'><p>{<TotalPrice products={products}/>}</p></div>
-                            <div className='col'><p>{<TotalDiscountPrice products={products}/>}</p></div>
-                            <div className='col'><p>{(<TotalQuantity products={products}/>)}</p></div>
+                            <div className='col'><p contentEditable='true'>{<TotalRecordes products={products}/>}</p></div>
+                            <div className='col'><p contentEditable='true'>{<ShippingCost address={address}/>}</p></div>
+                            <div className='col'><p contentEditable='true'>{<TotalPrice products={products}/>}</p></div>
+                            <div className='col'><p contentEditable='true'>{<TotalDiscountPrice products={products}/>}</p></div>
+                            <div className='col'><p contentEditable='true'>{(<TotalQuantity products={products}/>)}</p></div>
                         </div>
                     </li> 
                 </ul>

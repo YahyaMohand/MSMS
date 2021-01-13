@@ -399,6 +399,16 @@ const Layout = ({children,match,history}) =>{
                 
             </li>
             )}
+             {/* to go to suppliers admin page */}
+             {isAuth() && isAuth().role ===1 && (
+            <li className="nav-item text-center">
+
+                    <Link onClick={()=>setSearchresult(false)} to='/admin/bussinesdashboard' className='nav-link' style={isActive('/admin/suppliers')}>
+                        Business Dashboard
+                    </Link>
+                
+            </li>
+            )}
 
              {/* to go to products admin page */}
              {isAuth() && isAuth().role ===1 && (
@@ -508,6 +518,10 @@ const Layout = ({children,match,history}) =>{
                         <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/carousels">Carousels</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addcarousel">Add Carousel</NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/groups">Groups</NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addgroup">Add Group</NavDropdown.Item>
                     </NavDropdown>
                 
             </li>

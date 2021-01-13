@@ -23,6 +23,8 @@ const AddCarousel = () => {
         image: "",
         notes:"",
         name:"",
+        group:"",
+        active:"",
         buttonText:"Submit"
     });
     const [pic, setPic]=useState(false)
@@ -68,7 +70,7 @@ const AddCarousel = () => {
         }
     }
 
-    const {link,itemid, notes,name,buttonText} = values
+    const {link,itemid, notes,name,group,active,buttonText} = values
 
     const handleChange = (link) => (event) => {
         setValues({...values, [link]: event.target.value});
@@ -81,11 +83,11 @@ const AddCarousel = () => {
             method: 'POST',
             // url: `${process.env.REACT_APP_ADMIN}/categories/create`,
             url: `${url}/admin/carousel/create/${userid}`,
-            data: {link,itemid, image, notes,name}
+            data: {link,itemid, image, notes,name,group,active}
         })
         .then(response =>{
             // console.log("Carousel Added to database successfully", response);
-            setValues({...values, link:'', images: '', notes:'',name:'',itemid:'',buttonText: 'Submitted'});
+            setValues({...values, link:'', images: '', notes:'',name:'',itemid:'',group:'',active:'',buttonText: 'Submitted'});
             toast.success(response.data.message);
         })
         .catch(error => {
@@ -120,6 +122,16 @@ const AddCarousel = () => {
             </div>
 
             <div className="form-group">
+                <label className="text-muted">Group (in which group carusal will appears)</label>
+                <input onChange={handleChange('group')} value={group} type="number" className="form-control" required/>
+            </div>
+
+            <div className="form-group">
+                <label className="text-muted">Status (Active=1, disable=0)</label>
+                <input onChange={handleChange('active')} value={active} type="number" className="form-control" required/>
+            </div>
+
+            <div className="form-group">
                 <label className="text-muted">Notes to help mobile app understand</label>
                 <select onChange={handleChange('notes')} value={notes}  type="text" className="form-control"  required>
                     <option>selecte item ...</option>
@@ -128,6 +140,7 @@ const AddCarousel = () => {
                     <option>subcategory</option>
                     <option>classcategory</option>
                     <option>brand</option>
+                    <option>group</option>
                 </select>
             </div>
 

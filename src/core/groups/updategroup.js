@@ -17,30 +17,32 @@ const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'not
 const token = cookie.get('token')
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
 
-const UpdateCarousel = (params) => {
+const UpdateGroup = (params) => {
 
     const [loading, setLoading]=useState(true)
     const [error, setError]=useState('')
-    const carouselid = params.match.params.carouselid
+    const groupid = params.match.params.groupid
     const [link, setLink]=useState()
     const [notes, setNotes]=useState()
-    const [name,setName]=useState()
+    const [nameArabic,setNameArabic]=useState()
     const [itemid,setitemid]=useState()
-    const [group,setgroup]=useState()
+    const [nameEnglish,setnameEnglish]=useState()
+    const [info,setinfo]=useState()
     const [active,setactive]=useState()
     const [buttonText, setButtonText]=useState('Update')
     const [image, setImage ] = useState()
 
     useEffect(()=>{
-        axios.get(`${url}/admin/carousel/${carouselid}/${userid}`)
+        axios.get(`${url}/admin/groups/${groupid}/${userid}`)
         .then(res => {
-            setLink(res.data.carousel.link)
-            setNotes(res.data.carousel.notes)
-            setImage(res.data.carousel.image)
-            setName(res.data.carousel.name)
-            setitemid(res.data.carousel.itemid)
-            setgroup(res.data.carousel.group)
-            setactive(res.data.carousel.active)
+            setLink(res.data.groups.link)
+            setNotes(res.data.groups.notes)
+            setImage(res.data.groups.image)
+            setNameArabic(res.data.groups.nameArabic)
+            setnameEnglish(res.data.groups.nameEnglish)
+            setinfo(res.data.groups.info)
+            setactive(res.data.groups.active)
+            setitemid(res.data.groups.itemid)
             setError('')
             setTimeout(()=>{setLoading(false)})
         })   
@@ -49,10 +51,11 @@ const UpdateCarousel = (params) => {
             setLink({})
             setNotes({})
             setImage({})
-            setName({})
-            setitemid({})
-            setgroup({})
+            setNameArabic({})
+            setnameEnglish({})
+            setinfo({})
             setactive({})
+            setitemid({})
             setError('Somthing went wrong')
         })
     }, [])
@@ -74,7 +77,7 @@ const UpdateCarousel = (params) => {
         formData.append('file', file);
         
         try {
-            const res = await axios.post(`${url}/admin/carousel/upload/${userid}`,
+            const res = await axios.post(`${url}/admin/groups/upload/${userid}`,
             formData,
             {
                 headers: {
@@ -105,8 +108,8 @@ const UpdateCarousel = (params) => {
         axios({
             method: 'PUT',
             // url: `${process.env.REACT_APP_ADMIN}/categories/create`,
-            url: `${url}/admin/carousel/update/${carouselid}/${userid}`,
-            data: {link, notes, image,name,itemid,group,active}
+            url: `${url}/admin/groups/update/${groupid}/${userid}`,
+            data: {link, notes, image,nameArabic,nameEnglish,active,info,itemid}
         })
         .then(response =>{
             // console.log("Carousel Added to database successfully", response);
@@ -130,12 +133,22 @@ const UpdateCarousel = (params) => {
     const newCarouselForm = () => (
         <form onSubmit={clickSubmit}>
             <div className="form-group">
-                <label className="text-muted">Click Link</label>
+                <label className="text-muted">Web Click Link</label>
                 <input onChange={(event)=>{setLink(event.target.value)}} value={link} type="text" className="form-control" required/>
             </div>
             <div className="form-group">
-                <label className="text-muted">Name for mobile appbar label</label>
-                <input onChange={(event)=>{setName(event.target.value)}} value={name} type="text" className="form-control" required/>
+                <label className="text-muted">Name for mobile appbar label (Arabic)</label>
+                <input onChange={(event)=>{setNameArabic(event.target.value)}} value={nameArabic} type="text" className="form-control" required/>
+            </div>
+
+            <div className="form-group">
+                <label className="text-muted">Name label (English)</label>
+                <input onChange={(event)=>{setnameEnglish(event.target.value)}} value={nameEnglish} type="text" className="form-control" required/>
+            </div>
+
+            <div className="form-group">
+                <label className="text-muted">description in Arabic</label>
+                <input onChange={(event)=>{setinfo(event.target.value)}} value={info} type="text" className="form-control" required/>
             </div>
 
             <div className="form-group">
@@ -144,24 +157,20 @@ const UpdateCarousel = (params) => {
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Group (in which group appears)</label>
-                <input onChange={(event)=>{setgroup(event.target.value)}} value={group} type="number" className="form-control" required/>
-            </div>
-
-            <div className="form-group">
-                <label className="text-muted">Status (Active=1, Disable=0)</label>
-                <input onChange={(event)=>{setactive(event.target.value)}} value={active} type="number" className="form-control" required/>
+                <label className="text-muted">Status (Active=1, disable=0)</label>
+                <input onChange={(event)=>{setactive(event.target.value)}} value={active} type="text" className="form-control" required/>
             </div>
 
             <div className="form-group">
                 <label className="text-muted">Notes to help mobile app understand</label>
                 <select onChange={(event)=>{setNotes(event.target.value)}} value={notes}  type="text" className="form-control"  required>
+                    <option>selecte item ...</option>
+                    <option>group</option>
                     <option>product</option>
                     <option>subcategory</option>
                     <option>classcategory</option>
                     <option>category</option>
                     <option>brand</option>
-                    <option>group</option>
                 </select>
             </div>
 
@@ -196,8 +205,8 @@ const UpdateCarousel = (params) => {
             <div className="">
                 {/* <ToastContainer /> */}
                 {isAuth() ? null : <Redirect to='/'/>} 
-                {JSON.stringify({link,notes,image,name,itemid})}
-                <h1 className="p-5 text-center">Update Carousel</h1>
+                {JSON.stringify({link,notes,image,itemid,nameArabic,nameEnglish,info,active})}
+                <h1 className="p-5 text-center">Update Group</h1>
                 {error ? error : null}
                 {loading ? loadingSpinner():pictureBorder()}
                 {loading ? loadingSpinner():newCarouselForm()}
@@ -206,4 +215,4 @@ const UpdateCarousel = (params) => {
     );
 }
 
-export default UpdateCarousel;
+export default UpdateGroup;
