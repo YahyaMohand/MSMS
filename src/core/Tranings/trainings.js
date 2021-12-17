@@ -93,7 +93,7 @@ const Trainings = () => {
                 <div className='row text-center font-weight-bold'>
                     <div className='col'><p className='m-0'>Name</p></div>
                     <div className='col'><p className='m-0'>Type</p></div>
-                    <div className='col'><p className='m-0'>Program Id</p></div>
+                    <div className='col'><p className='m-0'>Program id</p></div>
                     <div className='col'><p className='m-0'>Start</p></div>
                     <div className='col'><p className='m-0'>End</p></div>
                     <div className='col'><p className='m-0'>days</p></div>
