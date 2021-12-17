@@ -88,7 +88,7 @@ const Interns = () => {
                     <div className='col'><p className='m-0'>Title</p></div>
                     <div className='col'><p className='m-0'>Supervisior</p></div>
                     <div className='col'><p className='m-0'>Payment</p></div>
-                    <div className='col'><p className='m-0'>Start</p></div>
+                    <div className='col'><p className='m-0'>Start Date</p></div>
                     <div className='col'><p className='m-0'>End</p></div>
                   
                 </div>
