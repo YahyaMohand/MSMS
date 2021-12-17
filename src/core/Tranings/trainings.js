@@ -96,7 +96,7 @@ const Trainings = () => {
                     <div className='col'><p className='m-0'>Program id</p></div>
                     <div className='col'><p className='m-0'>Start</p></div>
                     <div className='col'><p className='m-0'>End</p></div>
-                    <div className='col'><p className='m-0'>days</p></div>
+                    <div className='col'><p className='m-0'>Days</p></div>
                     <div className='col'><p className='m-0'>Hours</p></div>
                     <div className='col'><p className='m-0'>Price</p></div>
                     <div className='col'><p className='m-0'>Modality</p></div>
