@@ -7,6 +7,7 @@ import Private from './core/private';
 import Admin from './core/admin';
 import PrivateRoute from './auth/PrivateRoute';
 import AdminRoute from './auth/AdminRoute';
+import BeautyRoute from './auth/BeautyRoute'
 import Products from './core/product/products';
 import Brands from './core/brand/brands';
 import AddCategory from './core/categories/addcategory';
@@ -69,6 +70,47 @@ import SuppliersPage from './core/orders/suppliers'
 import UpdateUsd from './general/usdtoiqd'
 import BussinesDashboard from './general/bussinessdashboard'
 import Grouproducts from './shop/groupproducts'
+import Booth from './bag/booth'
+import AddHr from './core/management/addhr'
+import Employees from './core/management/employees'
+import UpdateHR from './core/management/updatehr'
+import AddContract from './core/management/addcontract'
+import Contracts from './core/management/contracts'
+import UpdateContract from './core/management/updatecontract'
+import AddTransaction from './core/management/addtransaction'
+import Transactions from './core/management/transactions'
+import UpdateTransaction from './core/management/updatetransaction'
+import AddLogistics from './core/management/addlogistics'
+import LogisticsItems from './core/management/logisticsitems'
+import UpdateLogistics from './core/management/updatelogistics'
+import FinanceDashboard from './core/management/financialdashboard'
+import StoreStyles from './core/store/storestyles'
+import AddBeautyCeter from './core/beautycenters/addbeautycenter'
+import BeautyCenters from './core/beautycenters/beautycenters'
+import UpdateBeautycenter from './core/beautycenters/updatebeautycenter'
+import BeautyCentersPage from './core/beautycenters/beautycenterpage'
+import AddService from './core/beautycenters/addbcservice'
+import AddContact from './core/beautycenters/addbccontact'
+import Addstaff from './core/beautycenters/addstaff'
+import UpdateBeautycenterService from './core/beautycenters/updateservice'
+import UpdateBeautycenterContact from './core/beautycenters/updatecontact'
+import UpdateBeautycenterStaff from './core/beautycenters/updatestaff'
+import DeleteBCContacts from './core/beautycenters/deletecontact'
+import DeleteBCServices from './core/beautycenters/deleteservice'
+import DeleteBCStaff from './core/beautycenters/deletestaff'
+import PubBeautyCenters from './core/beautycenters/publiclistbc'
+import PubBeautyCentersPage from './core/beautycenters/pubbeautycenterprofile'
+import BCowner from './core/bcowner'
+import OAddService from './core/bcowner/addbcservice'
+import OAddContact from './core/bcowner/addbccontact'
+import OAddstaff from './core/bcowner/addstaff'
+import OUpdateBeautycenterService from './core/bcowner/updateservice'
+import OUpdateBeautycenterContact from './core/bcowner/updatecontact'
+import OUpdateBeautycenterStaff from './core/bcowner/updatestaff'
+import ODeleteBCContacts from './core/bcowner/deletecontact'
+import ODeleteBCServices from './core/bcowner/deleteservice'
+import ODeleteBCStaff from './core/bcowner/deletestaff'
+import OUpdateBeautycenter from './core/bcowner/updatebeautycenter'
 
 const Routes = () => {
     return(
@@ -84,13 +126,55 @@ const Routes = () => {
                 <Route path="/signup" exact component={Signup} />
                 <Route path="/signin" exact component={Signin} />
                 <PrivateRoute path="/bag" exact component={PBag} />
+                <AdminRoute path="/admin/booth" exact component={Booth} />
                 <Route path="/brands" exact component={GBrands} />
                 <Route path="/products/:productid" exact component={ProductPage} />
                 <Route path="/privacypolicy" exact component={PrivacyPolicy} />
                 <Route path="/product/new" exact component={NewProducts} />
                 <Route path="/product/sales" exact component={SalesProducts} />
                 <Route path="/product/vip" exact component={VipProducts} />
+                <Route path="/beautycenters/:centerid" exact component={PubBeautyCentersPage} />
+                <Route path='/beautycenters' exact component={PubBeautyCenters} />
                 <PrivateRoute path="/private" exact component={Private} />
+                <BeautyRoute path='/bcowner' exact component={BCowner} />
+
+                <BeautyRoute path='/bcservices/delete/:serviceid' exact component={ODeleteBCServices} />
+                <BeautyRoute path='/bcstaff/delete/:staffid' exact component={ODeleteBCStaff} />
+                <BeautyRoute path='/bccontacts/delete/:contactid' exact component={ODeleteBCContacts} />
+                <BeautyRoute path='/bccontacts/update/:contactid' exact component={OUpdateBeautycenterContact} />
+                <BeautyRoute path='/bcstaff/update/:staffid' exact component={OUpdateBeautycenterStaff} />
+                <BeautyRoute path='/bcservices/update/:serviceid' exact component={OUpdateBeautycenterService} />
+                <BeautyRoute path='/addbcstaff/:centerid' exact component={OAddstaff} />
+                <BeautyRoute path='/addbccontact/:centerid' exact component={OAddContact} />
+                <BeautyRoute path='/addbcservices/:centerid' exact component={OAddService} />
+                <BeautyRoute path='/beautycenters/update/:centerid' exact component={OUpdateBeautycenter} />
+
+                <AdminRoute path='/admin/bcservices/delete/:serviceid' exact component={DeleteBCServices} />
+                <AdminRoute path='/admin/bcstaff/delete/:staffid' exact component={DeleteBCStaff} />
+                <AdminRoute path='/admin/bccontacts/delete/:contactid' exact component={DeleteBCContacts} />
+                <AdminRoute path='/admin/bccontacts/update/:contactid' exact component={UpdateBeautycenterContact} />
+                <AdminRoute path='/admin/bcstaff/update/:staffid' exact component={UpdateBeautycenterStaff} />
+                <AdminRoute path='/admin/bcservices/update/:serviceid' exact component={UpdateBeautycenterService} />
+                <AdminRoute path='/admin/addbcstaff/:centerid' exact component={Addstaff} />
+                <AdminRoute path='/admin/addbccontact/:centerid' exact component={AddContact} />
+                <AdminRoute path='/admin/addbcservices/:centerid' exact component={AddService} />
+                <AdminRoute path='/admin/beautycenters/:centerid' exact component={BeautyCentersPage} />
+                <AdminRoute path='/admin/beautycenters/update/:centerid' exact component={UpdateBeautycenter} />
+                <AdminRoute path='/admin/beautycenters' exact component={BeautyCenters} />
+                <AdminRoute path='/admin/addbeautycenter' exact component={AddBeautyCeter} />
+                <AdminRoute path='/admin/financedashboard' exact component={FinanceDashboard} />
+                <AdminRoute path="/admin/logistics/update/:logisticsid" exact component={UpdateLogistics} />
+                <AdminRoute path='/admin/logistics' exact component={LogisticsItems} />
+                <AdminRoute path="/admin/logistics/add" exact component={AddLogistics} />
+                <AdminRoute path="/admin/transactions/update/:transactionid" exact component={UpdateTransaction} />
+                <AdminRoute path="/admin/transactions" exact component={Transactions} />
+                <AdminRoute path="/admin/transactions/add" exact component={AddTransaction} />
+                <AdminRoute path="/admin/contracts/update/:contractid" exact component={UpdateContract} />
+                <AdminRoute path="/admin/contracts" exact component={Contracts} />
+                <AdminRoute path="/admin/contracts/add" exact component={AddContract} />
+                <AdminRoute path="/admin/hr/update/:hrid" exact component={UpdateHR} />
+                <AdminRoute path="/admin/hr/add" exact component={AddHr} />
+                <AdminRoute path="/admin/employees" exact component={Employees} /> 
                 <AdminRoute path="/admin" exact component={Admin} />
                 <AdminRoute path="/admin/orders" exact component={Orders} />
                 <AdminRoute path="/admin/suppliers" exact component={SuppliersPage} />
@@ -128,8 +212,9 @@ const Routes = () => {
                 {/* <AdminRoute path="/admin/carousels/delete/:carouselid" exact component={DeleteCarousel} /> */}
                 <AdminRoute path="/admin/orders/:orderid" exact component={OrderPage} />
                 <AdminRoute path="/admin/orders/suppliers/:orderid" exact component={SupplierOrder} />
-                <AdminRoute path="/admin/dashboard" exact component={Dashboard} />
+                <AdminRoute path="/admin/dashboard/:pageid" exact component={Dashboard} />
                 <AdminRoute path="/admin/productstyles/:productid" exact component={ProductStyles} />
+                <AdminRoute path="/admin/storestyles/:storeid" exact component={StoreStyles} />
                 <AdminRoute path="/admin/products/addstyle/:productid" exact component={AddStyleByProduct} />
                 <AdminRoute path="/admin/dashboard/new" exact component={DashboardNew} />
                 <AdminRoute path="/admin/dashboard/sales" exact component={DashboardSales} />
