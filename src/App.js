@@ -8,7 +8,10 @@ import loadingSpinner from './components/loadingspinner'
 import ProductCards from './components/productcards'
 import BrandCard from './components/brandcards'
 import {Link} from 'react-router-dom'
+import { Helmet } from 'react-helmet';
+import ReactPixel from 'react-facebook-pixel';
 // import SidbarCard from './components/sidebarcard'
+// import MessengerCustomerChat from 'react-messenger-customer-chat';
 // import Sidebar from "react-sidebar";
 // import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
 
@@ -53,10 +56,15 @@ const App = ()=>{
         setBrands(res.data.brands)
         setCategories(res.data.categories)
         setError('')
-        setTimeout(setLoading(false)) 
+        if(res.status ===200){
+          setLoading(false)
+        }
     })   
     .catch(error => {
-        setLoading(false)
+        if(error){
+          setLoading(false)
+          setError('Somthing went wrong')
+        }
         setCarousels({})
         setNewProducts({})
         setSalesproducts({})
@@ -370,25 +378,14 @@ const App = ()=>{
 
   return (
     <Layout>
-          {error ? error : null}
-          
-          {/* <main role='main' className='col-md-9 ml-sm-auto col-lg-10 p-0'> */}
+      <Helmet>
+                <title>
+                Mosul Space MS
+                </title>
+      </Helmet>
+          {/* {error ? error : null} */}
           <div className='container-fluid'>
-            {loading ? loadingSpinner():Slidder()}
-            {/* {loading ? loadingSpinner():SidbarNav()} */}
-            {loading ? null:subcategorieslist()}
-            {loading ? null: grouplist()}
-            {/* {loading ? loadingSpinner():VipProducts()} */}
-            {loading ? loadingSpinner():NewProducts()}
-            {loading ? loadingSpinner():SalesProducts()}
-            {loading ? loadingSpinner():Brands()}
-            {/* {loading ? loadingSpinner():MakeupProducts()} */}
-            {/* {loading ? loadingSpinner():SkincareProducts()} */}
-            {/* {loading ? loadingSpinner():HairProducts()} */}
-            {/* {loading ? loadingSpinner():FragranceProducts()} */}
-            {/* {loading ? loadingSpinner():MenProducts()} */}
-            {/* {loading ? loadingSpinner():GiftProducts()} */}
-          {/* </main> */}
+              <h1>Dashboard page</h1>
           </div>
     </Layout>
   )

@@ -5,7 +5,7 @@ import axios from 'axios';
 import {isAuth} from './helpers';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-
+import ReactPixel from 'react-facebook-pixel';
 
 const Signup = () =>{
     const [values, setValues] = useState({
@@ -34,6 +34,7 @@ const Signup = () =>{
             // console.log("SIGNUP Success", response);
             setValues({...values, username:'', phonenumber: '', password:'', buttonText: 'Submitted'});
             toast.success(response.data.message);
+            ReactPixel.fbq('track', 'CompleteRegistration');
         })
         .catch(error => {
             // console.log('SINGUP ERROR', error.response.data)

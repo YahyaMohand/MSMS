@@ -4,7 +4,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import axios from 'axios';
 import loadingSpinner from '../components/loadingspinner'
 import BrandCard from '../components/brandcards'
-
+import { Helmet } from 'react-helmet';
+import ReactPixel from 'react-facebook-pixel';
 
 const url = process.env.REACT_APP_NODE
 
@@ -22,12 +23,16 @@ const GBrands = ()=>{
         setBrands(res.data.brands)
  
         setError('')
-        setTimeout(setLoading(false)) 
+        if(res.status == 200){
+          setLoading(false)
+        }
     })   
     .catch(error => {
-        setLoading(false)
+        if(error){
+          setError('Somthing went wrong')
+          setLoading(false)
+        }
         setBrands({})
-        setError('Somthing went wrong')
     })
   }, [])
 
@@ -49,7 +54,13 @@ const GBrands = ()=>{
 
   return (
     <Layout>
+      <Helmet>
+                <title>
+                  متجر كويسي
+                </title>
+      </Helmet>
       <div className='container-fluid'>
+        {ReactPixel.pageView('Brands')}
           {error ? error : null}
           {/* {loading ? loadingSpinner():SidbarNav()} */}
           {/* <main role='main' className='col-md-9 ml-sm-auto col-lg-10 p-0'> */}

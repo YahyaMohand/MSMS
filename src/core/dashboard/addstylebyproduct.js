@@ -61,6 +61,7 @@ function AddStyleByProduct(params) {
         images: "",
         quantity:0,
         size:"",
+        ssnumber:0,
         buttonText:"Submit"
     });
     //price calculation status
@@ -128,6 +129,7 @@ function AddStyleByProduct(params) {
     priceType,
     quantity,
     size,
+    ssnumber,
     buttonText} = values
 
     const handleChange = (name) => (event) => {
@@ -154,7 +156,8 @@ function AddStyleByProduct(params) {
                 images,
                 quantity,
                 size,
-                buttonText}
+                ssnumber,
+                }
         })
         .then(response =>{
             // console.log("Product Added to database successfully", response);
@@ -241,6 +244,12 @@ function AddStyleByProduct(params) {
                         <div className='col'>
                             <input className="form-control" style={{backgroundColor: color}} disabled/>
                         </div>
+                    </div>
+                    <div className='col input-group mb-5'>
+                        <div className='input-group-prepend'>
+                            <span className='input-group-text'>Serial Number</span>
+                        </div>
+                        <input onChange={handleChange('ssnumber')} value={ssnumber} type="text" className="form-control" required /> 
                     </div>
                     <div className='col input-group mb-5'>
                         <div className='input-group-prepend'>

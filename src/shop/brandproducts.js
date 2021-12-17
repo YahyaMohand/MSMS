@@ -27,12 +27,18 @@ const BrandProducts = (params)=>{
     .then(res => {
         setProducts(res.data.products)
         setError('')
-        setTimeout(setLoading(false)) 
+        if(res.status==200){
+          setLoading(false)
+        } 
     })   
     .catch(error => {
+      if(error){
+        setError('Somthing went wrong') 
         setLoading(false)
+      }
+       
         setProducts({})
-        setError('Somthing went wrong')
+        
     })
   }, [])
 
@@ -44,7 +50,7 @@ const BrandProducts = (params)=>{
       <h3 className='text-center'>المنتجات</h3>
       <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr>
       <div  className='container-fluid'>
-      {isAuth() && isAuth().role ===1? 
+      {isAuth() && isAuth().role >=1? 
             <div className='row mx-auto d-flex'>
                 {products.map((products,i)=>(<DashboardCard key={i} products={products}/>))}
             </div>

@@ -40,7 +40,9 @@ const SubCates = (params)=>{
         // console.log(res.data)
         setProducts(res.data.products)
         setError('')
-        setTimeout(setLoading(false)) 
+        if(res.status==200){
+          setLoading(false)
+        }
     })   
     .catch(error => {
         setLoading(false)

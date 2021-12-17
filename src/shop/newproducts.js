@@ -29,7 +29,9 @@ const NewProducts = ()=>{
         console.log(products)
         setProducts(res.data.products)
         setError('')
-        setTimeout(setLoading(false)) 
+        if(res.status==200){
+          setLoading(false)
+        }
     })   
     .catch(error => {
         setLoading(false)

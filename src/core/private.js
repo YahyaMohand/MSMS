@@ -7,7 +7,7 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import cookie from 'js-cookie'
 import loadingSpinner from '../components/loadingspinner'
-import PrivateOrderCard from '../core/orders/privateordercard'
+
 
 const url = process.env.REACT_APP_NODE
 
@@ -37,7 +37,10 @@ const Private = () =>{
                 setHasorders(true)
             }
             setError('')
-            setTimeout(()=>{setLoading(false)})
+            if(res.status==200){
+                setTimeout(()=>{setLoading(false)})
+              }
+            
         }).catch(err=>{
             setUser({})
             setorders({})
@@ -45,6 +48,37 @@ const Private = () =>{
             setLoading(false)
         })
     }, [])
+
+    const PublicOrderCard = ({orders}) => {
+
+        function formatedDate(x){
+            const birthday = new Date(x)
+            const day = birthday.getDate();
+            const mon = birthday.getMonth()+1;
+            const year = birthday.getFullYear();
+            return (`${day}/${mon}/${year}`);
+        }
+    
+        function formatedTime(x){
+            const birthday = new Date(x).toLocaleTimeString('en-IQ')
+            return birthday
+        }
+    
+    
+        return(             
+            <li className='list-group-item'>
+                
+                <div className='row text-center'>
+                    <div className='col'><p>{orders.orderid}</p></div>
+                    <div className='col'><p>{formatedDate(orders.createDate)}</p></div>
+                    <div className='col'><p>{formatedTime(orders.createDate)}</p></div>
+                    <div className='col'><p>{orders.orderstatus}</p></div>
+                    
+                </div>
+                
+            </li>        
+        )
+    }
 
     const noOrders = ()=>(
         <div className='mx-auto my-auto'>
@@ -56,7 +90,7 @@ const Private = () =>{
     )
 
     const ordersList = ()=>(
-        <div className='container col-d-6 offset-5'>
+        <div className='container '>
         <div className='mt-3 mb-3'>
             <ul className='list-group'>
                 <li className='list-group-item active'><h4 className='text-center'>الطلبات</h4></li>
@@ -68,7 +102,7 @@ const Private = () =>{
                         <div className='col'><p>الحالة</p></div>
                     </div>
                 </li>
-                {orders.map((orders,i)=>(<PrivateOrderCard key={i} orders={orders} />))}
+                {orders.map((orders,i)=>(<PublicOrderCard key={i} orders={orders} />))}
             </ul>
         </div></div>
     )

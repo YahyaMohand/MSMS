@@ -16,6 +16,8 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
 import {BrowserView,MobileView,isBrowser,isMobile} from "react-device-detect";
+import ReactPixel from 'react-facebook-pixel';
+var QRCode = require('qrcode.react');
 
 const url = process.env.REACT_APP_NODE
 
@@ -48,9 +50,11 @@ const url = process.env.REACT_APP_NODE
     const [productname, setproductname]=useState({})
     const [dlink,setDlink]=useState({})
 
+
     useEffect(()=>{
         axios.get(`${url}/products/${productid}`)
         .then(res => {
+            // console.log(res.data)
             setProduct(res.data.product)
             setStyles(res.data.product.styles)
             setimages(res.data.product.imagePath)
@@ -68,10 +72,16 @@ const url = process.env.REACT_APP_NODE
             setproductname(res.data.product.name)
             setDlink(res.data.product.dlink)
             setError('')
-            setTimeout(setLoading(false)) 
+            if(res.status==200){
+                setLoading(false)
+            }
         })   
         .catch(error => {
-            setLoading(false)
+            if(error){
+                setLoading(false)
+                setError('Somthing went wrong')
+            }
+            
             setProduct({})
             setStyles({})
             setimages({})
@@ -82,7 +92,7 @@ const url = process.env.REACT_APP_NODE
             setbrandlogo({})
             setdiscountPrice({})
             setDlink({})
-            setError('Somthing went wrong')
+            
         })
     }, [])
 
@@ -109,19 +119,22 @@ const url = process.env.REACT_APP_NODE
     }
 
 
-
     const IQD = 'دينار عراقي'
 
     const addToBag =()=>{
         if(isAuth()){
+            // ReactPixel.track("add to bag", {productid,productname,selectedstyleid})
         let style = styles.find(({styleid}) => styleid === selectedstyleid)
-        toast.success('تمت اضافة المنتج الى الحقيبة')
+        ReactPixel.fbq('track', 'AddToCart',{productid,productname,brandName});
+        // toast.success('تمت اضافة المنتج الى الحقيبة')
         addItem(style, ()=>{})
         // window.location.reload()
         }else{
             toast.warning('لطفا يرجى تسجيل الدخول اولا')  
         }
     }
+
+    
 
     const productPart = ()=> (
         <DirectionProvider direction={DIRECTIONS.RTL}>
@@ -135,6 +148,7 @@ const url = process.env.REACT_APP_NODE
                     <div>
                         <img src={`${url}/${images}`} alt='product pic'style={{border: '1px solid #ffffff'}} className='shadow' width='80%'>
                         </img>
+                       
                     </div>
                     <hr style={{border: '1px solid gery'}}></hr>
                 </div>
@@ -195,6 +209,7 @@ const url = process.env.REACT_APP_NODE
                     </button>
                         {quantity == 0 ? <p className='text-center mt-3'>جرب لون او موديل اخر لطفا</p> : null}
                 </div>
+                
             </div>
             <hr></hr>
             <div className='container-fluid' style={{backgroundColor: '#ffffff',}}>
@@ -215,6 +230,11 @@ const url = process.env.REACT_APP_NODE
                         <h6 className='text-right'> وصف المنتج :</h6>
                         {/* <hr></hr> */}
                         <p className='text-right'>{product.description}</p>
+                    </div>
+                    <div>
+                        {/* test qrcode */}
+                {/* <QRCode size={750} level="L" value={`"{"styleid":"${selectedstyleid}","productid":"${productid}"}"`} />
+                <p>{JSON.stringify(selectedstyleid,productid,dlink)}</p> */}
                     </div>
                 </div>
                 {/* <div className='row'>
@@ -242,9 +262,33 @@ const url = process.env.REACT_APP_NODE
                 <title>
                     {productname.toString()}
                 </title>
+                {/* <!-- facebook app links meta tags start --> */}
+                <meta property="al:ios:url" content={"kwaysi://products/"+product.productid} />
+                <meta property="al:ios:app_store_id" content="1527991952" />
+                <meta property="al:ios:app_name" content="متجر كويسي - Kwaysi Store" />
+                <meta property="al:android:url" content={"kwaysi://products/"+product.productid} />
+                <meta property="al:android:app_name" content="متجر كويسي - Kwaysi Store" />
+                <meta property="al:android:package" content="com.kwaysi.com" />
+                <meta property="al:web:url" content="http://kwaysi.com/" />
+                <meta property="al:web:should_fallback" content="false" />
+                {/* <!-- facebook meta tags end --> */}
                 <meta name="description" content={product.description +' - '+product.model} />
                 <meta property="og:image" content={`${url}/${images}`}></meta>
+                {/* facebook pixel micro data for product catalog start */}
+                <meta property="og:title" content={productname}/>
+                <meta property="og:description" content={product.description} />
+                <meta property="og:url" content={`https://kwaysi.com/products/`+productid}/>
+                <meta property="og:image" content={url+product.imagePath} />
+                <meta property="product:brand" content={brandName} />
+                <meta property="product:availability" content={quantity!==0? "in stock":"out of stock"}/>
+                <meta property="product:condition" content="new"/>
+                <meta property="product:price:amount" content={discountPrice}/>
+                <meta property="product:price:currency" content="IQD"/>
+                <meta property="product:retailer_item_id" content={productid} />
+                <meta property="product:item_group_id" content={product.classcateid}></meta>
+                {/* facebook pixel micro data end */}
             </Helmet>
+            {ReactPixel.pageView("product-page",{productid,productname})}
             {/* <div className='ml-lg-5 mr-lg-5'> */}
                 <div 
                 className='container-fluid'

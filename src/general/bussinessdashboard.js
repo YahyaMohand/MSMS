@@ -93,7 +93,9 @@ function BussinesDashboard() {
             setproductsprice(res.data.productsprice)
             // setproductscost(res.data.productscost)
             // console.log(productscost)
-            setTimeout(()=>{setLoading(false)})
+            if(res.status==200){
+                setLoading(false)
+              }
             setError('')
             // console.log(res)
         })   
@@ -120,7 +122,7 @@ function BussinesDashboard() {
           //cities,classcategories,brands,subcategories,maincategories,topproducts,suppliers
         axios.get(`${url}/admin/dynamicparameters/${userid}`)
         .then(res => {
-            
+            // console.log(res.status)
             setcities(res.data.cities)
             setclasscategories(res.data.classcategories)
             setbrands(res.data.brands)
@@ -128,7 +130,10 @@ function BussinesDashboard() {
             setmaincategories(res.data.maincategories)
             settopproducts(res.data.topproducts)
             setsuppliers(res.data.suppliers)
-            setTimeout(()=>{setloading2(false)})
+            if(res.status == 200){
+               
+                setloading2(false)
+            }
             setError('')
             // console.log(res)
         })   
@@ -190,7 +195,9 @@ function BussinesDashboard() {
             setsoldproducts(res.data.soldproducts)
             setproductsdiscount(res.data.productsdiscount)
             setproductsprice(res.data.productsprice)
-            setTimeout(()=>{setLoading(false)})
+            if(res.status==200){
+                setLoading(false)
+              }
             setError('')
             // console.log(res)
         })   

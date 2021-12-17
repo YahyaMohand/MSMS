@@ -47,7 +47,9 @@ function UpdateUsd() {
 
             setusdvalue(res.data.usdtoiqd)
             
-            setTimeout(()=>{setLoading(false)})
+            if(res.status==200){
+                setLoading(false)
+              }
             setError('')
         })   
         .catch(error => {

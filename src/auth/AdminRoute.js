@@ -6,7 +6,7 @@ import {isAuth} from './helpers';
 const AdminRoute = ({component: Component, ...rest})=> (
     <Route {...rest} render={
         
-        props => isAuth() && isAuth().role === 1 ? <Component {...props} /> : <Redirect to={{
+        props => isAuth() && isAuth().role >= 1 ? <Component {...props} /> : <Redirect to={{
             pathname:'/signin',
             state: {from:props.location}
             

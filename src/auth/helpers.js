@@ -5,7 +5,7 @@ import cookie from 'js-cookie'
 export const setCookie = (key, value) =>{
     if(window !== 'undefined'){
         cookie.set(key,value,{
-            expires: 7
+            expires: 30
         })
     }
 }
@@ -16,7 +16,7 @@ export const setCookie = (key, value) =>{
 export const removeCookie = (key) =>{
     if(window !== 'undefined'){
         cookie.remove(key,{
-            expires: 7
+            expires: 30
         })
     }
 }
@@ -73,10 +73,10 @@ export const isAuth = () =>{
 };
 
 
-export const signout = next =>{
+export const signout = () =>{
     removeCookie('token')
     removeLocalStorage('user')
     removeLocalStorage('bag')
-    next();
+    // next();
     
 }

@@ -7,26 +7,26 @@ import {ToastContainer, toast} from 'react-toastify';
 import Google from './google';
 import Facebook from './facebook';
 import 'react-toastify/dist/ReactToastify.min.css';
-
+import ReactPixel from 'react-facebook-pixel';
 
 const Signin = ({history}) =>{
     const [values, setValues] = useState({
-        phonenumber: "",
-        password:"",
+        user_email: "",
+        user_password:"",
         buttonText:"تسجيل الدخول"
     });
 
 
-    const {phonenumber, password, buttonText} = values
+    const {user_email, user_password, buttonText} = values
 
-    const handleChange = (username) => (event) => {
-        setValues({...values, [username]: event.target.value});
+    const handleChange = (user_email) => (event) => {
+        setValues({...values, [user_email]: event.target.value});
     }
 
     const informParent =response =>{
         authenticate(response, ()=>{
             // toast.success(`Hey ${response.data.user.username}, Welcome back!`);
-            isAuth() && isAuth().role ===1 ? history.push('/admin') : history.push('/private'); 
+            isAuth() && isAuth().role >=1 ? history.push('/admin') : history.push('/private'); 
         });
 
     }
@@ -37,19 +37,18 @@ const Signin = ({history}) =>{
         axios({
             method: 'POST',
             url: `${process.env.REACT_APP_API}/signin`,
-            data: {phonenumber,  password}
+            data: {user_email,  user_password}
         })
         .then(response =>{
             // console.log("SIGNIN Success", response);
 
             //save the response (user, token) localstorage/cookie
             authenticate(response, ()=>{
-                setValues({...values, username:'', phonenumber: '', password:'', buttonText: 'Submitted'});
+                setValues({...values, user_password: '', user_email:'', buttonText: 'Submitted'});
                 // toast.success(`Hey ${response.data.user.username}, Welcome back!`);
-                isAuth() && isAuth().role ===1 ? history.push('/admin') : history.push('/private'); 
+                isAuth() && isAuth().role >=1 ? history.push('/admin') : isAuth() && isAuth().bcowner == 1? history.push('/bcowner') :history.push('/private'); 
             });
 
-            
         })
         .catch(error => {
             // console.log('SINGIN ERROR', error.response.data)
@@ -62,13 +61,13 @@ const Signin = ({history}) =>{
         <form className='m-lg-5'>
 
             <div className="form-group m-2">
-                <label className="text-muted">رقم الهاتف</label>
-                <input onChange={handleChange('phonenumber')} value={phonenumber} type="text" className="form-control" />
+                <label className="text-muted">Email</label>
+                <input onChange={handleChange('user_email')} value={user_email} type="text" className="form-control" />
             </div>
 
             <div className="form-group m-2">
-                <label className="text-muted">الباسورد</label>
-                <input onChange={handleChange('password')} value={password} type="password" className="form-control" />
+                <label className="text-muted">Password</label>
+                <input onChange={handleChange('user_password')} value={user_password} type="password" className="form-control" />
             </div>
 
             <div className='m-2 mt-4 btn-block mb-5'>
@@ -85,13 +84,12 @@ const Signin = ({history}) =>{
         {/* {JSON.stringify(isAuth())} */}
         <div className='container mb-lg-5 mt-lg-5'>
             <div className="col-d-6">
-                {/* <ToastContainer /> */}
+              
                 {/* if the user is loged in it will convert it to home page */}
-                {isAuth() ? <Redirect to='/'/> : null} 
-                {/* {JSON.stringify({phonenumber,password})} */}
-                <h1 className="p-5 text-center m-5">تسجيل الدخول</h1>
-                {/* <Google informParent={informParent}/> */}
-                {/* <Facebook informParent={informParent}/> */}
+                {/* {isAuth() ? <Redirect to='/'/> : null}  */}
+
+                <h1 className="p-5 text-center m-5">Welcome to MSMS</h1>
+               
                 {signinForm()}
             </div></div>
         </Layout>

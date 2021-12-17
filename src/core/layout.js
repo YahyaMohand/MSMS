@@ -1,9 +1,9 @@
 import React, {Fragment, useState} from 'react';
-import {Link, withRouter,Route} from 'react-router-dom';
+import {Link, withRouter,Route, Redirect} from 'react-router-dom';
 import {isAuth, signout} from '../auth/helpers';
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
 import {NavDropdown} from 'react-bootstrap'
-import { FaFacebookSquare, FaInstagramSquare, FaYoutubeSquare, FaSnapchatSquare, FaUserCircle,FaShoppingBag,FaProductHunt } from 'react-icons/fa';
+import { FaFacebookSquare, FaInstagramSquare, FaYoutubeSquare, FaSnapchatSquare, FaUserCircle,FaShoppingBag,FaProductHunt,FaBold } from 'react-icons/fa';
 import {FiLogIn, FiLogOut} from 'react-icons/fi';
 import {BsFillPersonPlusFill} from 'react-icons/bs';
 import Tooltip from 'rc-tooltip';
@@ -13,11 +13,13 @@ import ProductCards from '../components/productcards'
 import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
 import DashboardCard from './dashboard/dashboardcard'
+import MessengerCustomerChat from 'react-messenger-customer-chat';
 import '../App.css'
 import {BrowserView,MobileView,isBrowser,isMobile,isAndroid,isIOS} from "react-device-detect";
+import ReactPixel from 'react-facebook-pixel';
+
 
 const Layout = ({children,match,history}) =>{
-
 
     const mobilebanner = ()=>(
         
@@ -52,9 +54,9 @@ const Layout = ({children,match,history}) =>{
 
     const isActive = path =>{
         if(match.path === path){
-            return{color: '#fff', fontSize: '1.2rem'};
+            return{color: '#ffee00', fontSize: '1.4rem',};
         }else{
-            return{color: '#f2f2f2'};
+            return{color: '#ffffff'};
         }
     };
 
@@ -66,7 +68,7 @@ const Layout = ({children,match,history}) =>{
           {/* <h3 className='text-center'>المنتجات</h3> */}
           {/* <hr className='ml-4 mr-4 mt-0 mb-4 p-0' style={{border: '1px solid #ececec'}}></hr> */}
           <div  className='container-fluid'>
-          {isAuth() && isAuth().role ===1? 
+          {isAuth() && (isAuth().role ===4 ||isAuth().role ===5 || isAuth().role===7)? 
             <div className='row mx-auto d-flex'>
                 {products.map((products,i)=>(<DashboardCard key={i} products={products}/>))}
             </div>
@@ -89,6 +91,7 @@ const Layout = ({children,match,history}) =>{
         .then(res => {
             // console.log(res.data)
             setProducts(res.data.products)
+            ReactPixel.fbq('track', 'Search');
             if(res.data.products[0]==null || res.data.products == {}){
                 setSearchresult(false)
                 toast.warning("لاتوجد نتائج لعملية البحث هذه");
@@ -97,8 +100,8 @@ const Layout = ({children,match,history}) =>{
             }
             setError('')
             setTimeout(setLoading(false))
-            console.log(products)
-            console.log(query)
+            // console.log(products)
+            // console.log(query)
         })   
         .catch(error => {
             setLoading(false)
@@ -106,214 +109,8 @@ const Layout = ({children,match,history}) =>{
             setError('Somthing went wrong')
         })
     };
-
-
-    //mobil nav
   
-    const mobilnav = ()=>(
-        <DirectionProvider direction={DIRECTIONS.RTL}>
-        <nav className=" navbar navbar-expand" style={{backgroundColor: '#562e48', color: '#ffffff'}}>
-       
-            
-            {/* <div className='collapse navbar-collapse' id="navbarSupportedContent"> */}
-            <ul className="container d-flex justify-content-between navbar-nav mx-auto">
-
-            <li className='nav-item'>
-                <Tooltip  placement="bottom"  overlay={<span>الرئيسية</span>}>
-                <Link to="/" onClick={()=>setSearchresult(false)} className="nav-link font-weight-bold right-align" style={isActive('/')} >
-                {/* <img className='m-0 p-0' height='30px' width='80px' src={window.location.origin + '/kwaysi.png'} alt='kwaysi'></img> */}
-                <AiFillHome style={{color: '#ffffff',fontSize:'24'}}/>
-                </Link>
-                </Tooltip>
-            </li>
-
-            <li className="nav-item text-center">
-            <Tooltip  placement="bottom"  overlay={<span>البراندات</span>}>
-                <Link to='/brands' onClick={()=>setSearchresult(false)} className='nav-link font-weight-bold' style={isActive('/brands')}>
-                   <AiFillTags style={{color: '#ffffff',fontSize:'24'}}/>
-                </Link>
-            </Tooltip>
-            </li>
-
-           {!isAuth() && (
-               <Fragment>
-                    <li className="nav-item text-center">
-                    <Tooltip  placement="bottom"  overlay={<span>تسجيل الدخول</span>}>
-                <Link onClick={()=>setSearchresult(false)} to="/signin" className=" nav-link font-weight-bold" style={isActive('/signin')}>
-                     <FiLogIn style={{color: '#ffffff',fontSize:'24'}}/>
-                </Link>
-                </Tooltip>
-            </li>
-
-            <li className="nav-item text-center">
-            <Tooltip  placement="bottom"  overlay={<span>تسجيل حساب</span>}>
-                <Link onClick={()=>setSearchresult(false)} to="/signup" className=" nav-link font-weight-bold" style={isActive('/signup')}>
-                    <BsFillPersonPlusFill style={{color: '#ffffff',fontSize:'24'}}/>
-                </Link>
-                </Tooltip>
-            </li>
-               </Fragment>
-           )}
-
-             {/* to show the username on nav and go to admin page */}
-             {/* {isAuth() && isAuth().role ===1 && (
-            <li className="nav-item">
-                
-                    <Link to='/admin' className='nav-link font-weight-bold' style={isActive('/admin')}>
-                        {`${isAuth().username} اهلا،`}
-                    </Link>
-                
-            </li>
-            )} */}
-
-             {/* to go to orders admin page */}
-             {isAuth() && isAuth().role ===1 && (
-            <li className="nav-item text-center">
-
-                    
-                    <Link onClick={()=>setSearchresult(false)} to='/admin/orders' className='nav-link' style={isActive('/admin/orders')}>
-                        <AiOutlineBulb style={{color: '#ffffff',fontSize:'24'}}/>
-                    </Link>
-                
-            </li>
-            )}
-
-            {/* to go to suppliers admin page */}
-            {isAuth() && isAuth().role ===1 && (
-            <li className="nav-item text-center">
-
-                    <Link onClick={()=>setSearchresult(false)} to='/admin/suppliers' className='nav-link' style={isActive('/admin/suppliers')}>
-                        <AiTwotoneBug style={{color: '#ffffff',fontSize:'24'}}/>
-                    </Link>
-                
-            </li>
-            )}
-
-             {/* to go to products admin page */}
-             {isAuth() && isAuth().role ===1 && (
-            <li className="nav-item text-center">
-                
-                        {/* <Link to='/admin/products' className='nav-link' style={isActive('/admin/products')}>
-                            Products
-                        </Link> */}
-                        <NavDropdown title="P" id="basic-nav-dropdown" >
-                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard">All Products</NavDropdown.Item>
-                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard/new">New Products</NavDropdown.Item>
-                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard/sales">Sales Products</NavDropdown.Item>
-                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard/vip">Vip Products</NavDropdown.Item>
-                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard/outofstock">Out of Stack</NavDropdown.Item>
-                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/products">All Styles</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addproduct">Add Product</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addstyle">Add Style</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/updateusd">Update USD</NavDropdown.Item>
-                        </NavDropdown>
-                
-            </li>
-            )}
-
-
-             {/* to go to brands admin page */}
-             {isAuth() && isAuth().role ===1 && (
-            <li className="nav-item text-center">
-                
-                    {/* <Link to='/admin/brands' className='nav-link' style={isActive('/admin/brands')}>
-                        Brands
-                    </Link> */}
-
-                    <NavDropdown title="B" id="basic-nav-dropdown" >
-                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/brands">Brands</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addbrand">Add Brand</NavDropdown.Item>
-                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/stores">Stores</NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addstore">Add Store</NavDropdown.Item>
-                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/cities">Cities</NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addcity">Add City</NavDropdown.Item>
-                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/carousels">Carousels</NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addcarousel">Add Carousel</NavDropdown.Item>
-                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/categories">Categories</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addcategory">Add Category</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addsubcategory">Add Sub-Category</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addclasscategory">Add Class-Category</NavDropdown.Item>
-                        </NavDropdown>
-                
-            </li>
-            )}
-
-
-           
-
-            
-
-           
-
-
-               {/* to show the bag on nav for user*/}
-               {isAuth() && isAuth().role ===0 && (
-            <li className="nav-item  text-center">
-                <Tooltip  placement="bottom"  overlay={<span>حقيبة التسوق</span>}>
-                    <Link onClick={()=>setSearchresult(false)} to='/bag' className='nav-link' style={isActive('/bag')}>
-                        <FaShoppingBag  style={{color: '#ffffff',fontSize:'24'}}/>
-                        {localStorage.getItem('bag') ? <sup className='badge' style={{backgroundColor: '#fc2779'}} >
-                            {/* <small className='' style={{fontSize: 'small'}}>{JSON.parse(localStorage.getItem('bag')).length}</small> */}
-                        </sup> : null}
-                    </Link>
-                </Tooltip>
-            </li>
-            )}
-
-                          {/* </div> */}
-            {/* to show the username on nav and go to private non-admin page */}
-            {isAuth() && isAuth().role ===0 && (
-            <li className="nav-item  text-center">
-                <Tooltip  placement="bottom"  overlay={<span>الحساب</span>}>
-                    <Link onClick={()=>setSearchresult(false)} to='/private' className='nav-link font-weight-bold' style={isActive('/private')}>
-                        {/* {` ${isAuth().username}    `} */}
-                        
-                        <FaUserCircle  style={{color: '#ffffff',fontSize:'24'}} />
-                    </Link>
-                </Tooltip>
-            </li>
-            )}
-
-            {/* signout nav if noth authenticated */}
-           {isAuth() && (
-            <li className="nav-item  text-center">
-                <Tooltip  placement="bottom"  overlay={<span>تسجيل الخروج</span>}>
-                <span className='nav-link'
-                    style={{cursor:'pointer', color:'#ff9009'}}
-                 onClick={()=>{
-                    signout(() => {
-                        history.push('/')
-                        setSearchresult(false)
-                    })
-                }}
-                >
-                    <FiLogOut  style={{color: '#5DFDCB',fontSize:'24'}}/>
-                </span>
-                </Tooltip>
-            </li>
-           )}
-
-           
-
-            
-
-           </ul>
-
-
-        </nav>
-        </DirectionProvider>
-    )
-    const nav = ()=>(
+        const nav = ()=>(
         <DirectionProvider direction={DIRECTIONS.RTL}>
         <nav className=" navbar navbar-expand-lg" style={{backgroundColor: '#562e48', color: '#ffffff'}}>
            
@@ -334,6 +131,7 @@ const Layout = ({children,match,history}) =>{
             </svg>
         </button>
             <div className='collapse navbar-collapse' id="navbarSupportedContent">
+                
             <ul className="container d-flex justify-content-between navbar-nav mx-auto my-auto">
 
             <li>
@@ -346,6 +144,14 @@ const Layout = ({children,match,history}) =>{
                 
                 <Link to='/brands' onClick={()=>setSearchresult(false)} className='nav-link font-weight-bold' style={isActive('/brands')}>
                     البراندات
+                </Link>
+            
+            </li>
+
+            <li className="nav-item text-center">
+                
+                <Link to='/beautycenters' onClick={()=>setSearchresult(false)} className='nav-link font-weight-bold' style={isActive('/beautycenters')}>
+                    مراكز التجميل
                 </Link>
             
             </li>
@@ -377,8 +183,9 @@ const Layout = ({children,match,history}) =>{
             </li>
             )} */}
 
+
              {/* to go to orders admin page */}
-             {isAuth() && isAuth().role ===1 && (
+             {isAuth() && (isAuth().role ===5 || isAuth().role===7) && (
             <li className="nav-item text-center">
 
                     
@@ -390,7 +197,7 @@ const Layout = ({children,match,history}) =>{
             )}
 
             {/* to go to suppliers admin page */}
-            {isAuth() && isAuth().role ===1 && (
+            {isAuth() && (isAuth().role ===5 || isAuth().role===7) && (
             <li className="nav-item text-center">
 
                     <Link onClick={()=>setSearchresult(false)} to='/admin/suppliers' className='nav-link' style={isActive('/admin/suppliers')}>
@@ -399,26 +206,95 @@ const Layout = ({children,match,history}) =>{
                 
             </li>
             )}
+
+
              {/* to go to suppliers admin page */}
-             {isAuth() && isAuth().role ===1 && (
+             {isAuth() && (isAuth().role ===2 || isAuth().role===7) && (
             <li className="nav-item text-center">
 
-                    <Link onClick={()=>setSearchresult(false)} to='/admin/bussinesdashboard' className='nav-link' style={isActive('/admin/suppliers')}>
+                    <Link onClick={()=>setSearchresult(false)} to='/admin/booth' className='nav-link' style={isActive('/admin/booth')}>
+                        Booth
+                    </Link>
+                
+            </li>
+            )}
+
+
+
+             {/* to go to suppliers admin page */}
+             {isAuth() && (isAuth().role ===3 || isAuth().role===5 || isAuth().role===7) && (
+            <li className="nav-item text-center">
+
+                    <Link onClick={()=>setSearchresult(false)} to='/admin/bussinesdashboard' className='nav-link' style={isActive('/admin/bussinesdashboard')}>
                         Business Dashboard
                     </Link>
                 
             </li>
             )}
 
+            {/* financ dashboard */}
+                {/* management tools  */}
+             {isAuth() && (isAuth().role ===8 || isAuth().role===7) && (
+            <li className="nav-item text-center">    
+                <Link onClick={()=>setSearchresult(false)} to='/admin/financedashboard' className='nav-link' style={isActive('/admin/financedashboard')}>
+                Finance Dashboard
+                </Link>   
+            </li>
+            )}
+
+             {/* to go to beauty centers admin page */}
+             {isAuth() && (isAuth().role ===4 ||isAuth().role ===5||isAuth().role ===7) && (
+            <li className="nav-item text-center">
+                
+                    {/* <Link to='/admin/stores' className='nav-link' style={isActive('/admin/stores')}>
+                        Stores
+                    </Link> */}
+                    <NavDropdown title="Beauty Centers" id="basic-nav-dropdown" >
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/beautycenters">beauty centers</NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addbeautycenter">Add beauty center</NavDropdown.Item>
+                    </NavDropdown>
+                
+            </li>
+            )}
+
+             {/* management tools  */}
+             {isAuth() && (isAuth().role ===6 || isAuth().role===7) && (
+            <li className="nav-item text-center">
+                
+                        {/* <Link to='/admin/products' className='nav-link' style={isActive('/admin/products')}>
+                            Products
+                        </Link> */}
+                        <NavDropdown title="Management" id="basic-nav-dropdown" >
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/employees">Employees</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/hr/add">Add Employee</NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/contracts">Contract</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/contracts/add">Add Contract</NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/transactions">Transactions</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/transactions/add">Add Transaction</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/logistics">Logistic items</NavDropdown.Item>
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/logistics/add">Add Logistics</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/financedashboard">Finance Dashboard</NavDropdown.Item>
+                            {/* <NavDropdown.Divider /> */}
+                            {/* <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/updateusd">Update USD</NavDropdown.Item> */}
+                        </NavDropdown>
+                
+            </li>
+            )}
+
              {/* to go to products admin page */}
-             {isAuth() && isAuth().role ===1 && (
+             {isAuth() && (isAuth().role ===4 ||isAuth().role ===5||isAuth().role ===7) && (
             <li className="nav-item text-center">
                 
                         {/* <Link to='/admin/products' className='nav-link' style={isActive('/admin/products')}>
                             Products
                         </Link> */}
                         <NavDropdown title="Products" id="basic-nav-dropdown" >
-                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard">All Products</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard/1">All Products</NavDropdown.Item>
                         <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard/new">New Products</NavDropdown.Item>
                         <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard/sales">Sales Products</NavDropdown.Item>
                         <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/dashboard/vip">Vip Products</NavDropdown.Item>
@@ -436,32 +312,19 @@ const Layout = ({children,match,history}) =>{
             )}
 
 
-             {/* to go to brands admin page */}
-             {isAuth() && isAuth().role ===1 && (
+             {/* to go to products tools admin page */}
+             {isAuth() && (isAuth().role ===4 ||isAuth().role ===5||isAuth().role ===7) && (
             <li className="nav-item text-center">
                 
                     {/* <Link to='/admin/brands' className='nav-link' style={isActive('/admin/brands')}>
                         Brands
                     </Link> */}
 
-                    <NavDropdown title="Brands" id="basic-nav-dropdown" >
+                    <NavDropdown title="Tools" id="basic-nav-dropdown" >
                             <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/brands">Brands</NavDropdown.Item>
-                            <NavDropdown.Divider />
+                            
                             <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addbrand">Add Brand</NavDropdown.Item>
-                        </NavDropdown>
-                
-            </li>
-            )}
-
-
-            {/* to go to categories admin page */}
-            {isAuth() && isAuth().role ===1 && (
-            <li className="nav-item text-center">
-                
-                    {/* <Link to='/admin/categories' className='nav-link' style={isActive('/admin/categories')}>
-                        Categories
-                    </Link> */}
-                    <NavDropdown title="Categories" id="basic-nav-dropdown" >
+                            <NavDropdown.Divider />
                             <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/categories">Categories</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addcategory">Add Category</NavDropdown.Item>
@@ -469,46 +332,30 @@ const Layout = ({children,match,history}) =>{
                             <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addsubcategory">Add Sub-Category</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addclasscategory">Add Class-Category</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/stores">Stores</NavDropdown.Item>
+                        
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addstore">Add Store</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/cities">Cities</NavDropdown.Item>
+                        
+                            <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addcity">Add City</NavDropdown.Item>
                         </NavDropdown>
                 
             </li>
             )}
 
 
-             {/* to go to stores admin page */}
-             {isAuth() && isAuth().role ===1 && (
-            <li className="nav-item text-center">
-                
-                    {/* <Link to='/admin/stores' className='nav-link' style={isActive('/admin/stores')}>
-                        Stores
-                    </Link> */}
-                    <NavDropdown title="Stores" id="basic-nav-dropdown" >
-                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/stores">Stores</NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addstore">Add Store</NavDropdown.Item>
-                    </NavDropdown>
-                
-            </li>
-            )}
+         
+            
 
-             {/* to go to cities admin page */}
-             {isAuth() && isAuth().role ===1 && (
-            <li className="nav-item  text-center" >
-                
-                    {/* <Link to='/admin/cities' className='nav-link' style={isActive('/admin/cities')}>
-                        Cities
-                    </Link> */}
-                    <NavDropdown title="Cities" id="basic-nav-dropdown">
-                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/cities">Cities</NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item onClick={()=>setSearchresult(false)} href="/admin/addcity">Add City</NavDropdown.Item>
-                    </NavDropdown>
-                
-            </li>
-            )}
+
+            
+
+            
 
             {/* to go to addcarousel admin page */}
-            {isAuth() && isAuth().role ===1 && (
+            {isAuth() && (isAuth().role ===3 || isAuth().role ===4 ||isAuth().role ===5||isAuth().role ===7) && (
             <li className="nav-item  text-center">
                 
                     {/* <Link to='/admin/addcarousel' className='nav-link' style={isActive('/admin/addcarousel')}>
@@ -566,10 +413,23 @@ const Layout = ({children,match,history}) =>{
            </ul>
            </div>
             {/* to show the username on nav and go to private non-admin page */}
-            {isAuth() && isAuth().role ===0 && (
+            {isAuth() && isAuth().role ===0 && isAuth().bcowner ===0 &&(
             // <li className="nav-item  text-center">
                 
                     <Link onClick={()=>setSearchresult(false)} to='/private' className='nav-link font-weight-bold' style={isActive('/private')}>
+                        {` ${isAuth().username}    `}
+                        
+                        <FaUserCircle  style={{color: '#ffffff',fontSize:'20'}} />
+                    </Link>
+                
+            // </li>
+            )}
+
+            {/* to show the username on nav and go to private non-admin page */}
+            {isAuth() && isAuth().role ===0 && isAuth().bcowner ===1 &&(
+            // <li className="nav-item  text-center">
+                
+                    <Link onClick={()=>setSearchresult(false)} to='/bcowner' className='nav-link font-weight-bold' style={isActive('/bcowner')}>
                         {` ${isAuth().username}    `}
                         
                         <FaUserCircle  style={{color: '#ffffff',fontSize:'20'}} />
@@ -582,87 +442,142 @@ const Layout = ({children,match,history}) =>{
         </DirectionProvider>
     );
 
-    const mobilFooter = ()=>(
-        <footer  style={{backgroundColor: '#fc2779', color: '#ffffff', width: '100%', height:'55px'}}>
-            <div>
+    const newside = ()=>(
+        <div>
+            <div className="container-fluid bg-primary col-12">
+            <div className="row">
+            <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 className="page-header">Dashboard</h1>
+            
 
             </div>
-        </footer>
+            </div>
+            </div>
+        </div>
     )
 
-    const Footer = ()=>(
-        <footer className='py-5 ' style={{backgroundColor: '#562e48', color: '#ffffff', width: '100%'}}>
-            <div className='container'>
-                <div className='row'>
-                    <div className='col-12 col-md'>
-                        <img height='60px' src={window.location.origin + '/kwaysi.png'} alt='logo'></img>
-                        <br></br>
-                        <div className='m-3'>
-                            <a href='https://www.facebook.com/kwaysistore/' ><FaFacebookSquare  style={{fontSize: '1.8rem', color: 'white'}} /> </a>
-                            <a href='https://www.instagram.com/kwaysistore/' ><FaInstagramSquare  style={{fontSize: '1.8rem', color: 'white'}} /> </a>
-                            <a href='https://www.youtube.com/channel/UCHDDkqwMnd4uc-8NSWN1MzA' ><FaYoutubeSquare  style={{fontSize: '1.8rem', color: 'white'}} /> </a>
-                            <a href='https://www.snapchat.com/add/kwaysistore' ><FaSnapchatSquare style={{fontSize: '1.8rem', color: 'white'}} /> </a>
-                        </div>
-                        <br></br>
-                        
-                        <a href="https://play.google.com/store/apps/details?id=com.kwaysi.com">
-                            <img height='60px' className='mb-5' src={window.location.origin + '/googleplay.png'} alt='google play' />
-                        </a>
-                        <br/>
-                        <a href="https://apps.apple.com/iq/app/%D9%85%D8%AA%D8%AC%D8%B1-%D9%83%D9%88%D9%8A%D8%B3%D9%8A-kwaysi-store/id1527991952">
-                            <img height='70px' className='mb-5' src={window.location.origin + '/appstore.png'} alt='app store' />
-                        </a>
-                       
-                    </div>
-                    <div className='col-6 col-md'>
-                       <h4>التواصل</h4>
-                       <p className='mt-3'>+964 750 330 5680</p>
-                       <p>info@kwaysi.com</p>
-                    </div>
-                    <div className='col-6 col-md'>
-                        <h4>العنوان</h4>
-                        {/* <p className='mt-3'>الموصل</p> */}
-                        {/* <p>41001</p> */}
-                        {/* <p>نينوى</p> */}
-                        <p>العراق</p>
-                    </div>
-                    <div className='col-6 col-md'>
-                        <h4>الاصناف الرئيسية</h4>
-                        <p className='mt-3'><a href='/categories/1' style={{textDecoration: 'none', color: '#ffffff'}}>المكياج</a></p>
-                        <p><a href='/categories/2' style={{textDecoration: 'none', color: '#ffffff'}}>العناية بالبشرة</a></p>
-                        <p><a href='/categories/3' style={{textDecoration: 'none', color: '#ffffff'}}>الشعر</a></p>
-                        <p><a href='/categories/4' style={{textDecoration: 'none', color: '#ffffff'}}>العطور</a></p>
-                        <p><a href='/categories/5' style={{textDecoration: 'none', color: '#ffffff'}}>الرجال</a></p>
-                        <p><a href='/categories/6' style={{textDecoration: 'none', color: '#ffffff'}}>الهدايا</a></p>
-                    </div>
+    const sidebar = ()=>(
+        <div>
+            {/* <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style={{width: '280px', height: '100vh'}}> */}
+                <div>
+                    <div style={{height:'100vh'}}>
+                        <h4 className='p-3'>Mosul Space</h4>
+                        <hr></hr>
+                        <ul className="list-group p-3" style={{width:'15vw'}}>
+                            <li className=" bg-dark" style={{listStyleType:'none'}} >
+                                <Link  to='/' className='nav-link list-group-item bg-dark' style={isActive('/')}>
+                                    Dashboard
+                                </Link>
+                            </li>
 
-                    {/* <div className='col-6 col-md'></div> */}
+                            <li className=" bg-dark" style={{listStyleType:'none'}} >
+                                <Link  to='/admin/community' className='nav-link list-group-item bg-dark' style={isActive('/admin/community')}>
+                                    Community
+                                </Link>
+                            </li>
+                            <li className=" bg-dark" style={{listStyleType:'none'}}>
+                                    <Link  to='/admin/programs' className='nav-link list-group-item bg-dark' style={isActive('/admin/programs')}>
+                                        Programs
+                                    </Link>
+                            
+                            
+                                </li>
+                            
+                                <li className=" bg-dark" style={{listStyleType:'none'}}>
+                                    <Link  to='/admin/events' className='nav-link list-group-item bg-dark' style={isActive('/admin/events')}>
+                                        Activities
+                                    </Link>
+                            
+                            
+                                </li>
+                                <li className=" bg-dark" style={{listStyleType:'none'}}>
+                                    <Link  to='/admin/trainings' className='nav-link list-group-item bg-dark' style={isActive('/admin/trainings')}>
+                                        Trainings
+                                    </Link>
+                            
+                            
+                                </li>
+                                <li className=" bg-dark" style={{listStyleType:'none'}}>
+                                    <Link  to='/admin/interns' className='nav-link list-group-item bg-dark' style={isActive('/admin/interns')}>
+                                        Interns
+                                    </Link>
+                            
+                            
+                                </li>
+                                <li className=" bg-dark" style={{listStyleType:'none'}}>
+                                    <Link  to='/admin/startups' className='nav-link list-group-item bg-dark' style={isActive('/admin/startups')}>
+                                        Startups
+                                    </Link>
+                            
+                            
+                                </li>
+                                <li className=" bg-dark" style={{listStyleType:'none'}}>
+                                    <Link  to='/admin/successstories' className='nav-link list-group-item bg-dark' style={isActive('/admin/successstories')}>
+                                        Success Stories
+                                    </Link>
+                            
+                            
+                                </li>
+                                <li className=" bg-dark" style={{listStyleType:'none'}}>
+                                    <Link  to='/admin/recommendations' className='nav-link list-group-item bg-dark' style={isActive('/admin/recommandations')}>
+                                        Recommandations
+                                    </Link>
+                            
+                            
+                                </li>
+                                <li className=" bg-dark" style={{listStyleType:'none'}}>
+                                    <Link  to='/admin/products' className='nav-link list-group-item bg-dark' style={isActive('/admin/products')}>
+                                        Products
+                                    </Link>
+                            
+                            
+                                </li>
+                                <li className=" bg-dark" style={{listStyleType:'none'}}>
+                                    <Link  to='/admin/services' className='nav-link list-group-item bg-dark' style={isActive('/admin/services')}>
+                                        Services
+                                    </Link>
+                            
+                            
+                                </li>
+                                <li className=" bg-dark" style={{listStyleType:'none'}}>
+                                    <Link  to='/admin/articles' className='nav-link list-group-item bg-dark' style={isActive('/admin/articles')}>
+                                        Articles
+                                    </Link>
+                            
+                            
+                                </li>
+                                <li className=" bg-dark" style={{listStyleType:'none', color:'#ffffff'}}>
+                                    <Link   onClick={()=>signout()} className='nav-link list-group-item bg-dark' style={{color:'#ffffff'}}>
+                                        Sign out
+                                    </Link>
+                            
+                            
+                                </li>
+                           
+                           
+                        </ul>
+                    {/* </div> */}
                 </div>
-            </div>
-
-        </footer>
+        </div>
+    </div>
     )
 
     return(
         <Fragment>
-            {isMobile? mobilnav(): nav()}
-            {mobilebanner()}
-            <div className='container-fluid widthclass' 
-            // style={{width:'80%'}}
-            >
-                <span>
-        {isAndroid ? <Route exact path="/qrcode" render={() => (window.location.href = "https://play.google.com/store/apps/details?id=com.kwaysi.com")} /> :isIOS ? <Route exact path="/qrcode" render={() => (window.location.href = "https://apps.apple.com/iq/app/%D9%85%D8%AA%D8%AC%D8%B1-%D9%83%D9%88%D9%8A%D8%B3%D9%8A-kwaysi-store/id1527991952")} />:<Route exact path="/qrcode" render={() => (window.location.href = "https://www.kwaysi.com")} />}
-      </span>
-                <div className='row' style={{backgroundColor: '#FDFDFB'}}>
-                    <ToastContainer 
-                    position='bottom-right'
-                    />
+                <div>
+                    {isAuth() ? null:<Redirect to='/signin'/>}
+                    {isAuth() ? (<div  style={{display:'table', width:'100%', height:'100vh'}}>
+                        <div className=" text-white bg-dark" style={{width: '15%', display:'table-cell', verticalAlign:'top'}}>
+                        {sidebar()}
+                    </div>
                     
-                    {searchresult ? SearchProducts():children}
-                    {/* {children} */}
+                    <div className="bg-light" style={{width:'85%',display:'table-cell',verticalAlign:'top'}} >
+                        {children}
+                    </div>
+                    </div>):(children)}
                 </div>
-            </div>
-            {isMobile ? mobilFooter(): Footer()}
+            
+            
         </Fragment>
     );
 };

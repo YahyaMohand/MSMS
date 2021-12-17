@@ -1,0 +1,27 @@
+.product {
+    display:inline-flex;
+    flex-direction:row;
+    align-items: center;
+    margin: 10px;
+    padding: 60px;
+    width: 30%;
+    max-height: 100px;
+    min-width: 50px;
+    background-color: rgb(207, 207, 207);
+    z-index: 1;
+  }
+  
+
+  .product:hover {
+    opacity: 1;
+    transform: scale(0.9) translate(20px, -10px) rotate(2deg);
+    -webkit-transform: scale(0.9) translate(20px, -10px) rotate(2deg);
+  }
+  .product__price {
+    margin-top: 5px;
+  }
+  .product__info {
+    height: 100px;
+    margin-bottom: 10px;
+    font-size: 30px;
+  }
