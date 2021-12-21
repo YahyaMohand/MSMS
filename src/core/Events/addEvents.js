@@ -168,37 +168,37 @@ const AddEvent = () => {
 
             <div className="form-group">
                 <label className="text-muted">description</label>
-                <input onChange={handleChange('event_description')} value={event_description} type="text" className="form-control" required/>
+                <input onChange={handleChange('event_description')} value={event_description} type="textarea" className="form-control" required/>
             </div>
 
             <div className="form-group">
                 <label className="text-muted">Activity place</label>
-                <textarea onChange={handleChange('event_place')} value={event_place} type="textarea" className="form-control" required/>
+                <textarea onChange={handleChange('event_place')} value={event_place} type="text" className="form-control" required/>
             </div>
 
             <div className="form-group">
                 <label className="text-muted">Duration days</label>
-                <textarea onChange={handleChange('event_durationdays')} value={event_durationdays} type="textarea" className="form-control" required/>
+                <textarea onChange={handleChange('event_durationdays')} value={event_durationdays} type="text" className="form-control" required/>
             </div>
 
             <div className="form-group">
                 <label className="text-muted">Duration hours</label>
-                <textarea onChange={handleChange('event_durationhours')} value={event_durationhours} type="textarea" className="form-control" required/>
+                <textarea onChange={handleChange('event_durationhours')} value={event_durationhours} type="text" className="form-control" required/>
             </div>
 
             <div className="form-group">
                 <label className="text-muted">Start date</label>
-                <textarea onChange={handleChange('event_startdate')} value={event_startdate} type="textarea" className="form-control" required/>
+                <textarea onChange={handleChange('event_startdate')} value={event_startdate} type="date" className="form-control" required/>
             </div>
 
             <div className="form-group">
                 <label className="text-muted">End date</label>
-                <textarea onChange={handleChange('event_enddate')} value={event_enddate} type="textarea" className="form-control" required/>
+                <textarea onChange={handleChange('event_enddate')} value={event_enddate} type="date" className="form-control" required/>
             </div>
 
             <div className="form-group">
                 <label className="text-muted">Partenrs</label>
-                <textarea onChange={handleChange('event_partenrs')} value={event_partenrs} type="textarea" className="form-control" required/>
+                <textarea onChange={handleChange('event_partenrs')} value={event_partenrs} type="text" className="form-control" required/>
             </div>
 
             {/* <div className='input-group mb-3'>

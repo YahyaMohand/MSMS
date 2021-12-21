@@ -31,6 +31,7 @@ const UpdateEvents = (params) => {
     const [event_startdate, setEvent_startdate]=useState()
     const [event_enddate, setEvent_enddate]=useState()
     const [event_partenrs, setEvent_partenrs]=useState()
+    const [programid, setProgramid]=useState()
     const [buttonText, setButtonText]=useState('Update')
 
     useEffect(()=>{
@@ -45,6 +46,7 @@ const UpdateEvents = (params) => {
             setEvent_startdate(res.data.events.event_startdate)
             setEvent_enddate(res.data.events.event_enddate)
             setEvent_partenrs(res.data.events.event_partenrs)
+            setProgramid(res.data.events.programid)
             setError('')
             if(res.status==200){
                 setLoading(false)
@@ -61,6 +63,7 @@ const UpdateEvents = (params) => {
             setEvent_startdate({})
             setEvent_enddate({})
             setEvent_partenrs({})
+            setProgramid({})
             console.log(error)
             setError('Somthing went wrong')
         })
@@ -124,7 +127,8 @@ const UpdateEvents = (params) => {
                 event_durationhours,
                 event_startdate,
                 event_enddate,
-                event_partenrs 
+                event_partenrs,
+                programid
             }
         })
         .then(response =>{
@@ -163,7 +167,7 @@ const UpdateEvents = (params) => {
 
             <div className="form-group">
                 <label className="text-muted">Description</label>
-                <input onChange={(event)=>{setEvent_description(event.target.value)}} value={event_description} type="text" className="form-control" required/>
+                <textarea onChange={(event)=>{setEvent_description(event.target.value)}} value={event_description} type="textarea" className="form-control" required/>
             </div>
             <div className="form-group">
                 <label className="text-muted">Activity Place</label>
@@ -175,19 +179,23 @@ const UpdateEvents = (params) => {
             </div>
             <div className="form-group">
                 <label className="text-muted">Duration hours</label>
-                <textarea onChange={(event)=>{setEvent_durationhours(event.target.value)}} value={event_durationhours} type="text" className="form-control" required/>
+                <input onChange={(event)=>{setEvent_durationhours(event.target.value)}} value={event_durationhours} type="text" className="form-control" required/>
             </div>
             <div className="form-group">
                 <label className="text-muted">Start date</label>
-                <input onChange={(event)=>{setEvent_startdate(event.target.value)}} value={event_startdate} type="text" className="form-control" required/>
+                <input onChange={(event)=>{setEvent_startdate(event.target.value)}} value={event_startdate} type="date" className="form-control" required/>
             </div>
             <div className="form-group">
                 <label className="text-muted">End date</label>
-                <textarea onChange={(event)=>{setEvent_enddate(event.target.value)}} value={event_enddate} type="text" className="form-control" required/>
+                <input onChange={(event)=>{setEvent_enddate(event.target.value)}} value={event_enddate} type="date" className="form-control" required/>
             </div>
             <div className="form-group">
                 <label className="text-muted">Partner</label>
-                <textarea onChange={(event)=>{setEvent_partenrs(event.target.value)}} value={event_partenrs} type="text" className="form-control" required/>
+                <input onChange={(event)=>{setEvent_partenrs(event.target.value)}} value={event_partenrs} type="text" className="form-control" required/>
+            </div>
+            <div className="form-group">
+                <label className="text-muted">Program id</label>
+                <input onChange={(event)=>{setEvent_partenrs(event.target.value)}} value={programid} type="text" className="form-control" required/>
             </div>
             {/* <div className="form-group">
                 <label className="text-muted">Arabic Name</label>
