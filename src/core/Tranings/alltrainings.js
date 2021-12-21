@@ -11,6 +11,8 @@ import Image from "react-bootstrap/Image"
 import "../products/products.css"
 import XLSX from 'xlsx';
 import { set } from 'date-fns';
+import { toast } from 'react-toastify';
+
 
 
 
@@ -48,6 +50,20 @@ const AllTrainings = (params) => {
 
             })
     }, [])
+
+
+    const SendArray= (e) =>{
+        e.preventDefault();
+        axios({
+            method: 'POST',
+            url: `${url}/admin/trainings/addarrayattendee/${trainingid}/${userid}`,
+            data: data
+        }).then(res=>{
+            toast.success(res.data.message);
+        }).catch(error => {
+            toast.error(error.res.data.error)
+        })
+    }
 
 
 
@@ -180,20 +196,20 @@ const AllTrainings = (params) => {
                         {data && (data.map((item) => (
                             <tr>
                                 <th scope="row">{item?.__rowNum__}</th>
-                                <td>{item.title}</td>
+                                <td>{item.name}</td>
                             </tr>
                         )))}
 
                     </tbody>
                 </table>
                 <div className='col'>
-                    {/* <button className='btn btn-block btn-dark' onClick={()=>printrecipt()}>Add Training</button> */}
-                    <Link
+                <button className='btn btn-block btn-dark' onClick={(event)=>{SendArray(event)}}>Add Attendce</button>
+                    {/* <Link
                         className='btn btn-block btn-dark'
                         to={{
                             pathname: `students/${trainingid}`
                         }} > Add Student
-                    </Link>
+                    </Link> */}
                     {/* <input onClick={readUploadFile} type='file' className='btn btn-block btn-success'>Add Student xlsx</input> */}
                 </div>
 
