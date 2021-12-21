@@ -38,6 +38,8 @@ import AddProduct from './core/products/addproduct';
 import UpdateProduct from './core/products/updateproduct';
 import AllProduct from './core/products/allproduct';
 import AllTrainings from './core/Tranings/alltrainings';
+import Student from './core/Tranings/addStudent';
+import AllEvents from './core/Events/allEvents';
 
 
 const Routes = () => {
@@ -109,6 +111,8 @@ const Routes = () => {
                 <AdminRoute path="/admin/events" exact component={Events} />
                 <AdminRoute path="/admin/trainings" exact component={Trainings} />
                 <AdminRoute path="/admin/trainings/:trainingid" exact component={AllTrainings} />
+                <AdminRoute path="/admin/trainings/students/:trainingid" exact component={Student} />
+
                 {/* <AdminRoute path="/admin/trainings/add/" exact component={AddTraining} /> */}
                 <AdminRoute path="/admin/trainings/update/:trainingid" exact component={UpdateTrainings} />
                 <AdminRoute path="/admin/community" exact component={Community} />
@@ -119,6 +123,8 @@ const Routes = () => {
                 <AdminRoute path="/admin/programs/update/:programid" exact component={UpdateProgram} />
                 <AdminRoute path="/admin/events/add/" exact component={AddEvent} />
                 <AdminRoute path="/admin/events/update/:eventid" exact component={UpdateEvents} />
+                <AdminRoute path="/admin/events/:eventid" exact component={AllEvents} />
+
 
 
 
