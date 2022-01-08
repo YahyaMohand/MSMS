@@ -8,6 +8,8 @@ import cookie from 'js-cookie'
 import {ToastContainer, toast} from 'react-toastify';
 import loadingSpinner from '../../components/loadingspinner';
 import OrderCard from './ordercard'
+import { FaUserEdit } from 'react-icons/fa';
+
 
 const url = process.env.REACT_APP_NODE
 
@@ -27,7 +29,7 @@ const Services = () => {
     useEffect(()=>{
         axios.get(`${url}/admin/services/${userid}`)
         .then(res => {
-            // console.log(res.data.orders)
+            console.log(res.data)
             setServices(res.data.services)
             setError('')
             if(res.status == 200){setLoading(false)}
@@ -64,8 +66,13 @@ const Services = () => {
                 }}>
                 <div className='row text-center'>
                 <div className='col'><p className='m-0'>{services.service_name}</p></div>
-                    <div className='col'><p className='m-0'>{services.service_price}</p></div>
                     <div className='col'><p className='m-0'>{services.service_workduration}</p></div>
+                    <div className='col'><p className='m-0'>{services.service_price}</p></div>
+                    <Link to={{
+                        pathname: `services/update/${services.serviceid}`
+                    }}
+                    // className='btn btn-warning'
+                    ><FaUserEdit color='red' size='1.5em'/></Link>
             
                 </div>
                 </Link>
@@ -86,7 +93,7 @@ const Services = () => {
                 </div>
             </li>
             <hr></hr>
-            {/* {services.map((services, i)=>(<ServicesCard key={i} services={services}/>))} */}
+            {services.map((services, i)=>(<ServicesCard key={i} services={services}/>))}
         </ul>
         </div>
     )
@@ -100,8 +107,12 @@ const Services = () => {
                     <h3>Services</h3>
                 </div>
             <div className='col'>
-                    <button className='btn btn-block btn-dark' onClick={()=>printrecipt()}>Add Service</button>
-                </div>
+            <Link
+                className='btn btn-block btn-dark'
+                    to={{
+                    pathname: `services/add`
+                }}> Add services
+                </Link>                </div>
                 {/* <div className='col'>
                     <button className='btn btn-block btn-success' onClick={()=>printrecipt()}>Add Using xlsx</button>
                 </div> */}

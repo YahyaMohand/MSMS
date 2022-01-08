@@ -1,10 +1,10 @@
-import React, {useState, useEffect } from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import Layout from '../layout';
 import { Spinner } from 'react-bootstrap';
 import axios from 'axios';
-import {isAuth} from '../../auth/helpers';
-import {ToastContainer, toast} from 'react-toastify';
+import { isAuth } from '../../auth/helpers';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import cookie from 'js-cookie'
 import loadingSpinner from '../../components/loadingspinner'
@@ -14,41 +14,62 @@ const url = process.env.REACT_APP_NODE
 
 const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'notlogedin'
 const token = cookie.get('token')
-axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
+axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
 const UpdateSuccess = (params) => {
 
     const storyid = params.match.params.storyid
-    const [story_description, setStory_description] =useState()
+    const [story_description, setStory_description] = useState()
     const [story_title, setStory_title] = useState()
+    const [communityid, setCommunity] = useState()
     const [buttonText, setButtonText] = useState('Update')
-    const [story_team, setStory_team ] = useState()
+    const [story_team, setStory_team] = useState()
+    const [getName, setName] = useState()
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     //bring now data of category
-    useEffect(()=>{
+    useEffect(() => {
         axios.get(`${url}/admin/successstories/update/${storyid}/${userid}`)
-        .then(res => {
-            console.log(res.data)
-            setStory_description(res.data.store.story_description)
-            setStory_title(res.data.store.story_title)
-            setStory_team(res.data.store.story_team)
-            setError('')
-            if(res.status==200){
+            .then(res => {
+                console.log(res.data)
+                setStory_description(res.data.successstory.story_description)
+                setStory_title(res.data.successstory.story_title)
+                setStory_team(res.data.successstory.story_team)
+                setCommunity(res.data.successstory.communityid)
+                setError('')
+                if (res.status == 200) {
+                    setLoading(false)
+                    getUserInfo()
+                }
+            })
+            .catch(error => {
                 setLoading(false)
-              }
-        })   
-        .catch(error => {
-            setLoading(false)
-            setError('Somthing went wrong')
-            setStory_description({})
-            setStory_title({})
-            setStory_team({}) 
-        })
+                setError('Somthing went wrong')
+                setStory_description({})
+                setStory_title({})
+                setStory_team({})
+                setCommunity({})
+            })
     }, [])
 
 
 
+    const getAddresses = async () => {
+        return await axios.get(`${url}/admin/community/${userid}`);
+    }
+    const getUserInfo = async () => {
+
+
+        try {
+            const responses = await Promise.all([getAddresses()]);
+            let newState = responses[0].data.community; // map your state here
+            let comm = newState.map((e) => e)
+            setName(comm); // and then update the state
+        } catch (error) {
+            console.error(error.message);
+            setName()
+        }
+    }
 
     //file upload 
     const [file, setFile] = useState('')
@@ -64,7 +85,7 @@ const UpdateSuccess = (params) => {
     //     e.preventDefault();
     //     const formData = new FormData();
     //     formData.append('file', file);
-        
+
     //     try {
     //         const res = await axios.post(`${url}/admin/categories/upload/${userid}`,
     //         formData,
@@ -73,9 +94,9 @@ const UpdateSuccess = (params) => {
     //                 'Content-Type': 'multipart/form-data'
     //             }
     //         });
-            
+
     //         const {fileName, filePath} = res.data;
-            
+
     //         setUploadedFile({ fileName, filePath});
     //         setLogoPath(filePath);
     //         toast.success('Image uploaded to the server')
@@ -103,19 +124,20 @@ const UpdateSuccess = (params) => {
             // url: `${process.env.REACT_APP_ADMIN}/categories/create`,
             url: `${url}/admin/successstories/update/${storyid}/${userid}`,
             data: {
-            story_description,
-            story_title,
-            story_team
+                communityid,
+                story_description,
+                story_title,
+                story_team,
             }
         })
-        .then(response =>{
-            setButtonText('Updated')
-            toast.success(response.data.message);
-        })
-        .catch(error => {
-            setButtonText('Update')
-            toast.error(error.response.data.error);
-        })
+            .then(response => {
+                setButtonText('Updated')
+                toast.success(response.data.message);
+            })
+            .catch(error => {
+                setButtonText('Update')
+                toast.error(error.response.data.error);
+            })
     };
 
 
@@ -130,17 +152,35 @@ const UpdateSuccess = (params) => {
         <form onSubmit={clickSubmit}>
             <div className="form-group">
                 <label className="text-muted">Description</label>
-                <input onChange={(event)=>{setStory_description(event.target.value)}} value={story_description} type="text" className="form-control" required/>
+                <input onChange={(event) => { setStory_description(event.target.value) }} value={story_description} type="text" className="form-control" required />
             </div>
 
             <div className="form-group">
                 <label className="text-muted">Title</label>
-                <input onChange={(event)=>{setStory_title(event.target.value)}} value={story_title} type="text" className="form-control" required/>
+                <input onChange={(event) => { setStory_title(event.target.value) }} value={story_title} type="text" className="form-control" required />
             </div>
 
             <div className="form-group">
                 <label className="text-muted">Team</label>
-                <input onChange={(event)=>{setStory_team(event.target.value)}} value={story_team} type="text" className="form-control" required/>
+                <input onChange={(event) => { setStory_team(event.target.value) }} value={story_team} type="text" className="form-control" required />
+            </div>
+            {/* <div className="form-group">
+                <label className="text-muted">Community id</label>
+                <input onChange={(event) => { setStory_team(event.target.value) }} value={communityid} type="text" className="form-control" required />
+            </div> */}
+
+            <div className="col input-group mb-2">
+            <label style={{ padding: '10px' }} className="text-muted">Community id</label>
+
+                <select onChange={(event) => {
+                    setCommunity(event.target.value)
+                }} value={communityid} type='text' className="form-control">
+                    <option>Select one</option>
+
+                    {getName?.map((item) => (
+                        <option value={item.communityid}>{item.com_name}</option>
+                    ))}
+                </select>
             </div>
 
             {/* <div className='input-group mb-3'>
@@ -168,18 +208,18 @@ const UpdateSuccess = (params) => {
     );
 
 
-    return(
+    return (
         <Layout>
             <div className='container'>
-            <div className="col-d-6">
-                {/* <ToastContainer /> */}
-                {isAuth() ? null : <Redirect to='/'/>} 
-                {/* {JSON.stringify({nameArabic,nameEnglish,logoPath})} */}
-                <h1 className="p-5 text-center">Update Success story</h1>
-                {error ? error : null}
-                {/* {loading ? loadingSpinner():pictureBorder()} */}
-                {loading ? loadingSpinner():newSuccessForm()}
-            </div></div>
+                <div className="col-d-6">
+                    {/* <ToastContainer /> */}
+                    {isAuth() ? null : <Redirect to='/' />}
+                    {/* {JSON.stringify({nameArabic,nameEnglish,logoPath})} */}
+                    <h1 className="p-5 text-center">Update Success story</h1>
+                    {error ? error : null}
+                    {/* {loading ? loadingSpinner():pictureBorder()} */}
+                    {loading ? loadingSpinner() : newSuccessForm()}
+                </div></div>
         </Layout>
     );
 }

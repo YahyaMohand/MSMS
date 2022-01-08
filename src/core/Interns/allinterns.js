@@ -10,7 +10,6 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import cookie from 'js-cookie'
 import loadingSpinner from '../../components/loadingspinner'
 import Image from 'react-bootstrap/Image'
-import "./products.css"
 import Me from '../../components/styleComponent';
 
 
@@ -20,25 +19,25 @@ const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'not
 const token = cookie.get('token')
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
 
-function AllProduct(params) {
-    const productid = params.match.params.productid
+function AllInterns(params) {
+    const internid = params.match.params.internid
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
-    const [products, setProducts] = useState({})
+    const [interns, setIntern] = useState({})
 
 
     useEffect(()=>{
-        axios.get(`${url}/admin/products/${productid}/${userid}`)
+        axios.get(`${url}/admin/interns/${internid}/${userid}`)
         .then(res => {
             console.log(res.data)
-            setProducts(res.data.products)
+            setIntern(res.data.intern)
             setError('')
             setLoading(false)
         })   
         .catch(error => {
             console.log(error)
             setLoading(false)
-            setProducts({})
+            setIntern({})
             setError('Somthing went wrong')
         })
     }, [])
@@ -116,7 +115,7 @@ function AllProduct(params) {
     //     }
     // }
 
-    const ProductCard = () => {
+    const InternCard = () => {
 
         function formatedDate(x){
             const birthday = new Date(x)
@@ -133,71 +132,66 @@ function AllProduct(params) {
     
     
         return(     
-           <div className='mt-2' >
+  <div className='mt-2' >
                 <div className='row card m-auto'>
                     <div>
-                        <h3 className='text-center'>{products.product_name}</h3>
+                        <h3 className='text-center'>{interns.intern_title}</h3>
                     </div>
 
                 </div>
-                  <div className='row mt-2'>
-                     <div className='row mt-2'>
+                <div className='row mt-2'>
                     <div style={{backgroundColor:'#ffffff'}} className='card ml-3 mr-2 col'>
                         <div> 
-                        <img width='500px' height='400px' src={products.product_picture} />
-
-                            </div>
-                            </div>
-
-                    </div>
-                    <div style={{backgroundColor:'#ffffff'}} className='card ml-3 mr-2 col'>
-                        <div> 
-                            <p>{products.product_description}</p>
+                            <p>{interns.intern_description}</p>
                         </div>
 
                     </div>
                     <div className='col p-0 mr-2'>
                     <ul className="list-group">
                         <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Machine used
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.machine_used}</span>
+                            Start date
+                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{formatedDate(interns.intern_startdate)}</span>
                         </li>
                         <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Material used
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.material_used}</span>
+                            End date
+                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{formatedDate(interns.intern_enddate)}</span>
                         </li>
                         <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Made by
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_madeby}</span>
+                            Evaluation
+                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{interns.intern_evaluation}</span>
                         </li>
                         <li className="list-group-item d-flex justify-content-between align-items-center">
-                             Made for
-                            <span style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_madefor}</span>
+                            Evaluation Detalis
+                            <span style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{interns.intern_evaluationdetalis}</span>
                         </li>
-                          <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Design file
+                        </ul>
+                    </div>
+                    <div className='col mr-3 p-0'>
+                    <ul className="list-group">
+                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                            Supervisior
                             <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} 
-                            className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_designfile}</span>
+                            className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{interns.intern_supervisior}</span>
+                        </li>
+                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                            Title
+                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} 
+                            className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{interns.intern_title}</span>
+                        </li>
+                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                            Payment
+                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}}
+                             className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{interns.intern_payment}</span>
+                        </li>
+                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                            Duration weeks
+                            <span style={{color:'#000000',backgroundColor:'#e9d3ff'}}
+                             className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{interns.intern_durationweeks}</span>
                         </li>
                            <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Work duration
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} 
-                            className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_workduration}</span>
-                        </li>
-                           <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Cost
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} 
-                            className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_cost}</span>
-                        </li>
-                           <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Price
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} 
-                            className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_price}</span>
-                        </li>
-                            <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Quantity
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} 
-                            className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_quantity}</span>
+                            Hours per week
+                            <span style={{color:'#000000',backgroundColor:'#e9d3ff'}}
+                             className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{interns.intern_hoursperweek}</span>
                         </li>
                         </ul>
                     </div>
@@ -205,10 +199,6 @@ function AllProduct(params) {
 
                 </div>
                 </div>
-
-            
-
-            
 
             
         )
@@ -222,10 +212,10 @@ function AllProduct(params) {
             <div className="col-d-6">
             {/* <ToastContainer /> */}
                 {isAuth() ? null : <Redirect to='/'/>} 
-                <h1 className="p-5 text-center">Product</h1>
+                <h1 className="p-5 text-center">Interns</h1>
                 {/* {pictureBorder()} */}
                 {error ? error : null}
-                {loading ? loadingSpinner():ProductCard()}
+                {loading ? loadingSpinner():InternCard()}
                 
             </div></div>
         </Layout>
@@ -234,4 +224,4 @@ function AllProduct(params) {
     
 }
 
-export default AllProduct;
+export default AllInterns;

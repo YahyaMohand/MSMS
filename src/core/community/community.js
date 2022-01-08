@@ -140,13 +140,9 @@ const Community = () => {
                 className='btn btn-block btn-dark'
                 to={{
                     pathname: `community/add`
-                }}>Add Recored</Link>
+                }}>Add Member</Link>
                 
                 </div>
-                <div className='col'>
-                    <button className='btn btn-block btn-success' onClick={()=>printrecipt()}>Add Using xlsx</button>
-                </div>
-
                 
             </div>
 

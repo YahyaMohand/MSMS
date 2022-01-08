@@ -66,8 +66,8 @@ const Interns = () => {
                 <div className='col'><p className='m-0'>{interns.intern_title}</p></div>
                     <div className='col'><p className='m-0'>{interns.intern_supervisior}</p></div>
                     <div className='col'><p className='m-0'>{interns.intern_payment}</p></div>
-                    <div className='col'><p className='m-0'>{interns.intern_startdate}</p></div>
-                    <div className='col'><p className='m-0'>{interns.intern_enddate}</p></div>
+                    <div className='col'><p className='m-0'>{formatedDate(interns.intern_startdate)}</p></div>
+                    <div className='col'><p className='m-0'>{formatedDate(interns.intern_enddate)}</p></div>
                     <Link to={{
                         pathname: `interns/update/${interns.internid}`
                     }}

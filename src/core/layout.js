@@ -460,12 +460,13 @@ const Layout = ({children,match,history}) =>{
         <div>
             {/* <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style={{width: '280px', height: '100vh'}}> */}
                 <div>
-                    <div style={{height:'100vh'}}>
-                        <h4 className='p-3'>Mosul Space</h4>
+                    <div style={{height:'110vh'}}>
+                        {/* <h4 className='p-3'>Mosul Space</h4> */}
+                        <img src={'https://mosulspace.org/wp-content/uploads/2019/09/logo-300px.png'} style={{padding:'20px'}}  className='m-0 ml-2 mr-2'></img>
                         <hr></hr>
                         <ul className="list-group p-3" style={{width:'15vw'}}>
                             <li className=" bg-dark" style={{listStyleType:'none'}} >
-                                <Link  to='/' className='nav-link list-group-item bg-dark' style={isActive('/')}>
+                                <Link  to='/' className='nav-link list-group-item bg-dark' style={isActive('/admin/dashboard')}>
                                     Dashboard
                                 </Link>
                             </li>
@@ -520,7 +521,7 @@ const Layout = ({children,match,history}) =>{
                                 </li>
                                 <li className=" bg-dark" style={{listStyleType:'none'}}>
                                     <Link  to='/admin/recommendations' className='nav-link list-group-item bg-dark' style={isActive('/admin/recommandations')}>
-                                        Recommandations
+                                        Recommendations
                                     </Link>
                             
                             
@@ -528,6 +529,13 @@ const Layout = ({children,match,history}) =>{
                                 <li className=" bg-dark" style={{listStyleType:'none'}}>
                                     <Link  to='/admin/products' className='nav-link list-group-item bg-dark' style={isActive('/admin/products')}>
                                         Products
+                                    </Link>
+                            
+                            
+                                </li>
+                                <li className=" bg-dark" style={{listStyleType:'none'}}>
+                                    <Link  to='/admin/memberships' className='nav-link list-group-item bg-dark' style={isActive('/admin/services')}>
+                                        Membership rent
                                     </Link>
                             
                             
@@ -564,6 +572,7 @@ const Layout = ({children,match,history}) =>{
 
     return(
         <Fragment>
+             <ToastContainer position='bottom-right' />
                 <div>
                     {isAuth() ? null:<Redirect to='/signin'/>}
                     {isAuth() ? (<div  style={{display:'table', width:'100%', height:'100vh'}}>

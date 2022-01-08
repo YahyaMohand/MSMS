@@ -10,7 +10,6 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import cookie from 'js-cookie'
 import loadingSpinner from '../../components/loadingspinner'
 import Image from 'react-bootstrap/Image'
-import "./products.css"
 import Me from '../../components/styleComponent';
 
 
@@ -20,27 +19,32 @@ const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'not
 const token = cookie.get('token')
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
 
-function AllProduct(params) {
-    const productid = params.match.params.productid
+function AllSuccess(params) {
+    const storyid = params.match.params.storyid
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
-    const [products, setProducts] = useState({})
+    const [successstory, setSuccessstories] = useState({})
 
 
     useEffect(()=>{
-        axios.get(`${url}/admin/products/${productid}/${userid}`)
+        let isMounted = true;
+        axios.get(`${url}/admin/successstories/${storyid}/${userid}`)
         .then(res => {
+            if (isMounted){
             console.log(res.data)
-            setProducts(res.data.products)
+            setSuccessstories(res.data.successstory)
             setError('')
             setLoading(false)
-        })   
+        }})   
         .catch(error => {
             console.log(error)
             setLoading(false)
-            setProducts({})
+            setSuccessstories({})
             setError('Somthing went wrong')
-        })
+          })
+          return ()=>{
+              isMounted = false
+          }
     }, [])
 
 
@@ -116,7 +120,7 @@ function AllProduct(params) {
     //     }
     // }
 
-    const ProductCard = () => {
+    const SuccessCard = () => {
 
         function formatedDate(x){
             const birthday = new Date(x)
@@ -136,68 +140,26 @@ function AllProduct(params) {
            <div className='mt-2' >
                 <div className='row card m-auto'>
                     <div>
-                        <h3 className='text-center'>{products.product_name}</h3>
+                        <h3 className='text-center'>{successstory.story_title}</h3>
                     </div>
 
                 </div>
-                  <div className='row mt-2'>
-                     <div className='row mt-2'>
+                <div className='row mt-2'>
                     <div style={{backgroundColor:'#ffffff'}} className='card ml-3 mr-2 col'>
                         <div> 
-                        <img width='500px' height='400px' src={products.product_picture} />
-
+                            <p>{successstory.story_description}</p>
                             </div>
-                            </div>
-
-                    </div>
-                    <div style={{backgroundColor:'#ffffff'}} className='card ml-3 mr-2 col'>
-                        <div> 
-                            <p>{products.product_description}</p>
-                        </div>
 
                     </div>
                     <div className='col p-0 mr-2'>
                     <ul className="list-group">
                         <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Machine used
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.machine_used}</span>
+                            Team
+                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{successstory.story_team}</span>
                         </li>
                         <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Material used
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.material_used}</span>
-                        </li>
-                        <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Made by
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_madeby}</span>
-                        </li>
-                        <li className="list-group-item d-flex justify-content-between align-items-center">
-                             Made for
-                            <span style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_madefor}</span>
-                        </li>
-                          <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Design file
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} 
-                            className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_designfile}</span>
-                        </li>
-                           <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Work duration
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} 
-                            className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_workduration}</span>
-                        </li>
-                           <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Cost
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} 
-                            className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_cost}</span>
-                        </li>
-                           <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Price
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} 
-                            className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_price}</span>
-                        </li>
-                            <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Quantity
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} 
-                            className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_quantity}</span>
+                            Community id
+                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{successstory.communityid}</span>
                         </li>
                         </ul>
                     </div>
@@ -205,8 +167,6 @@ function AllProduct(params) {
 
                 </div>
                 </div>
-
-            
 
             
 
@@ -222,10 +182,10 @@ function AllProduct(params) {
             <div className="col-d-6">
             {/* <ToastContainer /> */}
                 {isAuth() ? null : <Redirect to='/'/>} 
-                <h1 className="p-5 text-center">Product</h1>
+                <h1 className="p-5 text-center">Success Story</h1>
                 {/* {pictureBorder()} */}
                 {error ? error : null}
-                {loading ? loadingSpinner():ProductCard()}
+                {loading ? loadingSpinner():SuccessCard()}
                 
             </div></div>
         </Layout>
@@ -234,4 +194,4 @@ function AllProduct(params) {
     
 }
 
-export default AllProduct;
+export default AllSuccess;

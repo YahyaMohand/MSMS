@@ -96,47 +96,45 @@ function AddProduct() {
     // const [discount, setDiscount] = useState()
     // const [imagePath, setImagePath ] = useState()
     
-    // //file upload 
-    // const [file, setFile] = useState('')
-    // const [filename, setFilename] = useState('Choose Image')
-    // const [uploadedFile, setUploadedFile] = useState({});
+    //file upload 
+    const [file, setFile] = useState('')
+    const [filename, setFilename] = useState('Choose Image')
+    const [uploadedFile, setUploadedFile] = useState({});
 
-    // const onUpload = e => {
-    //     setFile(e.target.files[0]);
-    //     setFilename(e.target.files[0].name)
-    //     // console.log(file)
-    // }
+    const onUpload = e => {
+        setFile(e.target.files[0]);
+        setFilename(e.target.files[0].name)
+        // console.log(file)
+    }
 
-    // const onSubmitFile = async e => {
-    //     e.preventDefault();
-    //     const formData = new FormData();
-    //     formData.append('file', file);
+    const onSubmitFile = async e => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('file', file);
         
-    //     try {
-    //         const res = await axios.post(`${url}/admin/products/upload/${userid}`,
-    //         formData,
-    //         {
-    //             headers: {
-    //                 'Content-Type': 'multipart/form-data'
-    //             }
-    //         });
+        try {
+            const res = await axios.post(`${url}/admin/products/upload/${userid}`,
+            formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
             
 
 
-    //         const {fileName, filePath} = res.data;
+            const {fileName, filePath} = res.data;
             
-    //         setUploadedFile({ fileName, filePath});
-    //         setImagePath(filePath);
-    //         toast.success('Image uploaded to the server')
-    //         setPic(true)
-    //     } catch(err){
-    //         if(err.response.status === 500){
-    //             toast.error('There is a problem with the server');
-    //         }else{
-    //             toast.error(err.response.data.massage);
-    //         }
-    //     }
-    // }
+            setUploadedFile({ fileName, filePath});
+            toast.success('Image uploaded to the server')
+        } catch(err){
+            if(err.response.status === 500){
+                toast.error('There is a problem with the server');
+            }else{
+                toast.error(err.response.data.massage);
+            }
+        }
+    }
 
     const {
         product_name,
@@ -258,10 +256,17 @@ function AddProduct() {
                 <textarea onChange={handleChange('product_description')} value={product_description} type="textarea" className="form-control" required/>
             </div>
 
-            <div className="form-group">
-                <label className="text-muted">Product designfile</label>
-                <textarea onChange={handleChange('product_designfile')} value={product_designfile} type="textarea" className="form-control" required/>
-            </div>
+            {/* <div className='custom-file'>
+            <label className="text-muted">Product designfile</label>
+            <input onChange={onUpload}  type="file" className="form-control" required/>
+                </div> */}
+                 <div className='custom-file'>
+                        <input 
+                        onChange={onUpload} 
+                        // value={filename} 
+                        type="file" className="custom-file-input" name='file'  id='fileupload' required />
+                        <label className='custom-file-label'>{filename}</label>
+                    </div>
 
             <div className="form-group">
                 <label className="text-muted">Product workduration</label>

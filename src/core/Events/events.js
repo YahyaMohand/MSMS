@@ -71,8 +71,8 @@ const Events = () => {
                     <div className='col'><p className='m-0'>{events.event_type}</p></div>
                     <div className='col'><p className='m-0'>{events.event_name}</p></div>
                     <div className='col'><p className='m-0'>{events.programid}</p></div>
-                    <div className='col'><p className='m-0'>{events.event_startdate}</p></div>
-                    <div className='col'><p className='m-0'>{events.event_enddate}</p></div>
+                    <div className='col'><p className='m-0'>{formatedDate(events.event_startdate)}</p></div>
+                    <div className='col'><p className='m-0'>{formatedDate(events.event_enddate)}</p></div>
                     <div className='col'><p className='m-0'>{events.event_durationdays}</p></div>
                     <div className='col'><p className='m-0'>{events.event_durationhours}</p></div>
                     <Link to={{

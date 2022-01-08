@@ -134,7 +134,17 @@ const UpdateProgram = (params) => {
         })
         .then(response =>{
             // console.log("BRAND Added to database successfully", response);
-            setButtonText('Updated')
+            setButtonText('Update')
+            setProgram_name('')
+            setProgram_drivelink('')
+            setProgram_startdate('')
+            setProgram_enddate('')
+            setProgram_donor('')
+            setProgram_description('')
+            setProgram_objectives('')
+            setProgram_activities('')
+            setProgram_goals('')
+            setProgram_beneficiaries('')
             toast.success(response.data.message);
         })
         .catch(error => {
@@ -197,11 +207,11 @@ const UpdateProgram = (params) => {
 
             <div className="form-group">
                 <label className="text-muted">Program start_date</label>
-                <input onChange={(event)=>{setProgram_startdate(event.target.value)}} value={program_startdate} type="text" className="form-control" required/>
+                <input onChange={(event)=>{setProgram_startdate(event.target.value)}} value={program_startdate} type="date" className="form-control" required/>
             </div>
             <div className="form-group">
                 <label className="text-muted">Program end_date</label>
-                <input onChange={(event)=>{setProgram_enddate(event.target.value)}} value={program_enddate} type="text" className="form-control" required/>
+                <input onChange={(event)=>{setProgram_enddate(event.target.value)}} value={program_enddate} type="date" className="form-control" required/>
             </div>
             <div className="form-group">
                 <label className="text-muted">Donor</label>

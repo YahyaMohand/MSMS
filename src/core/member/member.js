@@ -1,49 +1,46 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../layout';
 import axios from 'axios';
-import GroupCard from './groupcard'
 import {isAuth} from '../../auth/helpers';
 import {Redirect, Link} from 'react-router-dom';
 import cookie from 'js-cookie'
 import loadingSpinner from '../../components/loadingspinner'
-import { FaUserEdit } from 'react-icons/fa';
+import {FaUserEdit} from 'react-icons/fa';
+
+
 
 const url = process.env.REACT_APP_NODE
 
-
 const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'notlogedin'
-
 const token = cookie.get('token')
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
 
 
-const Recommandations = () => {
-
+const Membership = () => {
 
     //get method functions
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
-    const [recomm, setRecommandations] = useState({})
+    const [membershipsrents, setMembershipsrents] = useState({})
 
 
     useEffect(()=>{
-        axios.get(`${url}/admin/recommendations/${userid}`)
+        axios.get(`${url}/admin/memberships/${userid}`)
         .then(res => {
             console.log(res.data)
-            setRecommandations(res.data.recomm)
+            setMembershipsrents(res.data.membershipsrents)
             setError('')
             setLoading(false)
-        })   
+        })
         .catch(error => {
             setLoading(false)
-            setRecommandations({})
+            setMembershipsrents({})
             setError('Somthing went wrong')
-            console.log(error)
         })
     }, [])
 
 
-    const RecommandationsCard = ({recommendations}) => {
+    const MemberCard = ({membershipsrents}) => {
 
         function formatedDate(x){
             const birthday = new Date(x)
@@ -57,6 +54,10 @@ const Recommandations = () => {
             const birthday = new Date(x).toLocaleTimeString('en-IQ')
             return birthday
         }
+
+
+
+
     
     
         return(             
@@ -64,17 +65,19 @@ const Recommandations = () => {
                 <Link 
                 style={{textDecoration: 'none', color: 'black'}}
                 to={{
-                    pathname: `recommendations/${recommendations.recommendationid}`
+                    pathname: `memberships/${membershipsrents.membershipsrentid}`
                 }}>
                 <div className='row text-center'>
-                    <div className='col'><p className='m-0'>{recommendations.recom_title}</p></div>
-                    <div className='col'><p className='m-0'>{recommendations.recom_letter}</p></div>
-                  
-                    <div className='col'><p className='m-0'>{formatedDate(recommendations.recom_date)}</p></div>
-                    <div className='col'><p className='m-0'>{recommendations.recom_madeby}</p></div>
-                    <div className='col'><p className='m-0'>{recommendations.communityid}</p></div>
+                     <div className='col'><p className='m-0'>{membershipsrents.mem_teamname}</p></div>
+                    {/* <div className='col'><p className='m-0'>{membershipsrents.mem_description}</p></div> */}
+                    <div className='col'><p className='m-0'>{membershipsrents.mem_duration}</p></div>
+                    <div className='col'><p className='m-0'>{membershipsrents.mem_price}</p></div>
+                    {/* <div className='col'><p className='m-0'>{membershipsrents.mem_durationtype}</p></div> */}
+                    <div className='col'><p className='m-0'>{membershipsrents.mem_type}</p></div>
+                    <div className='col'><p className='m-0'>{formatedDate(membershipsrents.mem_startdate)}</p></div>
+                    {/* <div className='col'><p className='m-0'>{membershipsrents.mem_enddate}</p></div> */}
                     <Link to={{
-                        pathname: `recommendations/update/${recommendations.recommendationid}`
+                        pathname: `memberships/update/${membershipsrents.membershipsrentid}`
                     }}
                     // className='btn btn-warning'
                     ><FaUserEdit color='red' size='1.5em'/></Link>
@@ -86,41 +89,39 @@ const Recommandations = () => {
     }
 
 
-    const newRecommandationsForm = () => (
+    const newMemberForm = () => (
         <div className='mt-3'>
         <ul className='list-group'>
             <li className='list-group-item' style={{backgroundColor:'#000000',color:'#ffffff', borderRadius:'25px'}} >
                 <div className='row text-center font-weight-bold'>
-                    <div className='col'><p className='m-0'>Title</p></div>
-                    <div className='col'><p className='m-0'>Letter</p></div>
-                    <div className='col'><p className='m-0'>Date</p></div>
-                    <div className='col'><p className='m-0'>Made by</p></div>
-                    <div className='col'><p className='m-0'>Community id</p></div>
-
-                  
+                    <div className='col'><p className='m-0'>Team Name</p></div>
+                    <div className='col'><p className='m-0'>Duration</p></div>
+                    <div className='col'><p className='m-0'>Price </p></div>
+                    <div className='col'><p className='m-0'>Type</p></div>
+                    <div className='col'><p className='m-0'>Start date</p></div>
                 </div>
             </li>
             <hr></hr>
-            {recomm.map((recommendations, i)=>(<RecommandationsCard key={i} recommendations={recommendations}/>))}
+            {membershipsrents.map((membershipsrents, i)=>(<MemberCard key={i} membershipsrents={membershipsrents}/>))}
         </ul>
         </div>
     )
     const printrecipt = ()=>{
         window.print()
     }
-    const RecommandationNav = ()=>(
+    const MemberNav = ()=>(
         <div  className='mt-5 mb-5 ml-3 mr-3'>
             <div className='row'>
                 <div className='col'>
-                    <h3>Recommendation</h3>
+                    <h3>Memberships</h3>
                 </div>
             <div className='col'>
-                    {/* <button className='btn btn-block btn-dark' onClick={()=>printrecipt()}>Add Recommendation</button> */}
+                    {/* <button className='btn btn-block btn-dark' onClick={()=>printrecipt()}>Add Training</button> */}
                     <Link
                 className='btn btn-block btn-dark'
                     to={{
-                    pathname: `recommendations/add`
-                }}> Add Recommandation
+                    pathname: `memberships/add`
+                }}> Add Membership
                 </Link>
                 </div>
                 {/* <div className='col'>
@@ -134,17 +135,18 @@ const Recommandations = () => {
     )
 
 
+  
+
     return (
         <Layout>
             <div className='container-fluid'>
-                {loading ? null:RecommandationNav()}
+                {loading ? null:MemberNav()}
                 {isAuth() ? null : <Redirect to='/'/>}
                 {error ? error : null}
-                {loading ? loadingSpinner():newRecommandationsForm()}
+                {loading ? loadingSpinner():newMemberForm()}
             </div>
-            
-
         </Layout>
     );
 }
-export default Recommandations;
+
+export default Membership;

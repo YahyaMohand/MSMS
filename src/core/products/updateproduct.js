@@ -145,6 +145,18 @@ function UpdateProduct(params) {
         .then(response =>{
             // console.log("Product Added to database successfully", response);
             setButtonText('Updated')
+            setProduct_name('')
+            setMaterial_used('')
+            setMachine_used('')
+            setProduct_madeby('')
+            setProduct_madefor('')
+            setProduct_picture('')
+            setProduct_description('')
+            setProduct_designfile('')
+            setProduct_workduration('')
+            setProduct_cost('')
+            setProduct_price('')
+            setProduct_quantity('')
             toast.success(response.data.message);
         })
         .catch(error => {

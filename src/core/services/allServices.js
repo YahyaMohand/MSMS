@@ -10,7 +10,6 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import cookie from 'js-cookie'
 import loadingSpinner from '../../components/loadingspinner'
 import Image from 'react-bootstrap/Image'
-import "./products.css"
 import Me from '../../components/styleComponent';
 
 
@@ -20,25 +19,25 @@ const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'not
 const token = cookie.get('token')
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
 
-function AllProduct(params) {
-    const productid = params.match.params.productid
+function AllService(params) {
+    const serviceid = params.match.params.serviceid
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
-    const [products, setProducts] = useState({})
+    const [service, setService] = useState({})
 
 
     useEffect(()=>{
-        axios.get(`${url}/admin/products/${productid}/${userid}`)
+        axios.get(`${url}/admin/services/${serviceid}/${userid}`)
         .then(res => {
             console.log(res.data)
-            setProducts(res.data.products)
+            setService(res.data.service)
             setError('')
             setLoading(false)
         })   
         .catch(error => {
             console.log(error)
             setLoading(false)
-            setProducts({})
+            setService({})
             setError('Somthing went wrong')
         })
     }, [])
@@ -116,7 +115,7 @@ function AllProduct(params) {
     //     }
     // }
 
-    const ProductCard = () => {
+    const ServiceCard = () => {
 
         function formatedDate(x){
             const birthday = new Date(x)
@@ -133,83 +132,47 @@ function AllProduct(params) {
     
     
         return(     
-           <div className='mt-2' >
+  <div className='mt-2' >
                 <div className='row card m-auto'>
                     <div>
-                        <h3 className='text-center'>{products.product_name}</h3>
+                        <h3 className='text-center'>{service.service_name}</h3>
                     </div>
 
                 </div>
                   <div className='row mt-2'>
-                     <div className='row mt-2'>
                     <div style={{backgroundColor:'#ffffff'}} className='card ml-3 mr-2 col'>
                         <div> 
-                        <img width='500px' height='400px' src={products.product_picture} />
-
-                            </div>
-                            </div>
-
-                    </div>
-                    <div style={{backgroundColor:'#ffffff'}} className='card ml-3 mr-2 col'>
-                        <div> 
-                            <p>{products.product_description}</p>
+                            <p>{service.service_description}</p>
                         </div>
-
-                    </div>
+                        </div>
+                        </div>
                     <div className='col p-0 mr-2'>
                     <ul className="list-group">
                         <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Machine used
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.machine_used}</span>
+                            File
+                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{service.service_file}</span>
                         </li>
                         <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Material used
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.material_used}</span>
+                            Beneficiary
+                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{service.service_beneficiary}</span>
                         </li>
                         <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Made by
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_madeby}</span>
+                            Price
+                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{service.service_price}</span>
                         </li>
                         <li className="list-group-item d-flex justify-content-between align-items-center">
-                             Made for
-                            <span style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_madefor}</span>
+                            Work duration
+                            <span style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{service.service_workduration}</span>
                         </li>
                           <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Design file
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} 
-                            className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_designfile}</span>
-                        </li>
-                           <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Work duration
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} 
-                            className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_workduration}</span>
-                        </li>
-                           <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Cost
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} 
-                            className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_cost}</span>
-                        </li>
-                           <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Price
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} 
-                            className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_price}</span>
-                        </li>
-                            <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Quantity
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} 
-                            className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_quantity}</span>
+                            Made by
+                            <span style={{color:'#000000',backgroundColor:'#e9d3ff'}} className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{service.service_madeby}</span>
                         </li>
                         </ul>
                     </div>
                     
 
                 </div>
-                </div>
-
-            
-
-            
-
             
         )
     }
@@ -222,16 +185,19 @@ function AllProduct(params) {
             <div className="col-d-6">
             {/* <ToastContainer /> */}
                 {isAuth() ? null : <Redirect to='/'/>} 
-                <h1 className="p-5 text-center">Product</h1>
+                <h1 className="p-5 text-center">Service</h1>
                 {/* {pictureBorder()} */}
                 {error ? error : null}
-                {loading ? loadingSpinner():ProductCard()}
+                {loading ? loadingSpinner():ServiceCard()}
                 
-            </div></div>
+            </div>
+            </div>
+
+
         </Layout>
     );
     
     
 }
 
-export default AllProduct;
+export default AllService;

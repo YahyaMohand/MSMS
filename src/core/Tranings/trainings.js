@@ -67,8 +67,8 @@ const Trainings = () => {
                      <div className='col'><p className='m-0'>{trainings.train_title}</p></div>
                     <div className='col'><p className='m-0'>{trainings.train_type}</p></div>
                     <div className='col'><p className='m-0'>{trainings.programid}</p></div>
-                    <div className='col'><p className='m-0'>{trainings.train_startdate}</p></div>
-                    <div className='col'><p className='m-0'>{trainings.train_enddate}</p></div>
+                    <div className='col'><p className='m-0'>{formatedDate(trainings.train_startdate)}</p></div>
+                    <div className='col'><p className='m-0'>{formatedDate(trainings.train_enddate)}</p></div>
                     <div className='col'><p className='m-0'>{trainings.train_durationdays}</p></div>
                     <div className='col'><p className='m-0'>{trainings.train_durationshours}</p></div>
                     <div className='col'><p className='m-0'>{trainings.train_price}</p></div>

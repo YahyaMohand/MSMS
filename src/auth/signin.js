@@ -82,6 +82,7 @@ const Signin = ({history}) =>{
     return(
         <Layout>
         {/* {JSON.stringify(isAuth())} */}
+        <ToastContainer position='bottom-right' />
         <div className='container mb-lg-5 mt-lg-5'>
             <div className="col-d-6">
               

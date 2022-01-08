@@ -69,7 +69,7 @@ const Startups = () => {
                     <p className='m-0 ml-1'>{startups.startup_name}</p></div></div>
                         <div className='col'><p className='m-0'>{startups.startup_sector}</p></div>
                         <div className='col'><p className='m-0'>{startups.startup_stage}</p></div>
-                        <div className='col'><p className='m-0'>{startups.startup_startdate}</p></div>
+                        <div className='col'><p className='m-0'>{formatedDate(startups.startup_startdate)}</p></div>
                         <div className='col'><p className='m-0'>{startups.startup_idea}</p></div>
                         <div className='col'><p className='m-0'>{startups.startup_website}</p></div>
                         <Link to={{

@@ -1,10 +1,10 @@
-import React, {useState, useEffect } from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import Layout from '../layout';
 import { Spinner } from 'react-bootstrap';
 import axios from 'axios';
-import {isAuth} from '../../auth/helpers';
-import {ToastContainer, toast} from 'react-toastify';
+import { isAuth } from '../../auth/helpers';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import cookie from 'js-cookie'
 import loadingSpinner from '../../components/loadingspinner'
@@ -14,12 +14,13 @@ const url = process.env.REACT_APP_NODE
 
 const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'notlogedin'
 const token = cookie.get('token')
-axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
+axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
 const UpdateTrainings = (params) => {
 
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
+    const [getName, setName] = useState()
     const trainingid = params.match.params.trainingid
     const [train_title, setTrain_title] = useState()
     const [train_description, setTrain_description] = useState()
@@ -31,43 +32,48 @@ const UpdateTrainings = (params) => {
     const [train_modality, setTrain_modality] = useState()
     const [train_formlink, setTrain_formlink] = useState()
     const [train_type, setTrain_type] = useState()
-  
-    const [buttonText, setButtonText]=useState('Update')
+    const [programid, setProgramid] = useState()
+
+    const [buttonText, setButtonText] = useState('Update')
 
     //bring now data of category
-    useEffect(()=>{
+    useEffect(() => {
         axios.get(`${url}/admin/trainings/update/${trainingid}/${userid}`)
-        .then(res => {console.log(res.data)
-            setTrain_title(res.data.brand.train_title)
-            setTrain_description(res.data.brand.train_description)
-            setTrain_startdate(res.data.brand.train_startdate)
-            setTrain_enddate(res.data.brand.train_enddate)
-            setTrain_durationdays(res.data.brand.train_durationdays)
-            setTrain_durationshours(res.data.brand.train_durationshours)
-            setTrain_price(res.data.brand.train_price)
-            setTrain_modality(res.data.brand.train_modality)
-            setTrain_formlink(res.data.brand.train_formlink)
-            setTrain_type(res.data.brand.train_type)
-            setError('')
-            if(res.status==200){
+            .then(res => {
+                console.log(res.data)
+                setTrain_title(res.data.training.train_title)
+                setTrain_description(res.data.training.train_description)
+                setTrain_startdate(res.data.training.train_startdate)
+                setTrain_enddate(res.data.training.train_enddate)
+                setTrain_durationdays(res.data.training.train_durationdays)
+                setTrain_durationshours(res.data.training.train_durationshours)
+                setTrain_price(res.data.training.train_price)
+                setTrain_modality(res.data.training.train_modality)
+                setTrain_formlink(res.data.training.train_formlink)
+                setTrain_type(res.data.training.train_type)
+                setProgramid(res.data.training.programid)
+                setError('')
+                if (res.status == 200) {
+                    setLoading(false)
+                    getUserInfo()
+                }
+            })
+            .catch(error => {
                 setLoading(false)
-              }
-        })   
-        .catch(error => {
-            setLoading(false)
-            setTrain_title({})
-            setTrain_description({})
-            setTrain_startdate({})
-            setTrain_enddate({})
-            setTrain_durationdays({})
-            setTrain_durationshours({})
-            setTrain_price({})
-            setTrain_modality({})
-            setTrain_formlink({})
-            setTrain_type({})
-            console.log(error)
-            setError('Somthing went wrong')
-        })
+                setTrain_title({})
+                setTrain_description({})
+                setTrain_startdate({})
+                setTrain_enddate({})
+                setTrain_durationdays({})
+                setTrain_durationshours({})
+                setTrain_price({})
+                setTrain_modality({})
+                setTrain_formlink({})
+                setTrain_type({})
+                setProgramid({})
+                console.log(error)
+                setError('Somthing went wrong')
+            })
     }, [])
 
 
@@ -87,7 +93,7 @@ const UpdateTrainings = (params) => {
     //     e.preventDefault();
     //     const formData = new FormData();
     //     formData.append('file', file);
-        
+
     //     try {
     //         const res = await axios.post(`${url}/admin/beautycenters/upload/${userid}`,
     //         formData,
@@ -96,9 +102,9 @@ const UpdateTrainings = (params) => {
     //                 'Content-Type': 'multipart/form-data'
     //             }
     //         });
-            
+
     //         const {fileName, filePath} = res.data;
-            
+
     //         setUploadedFile({ fileName, filePath});
     //         setcimage(filePath);
     //         toast.success('Image uploaded to the server')
@@ -135,18 +141,47 @@ const UpdateTrainings = (params) => {
                 train_price,
                 train_modality,
                 train_formlink,
-                train_type         
-               }
+                train_type
+            }
         })
-        .then(response =>{
-            setButtonText('Updated')
-            toast.success(response.data.message);
-        })
-        .catch(error => {
-            setButtonText('Update')
-            toast.error(error.response.data.error);
-        })
+            .then(response => {
+                setButtonText('Update')
+                setTrain_title('')
+                setTrain_description('')
+                setTrain_startdate('')
+                setTrain_enddate('')
+                setTrain_durationdays('')
+                setTrain_durationshours('')
+                setTrain_price('')
+                setTrain_modality('')
+                setTrain_formlink('')
+                setTrain_type('')
+                setProgramid('')
+                toast.success(response.data.message);
+            })
+            .catch(error => {
+                setButtonText('Update')
+                toast.error(error.response.data.error);
+            })
     };
+
+
+    const getAddresses = async () => {
+        return await axios.get(`${url}/admin/programs/${userid}`);
+    }
+    const getUserInfo = async () => {
+
+
+        try {
+            const responses = await Promise.all([getAddresses()]);
+            let newState = responses[0].data.programs; // map your state here
+            let comm = newState.map((e) => e)
+            setName(comm); // and then update the state
+        } catch (error) {
+            console.error(error.message);
+            setName()
+        }
+    }
 
 
     // const pictureBorder = () => (
@@ -158,57 +193,70 @@ const UpdateTrainings = (params) => {
     const newTrainingForm = () => (
 
         <form onSubmit={clickSubmit}>
-        <ToastContainer position='bottom-right'/>
-<div className="form-group">
+            <ToastContainer position='bottom-right' />
+            <div className="form-group">
                 <label className="text-muted">Trairing Title</label>
-                <input  onChange={(event)=>{setTrain_title(event.target.value)}} value={train_title} type="text" className="form-control" required/>        
-         </div>
+                <input onChange={(event) => { setTrain_title(event.target.value) }} value={train_title} type="text" className="form-control" required />
+            </div>
             <div className="form-group">
                 <label className="text-muted">Description</label>
-                <textarea onChange={(event)=>{setTrain_description(event.target.value)}} value={train_description} type="text" className="form-control" required/>
+                <textarea onChange={(event) => { setTrain_description(event.target.value) }} value={train_description} type="text" className="form-control" required />
             </div>
 
             <div className="form-group">
                 <label className="text-muted">Startdate</label>
-                <input onChange={(event)=>{setTrain_startdate(event.target.value)}} value={train_startdate} type="date" className="form-control" required/>
+                <input onChange={(event) => { setTrain_startdate(event.target.value) }} value={train_startdate} type="date" className="form-control" required />
             </div>
 
             <div className="form-group">
                 <label className="text-muted">Enddate</label>
-                <input onChange={(event)=>{setTrain_enddate(event.target.value)}} value={train_enddate} type="date" className="form-control" required/>
+                <input onChange={(event) => { setTrain_enddate(event.target.value) }} value={train_enddate} type="date" className="form-control" required />
             </div>
 
             <div className="form-group">
                 <label className="text-muted">Duration days</label>
-                <input onChange={(event)=>{setTrain_durationdays(event.target.value)}} value={train_durationdays} type="text" className="form-control" required/>
+                <input onChange={(event) => { setTrain_durationdays(event.target.value) }} value={train_durationdays} type="text" className="form-control" required />
             </div>
 
             <div className="form-group">
                 <label className="text-muted">Duration hours</label>
-                <input onChange={(event)=>{setTrain_durationshours(event.target.value)}} value={train_durationshours} type="text" className="form-control" required/>
+                <input onChange={(event) => { setTrain_durationshours(event.target.value) }} value={train_durationshours} type="text" className="form-control" required />
             </div>
 
             <div className="form-group">
                 <label className="text-muted">Training Price</label>
-                <input onChange={(event)=>{setTrain_price(event.target.value)}} value={train_price} type="text" className="form-control" required/>
+                <input onChange={(event) => { setTrain_price(event.target.value) }} value={train_price} type="text" className="form-control" required />
             </div>
 
             <div className="form-group">
                 <label className="text-muted">Modality</label>
-                <textarea onChange={(event)=>{setTrain_modality(event.target.value)}} value={train_modality} type="textarea" className="form-control" required/>
+                <textarea onChange={(event) => { setTrain_modality(event.target.value) }} value={train_modality} type="textarea" className="form-control" required />
             </div>
 
             <div className="form-group">
                 <label className="text-muted">Formlink</label>
-                <input onChange={(event)=>{setTrain_formlink(event.target.value)}} value={train_formlink} type="link" className="form-control" required/>
+                <input onChange={(event) => { setTrain_formlink(event.target.value) }} value={train_formlink} type="link" className="form-control" required />
             </div>
 
             <div className="form-group">
                 <label className="text-muted">Train Type</label>
-                <input onChange={(event)=>{setTrain_type(event.target.value)}} value={train_type} type="text" className="form-control" required/>
+                <input onChange={(event) => { setTrain_type(event.target.value) }} value={train_type} type="text" className="form-control" required />
             </div>
 
-           
+            <div className="col input-group mb-2">
+            <label style={{ padding: '10px' }} className="text-muted">Program id</label>
+                <select onChange={(event) => {
+                    console.log(event.target.value)
+                    setProgramid(event.target.value)
+                }} value={programid} type='text' className="form-control">
+                    <option>Select one</option>
+                    {getName?.map((item) => (
+                        <option value={item.programid}>{item.program_name}</option>
+                    ))}
+                </select>
+            </div>
+
+
             {/* <div className="form-group">
                 <label className="text-muted">الاسم بالعربي</label>
                 <input onChange={(event)=>{setNameArabic(event.target.value)}} value={nameArabic} type="text" className="form-control" required/>
@@ -288,7 +336,7 @@ const UpdateTrainings = (params) => {
                 </div>
             </div>*/}
 
-            <div> 
+            <div>
                 <button className="btn btn-primary">
                     {buttonText}
                 </button>
@@ -297,18 +345,18 @@ const UpdateTrainings = (params) => {
     );
 
 
-    return(
+    return (
         <Layout>
             <div className='container'>
-            <div className="col-d-6">
-                {/* <ToastContainer /> */}
-                {isAuth() ? null : <Redirect to='/'/>} 
-                {/* {JSON.stringify({nameArabic,nameEnglish,logoPath})} */}
-                <h1 className="p-5 text-center">Update Training</h1>
-                {error ? error : null}
-                {/* {loading ? loadingSpinner():pictureBorder()} */}
-                {loading ? loadingSpinner():newTrainingForm()}
-            </div></div>
+                <div className="col-d-6">
+                    {/* <ToastContainer /> */}
+                    {isAuth() ? null : <Redirect to='/' />}
+                    {/* {JSON.stringify({nameArabic,nameEnglish,logoPath})} */}
+                    <h1 className="p-5 text-center">Update Training</h1>
+                    {error ? error : null}
+                    {/* {loading ? loadingSpinner():pictureBorder()} */}
+                    {loading ? loadingSpinner() : newTrainingForm()}
+                </div></div>
         </Layout>
     );
 }

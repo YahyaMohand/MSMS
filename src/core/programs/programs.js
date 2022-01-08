@@ -76,8 +76,8 @@ const Programs = () => {
                     <div className='col'><p className='m-0'>{programs.program_name}</p></div>
                     <div className='col'><p className='m-0'>{programs.program_donor}</p></div>
                   
-                    <div className='col'><p className='m-0'>{programs.program_startdate}</p></div>
-                    <div className='col'><p className='m-0'>{programs.program_enddate}</p></div>
+                    <div className='col'><p className='m-0'>{formatedDate(programs.program_startdate)}</p></div>
+                    <div className='col'><p className='m-0'>{formatedDate(programs.program_enddate)}</p></div>
                     <div className='mr-2'>
                     <Link to={{
                         pathname: `programs/update/${programs.programid}`
