@@ -24,13 +24,16 @@ function AllMember(params) {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     const [membershipsrents, setMembershipsrents] = useState({})
+    const [getNameStart, setNameStart] = useState()
+
 
 
     useEffect(()=>{
-        axios.get(`${url}/admin/memberships/${membershipsrentid}/${userid}`)
+        axios.get(`${url}/admin/membershipsrent/${membershipsrentid}/${userid}`)
         .then(res => {
             console.log(res.data)
             setMembershipsrents(res.data.membershipsrents)
+            setNameStart(res.data.membershipsrentcommunity)
             setError('')
             setLoading(false)
         })   
@@ -38,6 +41,7 @@ function AllMember(params) {
             console.log(error)
             setLoading(false)
             setMembershipsrents({})
+            setNameStart({})
             setError('Somthing went wrong')
         })
     }, [])
@@ -129,6 +133,25 @@ function AllMember(params) {
             const birthday = new Date(x).toLocaleTimeString('en-IQ')
             return birthday
         }
+
+
+        const AttendeeTable = ({getNameStart})=>
+        (
+            
+                <tbody>
+                    <tr>
+                    <th scope="row">{getNameStart.com_name}</th>
+                    <th scope="col">{formatedDate(getNameStart.com_birthday)}</th>
+                    <th scope="col">{getNameStart.com_gender}</th>
+                    <th scope="col">{getNameStart.com_employmenttype}</th>
+                    {/* <Link to={{
+                    pathname: `startups/updateteam/${startupid}`
+                }}
+                // className='btn btn-warning'
+                ><FaUserEdit style={{textAlign:'center'}} color='red' size='2em'/></Link> */}
+                    </tr>
+                </tbody>
+        )
     
     
         return(     
@@ -180,10 +203,41 @@ function AllMember(params) {
                         </li>
                         </ul>
                     </div>
-                    
+                </div>
+                <div>
+                    <h3  className='mt-4  mb-3'>Member Startup</h3>
+                    <div>
+                   
+                    <table class="table table-striped">
+                    <thead className='table-dark'>
+                        <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Birthday</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Position</th>
+                        </tr>
+                    </thead>
+                    {getNameStart.map((getNameStart, i)=>(<AttendeeTable key={i} getNameStart={getNameStart}/>))}
+                    </table>
+                </div>
+                        
+                   
+                </div>
 
+                <hr></hr>
+                <div className='col'>
+                    <Link
+                className='btn btn-block btn-primary'
+                    to={{
+                    pathname: `membershipsrentcommunity/${membershipsrentid}`
+                }}> Add New Member in {membershipsrents.mem_teamname}
+                </Link>
                 </div>
                 </div>
+                
+                
+
+                
 
             
         )
@@ -197,7 +251,7 @@ function AllMember(params) {
             <div className="col-d-6">
             {/* <ToastContainer /> */}
                 {isAuth() ? null : <Redirect to='/'/>} 
-                <h1 className="p-5 text-center">Product</h1>
+                <h1 className="p-5 text-center">Membership</h1>
                 {/* {pictureBorder()} */}
                 {error ? error : null}
                 {loading ? loadingSpinner():MemberCard()}

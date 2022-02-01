@@ -34,7 +34,7 @@ const UpdateMember = (params) => {
 
     
     useEffect(()=>{
-        axios.get(`${url}/admin/memberships/update/${membershipsrentid}/${userid}`)
+        axios.get(`${url}/admin/membershipsrent/update/${membershipsrentid}/${userid}`)
         .then(res => {
             setMem_type(res.data.membershipsrents.mem_type)
             setMem_startdate(res.data.membershipsrents.mem_startdate)

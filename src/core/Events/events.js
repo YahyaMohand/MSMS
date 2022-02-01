@@ -25,6 +25,7 @@ const Events = () => {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     const [events, setEvents] = useState({})
+    const [values, setValues] = useState('')
 
 
     useEffect(()=>{
@@ -70,11 +71,12 @@ const Events = () => {
                    
                     <div className='col'><p className='m-0'>{events.event_type}</p></div>
                     <div className='col'><p className='m-0'>{events.event_name}</p></div>
-                    <div className='col'><p className='m-0'>{events.programid}</p></div>
                     <div className='col'><p className='m-0'>{formatedDate(events.event_startdate)}</p></div>
                     <div className='col'><p className='m-0'>{formatedDate(events.event_enddate)}</p></div>
                     <div className='col'><p className='m-0'>{events.event_durationdays}</p></div>
                     <div className='col'><p className='m-0'>{events.event_durationhours}</p></div>
+                    <div className='col'><p className='m-0'>{events.event_partenrs}</p></div>
+
                     <Link to={{
                         pathname: `events/update/${events.eventid}`
                     }}
@@ -95,15 +97,16 @@ const Events = () => {
                 <div className='row text-center font-weight-bold'>
                     <div className='col'><p className='m-0'>Type</p></div>
                     <div className='col'><p className='m-0'>Name</p></div>
-                    <div className='col'><p className='m-0'>Program Id</p></div>
                     <div className='col'><p className='m-0'>Start</p></div>
                     <div className='col'><p className='m-0'>End</p></div>
                     <div className='col'><p className='m-0'>days</p></div>
                     <div className='col'><p className='m-0'>Hours</p></div>
+                    <div className='col'><p className='m-0'>Partner</p></div>
+
                 </div>
             </li>
             <hr></hr>
-            {events.map((events, i)=>(<EventCard key={i} events={events}/>))}
+            {events?.filter(name => name.event_type.toLowerCase().includes(values.toLowerCase())).sort((a, b) => b.event_startdate.localeCompare(a.event_startdate)).map((events, i)=>(<EventCard key={i} events={events}/>))}
         </ul>
         </div>
     )
@@ -115,6 +118,12 @@ const Events = () => {
             <div className='row'>
                 <div className='col'>
                     <h3>Activities</h3>
+                </div>
+                <div className="col input-group mb-2">
+                    <label style={{ padding: '10px', fontWeight: 'bold' }} className="text-muted">Search Event Type :</label>
+                    <input placeholder='Search' onChange={(event) => {
+                        setValues(event.target.value)
+                    }} value={values} type='text' className="form-control" />
                 </div>
             <div className='col'>
                     {/* <button className='btn btn-block btn-dark' onClick={()=>printrecipt()}>Add Event</button> */}

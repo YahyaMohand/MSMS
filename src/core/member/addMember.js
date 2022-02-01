@@ -50,7 +50,7 @@ const AddMember = () => {
         axios({
             method: 'POST',
             // url: `${process.env.REACT_APP_ADMIN}/categories/create`,
-            url: `${url}/admin/memberships/create/${userid}`,
+            url: `${url}/admin/membershipsrent/create/${userid}`,
             data:{mem_duration,
                 mem_description,
                 mem_teamname, 

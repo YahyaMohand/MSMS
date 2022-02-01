@@ -462,7 +462,7 @@ const Layout = ({children,match,history}) =>{
                 <div>
                     <div style={{height:'110vh'}}>
                         {/* <h4 className='p-3'>Mosul Space</h4> */}
-                        <img src={'https://mosulspace.org/wp-content/uploads/2019/09/logo-300px.png'} style={{padding:'20px'}}  className='m-0 ml-2 mr-2'></img>
+                        <img src={require('C://Users/yahya/Downloads/MS.png')} style={{padding:'20px',width:'300px',height:'200px'}}  className='m-0 ml-2 mr-2'></img>
                         <hr></hr>
                         <ul className="list-group p-3" style={{width:'15vw'}}>
                             <li className=" bg-dark" style={{listStyleType:'none'}} >
@@ -534,7 +534,7 @@ const Layout = ({children,match,history}) =>{
                             
                                 </li>
                                 <li className=" bg-dark" style={{listStyleType:'none'}}>
-                                    <Link  to='/admin/memberships' className='nav-link list-group-item bg-dark' style={isActive('/admin/services')}>
+                                    <Link  to='/admin/membershipsrent' className='nav-link list-group-item bg-dark' style={isActive('/admin/services')}>
                                         Membership rent
                                     </Link>
                             

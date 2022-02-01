@@ -176,8 +176,8 @@ function AllProduct(params) {
                         </li>
                           <li className="list-group-item d-flex justify-content-between align-items-center">
                             Design file
-                            <span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} 
-                            className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{products.product_designfile}</span>
+                            <a href='https://drive.google.com/drive/folders/1YklY3C_1Sz9jT2t3Ttqh53vtTgrlDTlO' target="_blank" ><span  style={{color:'#000000',backgroundColor:'#e9d3ff'}} 
+                            className="pr-1 pl-1 fw-bolder fs-3 rounded-pill">{'https://drive.google.com/drive/folders/1YklY3C_1Sz9jT2t3Ttqh53vtTgrlDTlO'}</span></a>
                         </li>
                            <li className="list-group-item d-flex justify-content-between align-items-center">
                             Work duration

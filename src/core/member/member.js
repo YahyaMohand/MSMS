@@ -25,7 +25,7 @@ const Membership = () => {
 
 
     useEffect(()=>{
-        axios.get(`${url}/admin/memberships/${userid}`)
+        axios.get(`${url}/admin/membershipsrent/${userid}`)
         .then(res => {
             console.log(res.data)
             setMembershipsrents(res.data.membershipsrents)
@@ -65,7 +65,7 @@ const Membership = () => {
                 <Link 
                 style={{textDecoration: 'none', color: 'black'}}
                 to={{
-                    pathname: `memberships/${membershipsrents.membershipsrentid}`
+                    pathname: `membershipsrent/${membershipsrents.membershipsrentid}`
                 }}>
                 <div className='row text-center'>
                      <div className='col'><p className='m-0'>{membershipsrents.mem_teamname}</p></div>
@@ -77,7 +77,7 @@ const Membership = () => {
                     <div className='col'><p className='m-0'>{formatedDate(membershipsrents.mem_startdate)}</p></div>
                     {/* <div className='col'><p className='m-0'>{membershipsrents.mem_enddate}</p></div> */}
                     <Link to={{
-                        pathname: `memberships/update/${membershipsrents.membershipsrentid}`
+                        pathname: `membershipsrent/update/${membershipsrents.membershipsrentid}`
                     }}
                     // className='btn btn-warning'
                     ><FaUserEdit color='red' size='1.5em'/></Link>
@@ -120,7 +120,7 @@ const Membership = () => {
                     <Link
                 className='btn btn-block btn-dark'
                     to={{
-                    pathname: `memberships/add`
+                    pathname: `membershipsrent/add`
                 }}> Add Membership
                 </Link>
                 </div>

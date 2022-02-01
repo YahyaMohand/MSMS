@@ -229,10 +229,6 @@ function UpdateProduct(params) {
     <textarea onChange={(event)=>{setProduct_description(event.target.value)}} value={product_description} type="text" className="form-control" required/>
 </div>
 <div className="form-group">
-    <label className="text-muted">product_designfile</label>
-    <input onChange={(event)=>{setProduct_designfile(event.target.value)}} value={product_designfile} type="text" className="form-control" required/>
-</div>
-<div className="form-group">
     <label className="text-muted">product_workduration</label>
     <input onChange={(event)=>{setProduct_workduration(event.target.value)}} value={product_workduration} type="text" className="form-control" required/>
 </div>

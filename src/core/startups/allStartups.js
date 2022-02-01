@@ -86,15 +86,12 @@ function AllStartups(params) {
                         <th scope="row">{getNameStart.com_name}</th>
                         <th scope="col">{formatedDate(getNameStart.com_birthday)}</th>
                         <th scope="col">{getNameStart.com_gender}</th>
-                        <th scope="col">{getNameStart.com_degree}</th>
-                        <th scope="col">{getNameStart.com_specialization}</th>
-                        <th scope="col">{getNameStart.com_position}</th>
-                        <th scope="col">{getNameStart.com_organization}</th>
-                        <Link to={{
+                        <th scope="col">{getNameStart.st_com_position}</th>
+                        {/* <Link to={{
                         pathname: `startups/updateteam/${startupid}`
                     }}
                     // className='btn btn-warning'
-                    ><FaUserEdit style={{textAlign:'center'}} color='red' size='2em'/></Link>
+                    ><FaUserEdit style={{textAlign:'center'}} color='red' size='2em'/></Link> */}
                         </tr>
                     </tbody>
             )
@@ -151,10 +148,7 @@ function AllStartups(params) {
                         <th scope="col">Name</th>
                         <th scope="col">Birthday</th>
                         <th scope="col">Gender</th>
-                        <th scope="col">Degree</th>
-                        <th scope="col">Specialization</th>
                         <th scope="col">Position</th>
-                        <th scope="col">Org.</th>
                         </tr>
                     </thead>
                     {getNameStart.map((getNameStart, i)=>(<AttendeeTable key={i} getNameStart={getNameStart}/>))}
@@ -167,10 +161,10 @@ function AllStartups(params) {
             <hr></hr>
                 <div className='col'>
                     <Link
-                className='btn btn-block btn-dark'
+                className='btn btn-block btn-primary'
                     to={{
                     pathname: `startupscommunity/${startupid}`
-                }}> Add New Member StartUp
+                }}> Add New Member in {startup.startup_name}
                 </Link>
                 </div>
                 </div>

@@ -61,6 +61,7 @@ import AddSuC from './core/startups/startupCommunity';
 import AddAttend from './core/Events/addEvent';
 import AddAttended from './core/Tranings/addAttended';
 import UpdateTeam from './core/startups/startupTeamUpdate';
+import AddMemberCommunity from './core/member/memberCommunity';
 
 
 
@@ -112,10 +113,12 @@ const Routes = () => {
                 <AdminRoute path="/admin/transactions/add" exact component={AddTransaction} />
             <AdminRoute path="/admin/contracts/update/:contractid" exact component={UpdateContract} />*/}
                 <AdminRoute path="/admin/articles" exact component={Articles} />
-                <AdminRoute path="/admin/memberships" exact component={Membership} />
-                <AdminRoute path="/admin/memberships/add" exact component={AddMember} />
-                <AdminRoute path="/admin/memberships/update/:membershipsrentid" exact component={UpdateMember} />
-                <AdminRoute path="/admin/memberships/:membershipsrentid" exact component={AllMember} />
+                <AdminRoute path="/admin/membershipsrent" exact component={Membership} />
+                <AdminRoute path="/admin/membershipsrent/add" exact component={AddMember} />
+                <AdminRoute path="/admin/membershipsrent/update/:membershipsrentid" exact component={UpdateMember} />
+                <AdminRoute path="/admin/membershipsrent/:membershipsrentid" exact component={AllMember} />
+                <AdminRoute path="/admin/membershipsrent/membershipsrentcommunity/:membershipsrentid" exact component={AddMemberCommunity} />
+                
 
                 <AdminRoute path="/admin/services" exact component={Services} />
                 <AdminRoute path="/admin/services/add" exact component={AddService} />
@@ -155,12 +158,12 @@ const Routes = () => {
                 <AdminRoute path="/admin/trainings" exact component={Trainings} />
                 <AdminRoute path="/admin/trainings/add" exact component={AddTraining} />
                 <AdminRoute path="/admin/trainings/update/:trainingid" exact component={UpdateTrainings} />
-                <AdminRoute path="/admin/trainings/:trainingid" exact component={AllTrainings} />
                 <AdminRoute path="/admin/trainings/addstudents/:trainingid" exact component={AddExcelStudents} />
                 <AdminRoute path="/admin/events/addattendees/:eventid" exact component={AddExcelAttendees} />
                 <AdminRoute path="/admin/trainings/students/:trainingid" exact component={Student} />
                 <AdminRoute path="/admin/trainings/addarrayinstructor/:trainingid" exact component={AddInstructor} />
                 <AdminRoute path="/admin/trainings/addarraystudents/:trainingid" exact component={AddAttended} />
+                <AdminRoute path="/admin/trainings/:trainingid" exact component={AllTrainings} />
 
 
 

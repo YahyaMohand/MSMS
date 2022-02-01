@@ -179,7 +179,20 @@ function AddProduct() {
         })
         .then(response =>{
             // console.log("Product Added to database successfully", response);
-            setValues({...values, buttonText: 'Submitted Add product'});
+            setValues({...values, 
+                product_name:'',
+                material_used:'',
+                machine_used:"",
+                product_madeby:"",
+                product_madefor:"",
+                product_picture:"",
+                product_description:"",
+                product_designfile:"",
+                product_workduration:"",
+                product_cost:"",
+                product_price:"",
+                product_quantity:"",
+                });
             toast.success(response.data.message);
         })
         .catch(error => {
@@ -260,13 +273,18 @@ function AddProduct() {
             <label className="text-muted">Product designfile</label>
             <input onChange={onUpload}  type="file" className="form-control" required/>
                 </div> */}
-                 <div className='custom-file'>
+                 {/* <div className='custom-file'>
                         <input 
                         onChange={onUpload} 
                         // value={filename} 
                         type="file" className="custom-file-input" name='file'  id='fileupload' required />
                         <label className='custom-file-label'>{filename}</label>
-                    </div>
+                    </div> */}
+
+                    <div className="form-group">
+                <label className="text-muted">Upload Product File </label>
+              <a href='https://drive.google.com/drive/folders/1YklY3C_1Sz9jT2t3Ttqh53vtTgrlDTlO' target="_blank" className="form-control" required>Forward Link to upload file </a>
+            </div>
 
             <div className="form-group">
                 <label className="text-muted">Product workduration</label>

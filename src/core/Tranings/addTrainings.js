@@ -156,8 +156,6 @@ const AddTraining = (params) => {
 
     useEffect(()=>{
         const getUserInfo = async () => {
-
-
             try {
                 const responses = await Promise.all([getAddresses()]);
                 let newState = responses[0].data.programs; // map your state here

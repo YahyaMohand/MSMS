@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../layout';
 import axios from 'axios';
-import {isAuth} from '../../auth/helpers';
-import {Redirect, Link} from 'react-router-dom';
+import { isAuth } from '../../auth/helpers';
+import { Redirect, Link } from 'react-router-dom';
 import cookie from 'js-cookie'
 import loadingSpinner from '../../components/loadingspinner'
 import DirectionProvider, { DIRECTIONS } from 'react-with-direction/dist/DirectionProvider';
@@ -14,16 +14,16 @@ const url = process.env.REACT_APP_NODE
 
 const userid = isAuth() ? JSON.parse(localStorage.getItem('user')).userid : 'notlogedin'
 const token = cookie.get('token')
-axios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
+axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
 function numcoma(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-function formatedDate(x){
+function formatedDate(x) {
     const birthday = new Date(x)
     const day = birthday.getDate();
-    const mon = birthday.getMonth()+1;
+    const mon = birthday.getMonth() + 1;
     const year = birthday.getFullYear();
     return (`${day}/${mon}/${year}`);
 }
@@ -50,7 +50,7 @@ const AddExcelAttendees = (params) => {
     //         if(res.status ===200){
     //             setLoading(false)
     //         }
-            
+
     //     })
     //     .catch(error => {
     //         setLoading(false)
@@ -63,16 +63,16 @@ const AddExcelAttendees = (params) => {
     // }, [])
 
 
-    const SendArray= (e) =>{
+    const SendArray = (e) => {
         e.preventDefault();
         axios({
             method: 'POST',
             url: `${url}/admin/events/addarrayattendee/${eventid}/${userid}`,
-            data: data
-        }).then(res=>{
+            data: data.map(({ com_birthday, ...rest }) => ({ com_birthday: excelDateToJSDate(com_birthday), ...rest }))
+        }).then(res => {
             toast.success(res.data.message);
         }).catch(error => {
-            toast.error(error.res.data.error)
+            toast.error(error?.response?.data?.message)
         })
     }
 
@@ -94,88 +94,96 @@ const AddExcelAttendees = (params) => {
             reader.readAsArrayBuffer(e.target.files[0]);
         }
     }
+    function excelDateToJSDate(excelDate) {
+        var date = new Date(Math.round((excelDate - (25567 + 2)) * 86400 * 1000));
+        var converted_date = date.toISOString().split('T')[0];
+        return converted_date;
+    }
 
 
-    const addExcelform =()=>(
+    const addExcelform = () => (
         <div>
-             
-               
 
-
-
-                <form >
-                    <div className='mb-3'>
+            <form >
+                <div className='mb-3'>
                     <label className='form-label' htmlFor="upload">Upload File</label>
-                    <input 
+                    <input
                         className='form-control'
                         type="file"
                         itemID='upload'
-                        
+
                         id="upload"
                         onChange={readUploadFile}
                     /></div>
-                </form>
+            </form>
 
-                <div className='col'>
-                <button className='btn btn-block btn-success' onClick={(event)=>{SendArray(event)}}>Confirm and save the data</button>
-                    {/* <Link
+            <div className='col'>
+                <button className='btn btn-block btn-success' onClick={(event) => { SendArray(event) }}>Confirm and save the data</button>
+                {/* <Link
                         className='btn btn-block btn-dark'
                         to={{
                             pathname: `students/${trainingid}`
                         }} > Add Student
                     </Link> */}
-                    {/* <input onClick={readUploadFile} type='file' className='btn btn-block btn-success'>Add Student xlsx</input> */}
-                </div>
-                <hr className='m-3'></hr>
+                {/* <input onClick={readUploadFile} type='file' className='btn btn-block btn-success'>Add Student xlsx</input> */}
+            </div>
+            <hr className='m-3'></hr>
 
-                <table className="table">
-                    <thead className='table-dark'>
+            <table className="table">
+                <thead className='table-dark'>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">College</th>
+                        <th scope="col">Birthday</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {data && (data.map((item) => (
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Gender</th>
+                            <th scope="row">{item?.__rowNum__}</th>
+                            <td>{item.com_name}</td>
+                            <td>{item.com_email_1}</td>
+                            <td>{item.com_gender}</td>
+                            <td>{item.com_phone_number_1}</td>
+                            <td>{item.com_college}</td>
+                            <td>{excelDateToJSDate(item.com_birthday)}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {data && (data.map((item) => (
-                            <tr>
-                                <th scope="row">{item?.__rowNum__}</th>
-                                <td>{item.com_name}</td>
-                                <td>{item.com_email_1}</td>
-                                <td>{item.com_gender}</td>
-                            </tr>
-                        )))}
+                    )))}
 
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
 
-      
-    
+
+
         </div>
     )
-   
-
-   
-
-   
 
 
-    
-
-   
 
 
-  
+
+
+
+
+
+
+
+
+
 
     return (
         <Layout>
             <div className='container-fluid'>
-            {isAuth() ? null : <Redirect to='/'/>} 
-            <h1 className='text-center m-lg-5'>Add Student Excel Sheet</h1>
-            {error ? error : null}
-            {addExcelform()}
-            <hr className='mt-5'></hr>
+                {isAuth() ? null : <Redirect to='/' />}
+                <h1 className='text-center m-lg-5'>Add Student Excel Sheet</h1>
+                {error ? error : null}
+                {addExcelform()}
+                <hr className='mt-5'></hr>
             </div>
         </Layout>
     );
